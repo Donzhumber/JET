@@ -757,7 +757,7 @@ Considere un juego bayesiano en tiempo discreto con horizonte $\mathbb{T}=\{0,1,
   \arg\max_{a_t^i\in\mathcal{A}^i}
   \;\mathcal{U}^i_t\!\bigl(a_t^i\mid \mathcal{I}_t^i,\chi,s^{-i}\bigr),
   \]
-  donde $L_t$ es la pérdida social condicional al tipo, $\Pi_{t,a^S}^S$ es la penalización por desviación del punto de referencia bayesiano de la rama elegida, y $\mathcal{U}^K_t$, $\mathcal{U}^F_t$ son las utilidades esperadas del captor y de la familia en $t$.
+  donde $L_t$ es la pérdida social condicional al tipo, $\Pi_{t,a^S}^S$ es la penalización por desviación del punto de referencia bayesiano de la rama elegida, $\Delta H_t(\alpha_t,\gamma_t)$ es la ganancia informacional esperada, y $\mathcal{U}^K_t$, $\mathcal{U}^F_t$ son las utilidades esperadas del captor y de la familia en $t$.
 
   \item[\textup{(b)}] Consistencia bayesiana en la senda. En todo nodo alcanzado con probabilidad positiva bajo $\ProbE^s$, las creencias coinciden con la inferencia bayesiana a partir de $\mu_0$ y las señales públicas observadas. Para todo $\theta\in\ThetaK$ y todo $t\ge 1$,
   \begin{equation}
@@ -925,33 +925,77 @@ Las secciones precedentes enuncian el mecanismo para un tipo desconocido general
 
 \subsection{Anclaje empírico del espacio de parámetros}\label{sec:institutional}
 
-Entre 1964 y 2025, Colombia registró 61.341 casos de secuestro, según \citet{cnmh_datos}, concentrados en municipios específicos y estrechamente ligados a la evolución del conflicto armado interno; la creación en 1996 de los Grupos de Acción Unificada por la Libertad Personal, GAULA, según \citet{ley282_1996}, marcó la respuesta institucional del Estado ante esta dinámica, y la variación resultante en capacidad coercitiva, reforma legal y estructura organizacional entre los grupos armados es precisamente la fuente de la heterogeneidad de tipos que el mecanismo está diseñado para cribar. Esta motivación aplicada se desarrolla extensamente, junto con el análisis macroeconométrico subyacente (un modelo de Vectores de Corrección de Errores y un modelo de Tendencia Lineal Local de la tendencia estocástica del secuestro, formalmente reconciliados por el corolario de equivalencia de tendencias), en el Apéndice A; la estimación microeconométrica completa que sustenta la tabla siguiente se presenta en el Apéndice B.
+Entre 1964 y 2025, Colombia registró 61.341 casos de secuestro, según \citet{cnmh_datos}; aunque durante este período gran parte del país sufrió este delito, los casos se concentraron en un conjunto de municipios, ligados a fases sucesivas del conflicto armado interno, desde la consolidación temprana de los grupos insurgentes, pasando por la creación en 1996 de los Grupos de Acción Unificada por la Libertad Personal (GAULA, \citealt{ley282_1996}), hasta un marcado endurecimiento institucional posterior a 2011 documentado por \citet{pinto2004}, \citet{Zarate2007} y \citet{CNMH2013}. Este patrón concentrado y espacialmente agrupado es consistente con el marco del triángulo del crimen de \citet{Pires2014}; el pico histórico de finales de los años noventa y comienzos de los 2000 coincidió con la expansión del conflicto armado y las economías ilegales, según muestra \citet{pinto2004}, y con el uso del secuestro como mecanismo de financiación y coerción política, según plantea \citet{Zarate2007}, lo que motiva tratar la heterogeneidad criminal como un rasgo estructural del fenómeno y no como un problema de estimación. Las Figuras~\ref{fig:evolucion-geo} y~\ref{fig:evolucion-historica} ilustran, respectivamente, esta concentración temporal y municipal y la trayectoria colombiana a través de las administraciones, las fases del conflicto y los hitos legales.
 
-Los parámetros que alimentan el espacio de estados y las tecnologías del mecanismo se obtienen de un modelo Logit Multinomial (MNL) de los desenlaces de los casos y de un modelo de riesgos proporcionales específicos por causa de \citet{Cox1972}, estimados sobre microdatos a nivel individual del Centro Nacional de Memoria Histórica, según \citet{cnmh_datos} ($n=1{,}125$ muestra analítica; especificación completa, pruebas de robustez y diagnósticos de selección muestral en el Apéndice B). La Tabla~\ref{tab:hazard-prior-summary} consolida la huella tecnológica resultante por tipo para los cuatro tipos de captor $\ThetaK=\{\text{DC},\text{PAR},\text{ELN},\text{FARC}\}$.
-
-\begin{table}[H]
+\begin{figure}[H]
 \centering
-\caption{Huella consolidada de hazard y desenlace por tipo (DC, PAR, ELN, FARC)}
-\label{tab:hazard-prior-summary}
-\begin{tabular}{lccc}
-\toprule
-Tipo $\theta_K$ & Margen de mortalidad (MNL) & Razón de hazard de pago (Cox, ref.\ FARC) & Rescate acum.\ @ día 100 (Cox) \\
-\midrule
-FARC & 0.002 & 1.00 (referencia) & 0.27 \\
-ELN  & 0.007 & $\approx 1.00$ (n.s., $p=0.317$) & 0.28 \\
-PAR  & 0.026 & $4.28$ ($p<0.001$) & 0.33 \\
-DC   & 0.071 & $1.71$ ($p=0.021$) & n.r.\ (véase Apéndice~B) \\
-\bottomrule
-\end{tabular}
-\end{table}
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\subfigheight}{Fig_2a.pdf}
+  \caption{Evolución temporal de los secuestros}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\subfigheight}{Fig_2b.pdf}
+  \caption{Distribución geográfica municipal}
+\end{subfigure}
+\caption{Evolución temporal y distribución geográfica del secuestro en Colombia.}
+\label{fig:evolucion-geo}
+\figurenote{\textit{Nota:} El panel (a) muestra la evolución del número total de casos de secuestro en Colombia, 1964--2025, destacando las principales fases de escalamiento y disminución. El panel (b) presenta la distribución geográfica de los casos de secuestro por municipios colombianos, 1964--2025. \textit{Fuente:} Cálculos del autor con base en \citet{cnmh_datos}.}
+\end{figure}
 
-La correspondencia entre estas estimaciones y el modelo teórico de la Sección~\ref{sec:model} es directa. Los márgenes de mortalidad ordenan la utilidad de reserva de la liberación $U^K_{\mathrm{rel}}(\theta)=-\kappa_{\mathrm{rel}}(\theta)$ entre tipos, dado que las organizaciones con menor capacidad logística de retención (mayor mortalidad) enfrentan un cálculo correspondientemente distinto en la restricción de participación $IR^K$. Las razones de hazard de Cox se trasladan al mecanismo como las intensidades efectivas específicas por tipo $\tilde\lambda_j(t\mid\theta_K)$ que gobiernan la señal diaria de riesgos competitivos $\zeta_t$ y, a través de ella, la actualización bayesiana de $\mu_t$; su separación empírica entre tipos es la contraparte observacional de la hipótesis de separación uniforme en variación total del Lema~\ref{lem:hazard-separation}, sobre la cual descansa el Teorema~\ref{thm:posterior-consistency}. Las creencias iniciales específicas por escenario $\mu_0(\theta\mid z,\theta_V)$ utilizadas en la calibración de la Sección~\ref{sec:calibracion} se reportan allí junto con cada escenario simulado.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{Fig_4.pdf}
+\caption{Evolución del secuestro en Colombia: conflicto armado, política de seguridad y cambio institucional (1962--2025).}
+\label{fig:evolucion-historica}
+\figurenote{\textit{Nota:} La figura presenta el número total de secuestros por período presidencial en Colombia entre 1962 y 2025. El sombreado distingue las fases del conflicto armado, y las anotaciones destacan desarrollos relacionados con grupos armados, reformas legales y políticas de seguridad. \textit{Fuente:} Elaboración del autor con base en \citet{cnmh_datos} y \citet{pinto2004}.}
+\end{figure}
+
+Un modelo Logit Multinomial y un modelo de riesgos proporcionales específicos por causa de \citet{Cox1972}, estimados sobre $n=1{,}125$ casos a nivel individual del Centro Nacional de Memoria Histórica, según \citet{cnmh_datos} (especificación completa, pruebas de robustez y diagnósticos de selección muestral en el Apéndice B), cuantifican esta heterogeneidad directamente a nivel organizacional: el margen estático de mortalidad del MNL en cautiverio va de 0.002 para las FARC a 0.071 para la delincuencia común (DC), las razones de hazard de pago relativas a las FARC alcanzan 4.28 para los paramilitares (PAR) y 1.71 para DC, mientras que el ELN es estadísticamente indistinguible del grupo de referencia, y la probabilidad acumulada de rescate táctico al día 100 varía entre 0.27 y 0.33 según el tipo; después de 2011, el hazard de rescate se multiplica por 4.86 y el hazard de pago cae 49\%, consistente con el fortalecimiento de la capacidad disuasiva del GAULA, como se muestra en la Figura~\ref{fig:cox-a}. El perfil dinámico de mortalidad de Cox en la Figura~\ref{fig:cox-b} reproduce el mismo orden entre organizaciones, con magnitudes comparables (0.002 a 0.079). Estas estimaciones proveen el menú de tipos del mecanismo $\ThetaK=\{\text{DC},\text{PAR},\text{ELN},\text{FARC}\}$, ordenan la utilidad de reserva de la liberación $U^K_{\mathrm{rel}}(\theta)$ entre tipos, y anclan las intensidades efectivas específicas por tipo $\tilde\lambda_j(t\mid\theta_K)$ cuya separación empírica es la contraparte observacional de la hipótesis de separación en variación total del Lema~\ref{lem:hazard-separation}.
+
+\begin{figure}[H]
+\centering
+\captionsetup[subfigure]{justification=centering,singlelinecheck=false}
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \parbox[t][\subfigheight][b]{\linewidth}{%
+    \centering\includegraphics[width=\linewidth,height=\subfigheight,keepaspectratio]{Fig_9a.pdf}%
+  }
+  \caption{Rescate por intervención del GAULA y duración}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \parbox[t][\subfigheight][b]{\linewidth}{%
+    \centering\includegraphics[width=\linewidth,height=\subfigheight,keepaspectratio]{Fig_9b.pdf}%
+  }
+  \caption{Supervivencia de la duración por perpetrador}
+\end{subfigure}
+\caption{Dinámica temporal del rescate y heterogeneidad en la duración del cautiverio.}
+\label{fig:cox-a}
+\figurenote{\textit{Nota:} El panel (a) reporta la probabilidad de Rescate según intervención del GAULA y categoría de duración. El panel (b) presenta las curvas de supervivencia de la duración del cautiverio por grupo perpetrador. \textit{Fuente:} Cálculos del autor con base en \citet{cnmh_datos}.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\subfigheight}{Fig_10a.pdf}
+  \caption{Probabilidad acumulada de Rescate estatal}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\subfigheight}{Fig_10b.pdf}
+  \caption{Mortalidad en cautiverio por grupo perpetrador}
+\end{subfigure}
+\caption{Probabilidad acumulada de rescate y mortalidad en cautiverio por grupo armado.}
+\label{fig:cox-b}
+\figurenote{\textit{Nota:} El panel (a) muestra la probabilidad acumulada de Rescate estatal por grupo armado, 1964--2025. El panel (b) reporta la probabilidad de Muerte en cautiverio por grupo perpetrador. \textit{Fuente:} Cálculos del autor con base en \citet{cnmh_datos}.}
+\end{figure}
 
 \subsection{De los estimadores a los insumos estructurales}\label{sec:pertinencia}
 
-El modelo teórico de la Sección~\ref{sec:model} requiere dos insumos empíricos para no depender de supuestos ad hoc: un entorno macroeconómico persistente que discipline los costos de retención y una estructura de tipos con priors, tecnologías y hazards diferenciados. El sistema VEC, la descomposición de Gonzalo--Granger y el corolario de equivalencia de tendencias (Apéndice A) proveen el primer insumo. La cointegración entre $K^E$, $K^{NE}$ y $r$ establece que el secuestro extorsivo no evoluciona como una serie aislada, sino como parte de un sistema de largo plazo en el que la capacidad coercitiva y las condiciones macrofinancieras actúan como fuerzas permanentes. La equivalencia entre la tendencia VEC--GG y la tendencia LLT evita que la calibración dependa de una única especificación econométrica, mientras que la estructura de ajuste del VEC muestra que $K^E$ es el margen que absorbe los desequilibrios. Por lo tanto, el vector de estado del mecanismo, el conjunto factible $\Gamma_t(\mu_t)$ y las restricciones $IC^K$ e $IR^{K,F}$ están anclados en regularidades persistentes, no en una normalización puramente teórica.
-
-Sobre esta base, el MNL y el modelo de Cox conectan la evidencia microeconómica con la distribución inicial $\mu_0\in\Delta(\ThetaK)$ y los vectores de tecnología $\beta_{K,j}(\theta_K)$. El MNL provee la huella estática de cada tipo al relacionar perpetrador, víctima, contexto y tácticas con la distribución condicional de desenlaces; así, la creencia inicial y los pagos terminales se fijan con pesos observados. El modelo de Cox provee la dimensión dinámica: sus hazards específicos por causa se trasladan al mecanismo como tasas $\lambda_j(\theta_K,t)$ que gobiernan la señal diaria $\zeta_t$, actualizan el posterior $\mu_t$ y determinan la velocidad del aprendizaje. La separación empírica de esas tasas entre organizaciones es la base observacional del Lema~\ref{lem:hazard-separation} y del criterio de \citet{Kakutani1948}: si las trayectorias inducidas por los tipos generan leyes suficientemente distintas, el posterior puede concentrarse en el tipo verdadero. En conjunto, el bloque empírico convierte los datos macro y micro en priors, costos, hazards y restricciones directamente utilizables por el mecanismo dinámico. El protocolo explícito de traducción entre estimadores y parámetros estructurales se detalla al comienzo de la Sección~\ref{sec:calibracion}.
+El MNL y el modelo de Cox conectan la evidencia microeconómica con la distribución inicial $\mu_0\in\Delta(\ThetaK)$ y los vectores de tecnología $\beta_{K,j}(\theta_K)$. El MNL provee la huella estática de cada tipo al relacionar perpetrador, víctima, contexto y tácticas con la distribución condicional de desenlaces; así, la creencia inicial y los pagos terminales se fijan con pesos observados. El modelo de Cox provee la dimensión dinámica: sus hazards específicos por causa se trasladan al mecanismo como tasas $\lambda_j(\theta_K,t)$ que gobiernan la señal diaria $\zeta_t$, actualizan el posterior $\mu_t$ y determinan la velocidad del aprendizaje. La separación empírica de esas tasas entre organizaciones es la base observacional del Lema~\ref{lem:hazard-separation} y del criterio de \citet{Kakutani1948}: si las trayectorias inducidas por los tipos generan leyes suficientemente distintas, el posterior puede concentrarse en el tipo verdadero. En conjunto, este bloque microeconométrico convierte los datos a nivel de caso en priors, costos, hazards y restricciones directamente utilizables por el mecanismo dinámico. El protocolo explícito de traducción entre estimadores y parámetros estructurales se detalla al comienzo de la Sección~\ref{sec:calibracion}.
 
 \section{Calibración del mecanismo y simulaciones}\label{sec:calibracion}
 \normalfont\normalsize

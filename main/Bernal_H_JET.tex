@@ -751,7 +751,7 @@ Consider a discrete-time Bayesian game with horizon $\mathbb{T}=\{0,1,\ldots,\ta
   \arg\max_{a_t^i\in\mathcal{A}^i}
   \;\mathcal{U}^i_t\!\bigl(a_t^i\mid \mathcal{I}_t^i,\chi,s^{-i}\bigr),
   \]
-  where $L_t$ is the type-conditional social loss, $\Pi_{t,a^S}^S$ is the penalty for deviation from the Bayesian benchmark of the chosen branch, and $\mathcal{U}^K_t$, $\mathcal{U}^F_t$ are the expected utilities of the captor and the family in $t$.
+  where $L_t$ is the type-conditional social loss, $\Pi_{t,a^S}^S$ is the penalty for deviation from the Bayesian benchmark of the chosen branch, $\Delta H_t(\alpha_t,\gamma_t)$ is the expected information gain, and $\mathcal{U}^K_t$, $\mathcal{U}^F_t$ are the expected utilities of the captor and the family in $t$.
 
   \item[\textup{(b)}] On-path Bayesian consistency. In every node reached with positive probability under $\ProbE^s$, beliefs coincide with the Bayesian inference from $\mu_0$ and the observed public signals. For all $\theta\in\ThetaK$ and all $t\ge 1$,
   \begin{equation}
@@ -920,33 +920,77 @@ The preceding sections state the mechanism for a general unknown type. This sect
 
 \subsection{Empirical anchoring of the parameter space}\label{sec:institutional}
 
-Between 1964 and 2025, Colombia registered 61,341 kidnapping cases \citep{cnmh_datos}, concentrated in specific municipalities and closely tied to the evolution of the internal armed conflict; the 1996 creation of the Unified Action Groups for Personal Liberty (GAULA, \citealt{ley282_1996}) marked the state's institutional response to this dynamic, and the resulting variation in coercive capacity, legal reform, and organizational structure across armed groups is precisely the source of the type heterogeneity the mechanism is designed to screen. This applied motivation is developed at length, together with the underlying macroeconometric analysis (a Vector Error Correction model and a Local Linear Trend model of kidnapping's stochastic trend, formally reconciled by the trend-equivalence corollary), in Appendix~A; the full microeconometric estimation underlying the table below is presented in Appendix~B.
+Between 1964 and 2025, Colombia registered 61,341 kidnapping cases, according to \citet{cnmh_datos}; although large parts of the country suffered this crime during this period, cases concentrated in a set of municipalities, tied to successive phases of the internal armed conflict, from the early consolidation of insurgent groups through the 1996 creation of the Unified Action Groups for Personal Liberty (GAULA, \citealt{ley282_1996}) to a marked post-2011 hardening of institutional deterrence documented by \citet{pinto2004}, \citet{Zarate2007}, and \citet{CNMH2013}. This concentrated, spatially clustered pattern is consistent with the crime triangle framework of \citet{Pires2014}; the historical peak in the late 1990s and early 2000s coincided with the expansion of the armed conflict and illegal economies, as shown by \citet{pinto2004}, and with kidnapping's use as a financing and political-coercion mechanism, as argued by \citet{Zarate2007}, motivating criminal heterogeneity as a structural feature of the phenomenon rather than an estimation nuisance. Figures~\ref{fig:evolucion-geo} and~\ref{fig:evolucion-historica} illustrate, respectively, this temporal and municipal concentration and the Colombian trajectory across administrations, conflict phases, and legal milestones.
 
-The parameters that feed the mechanism's state space and technologies are obtained from a Multinomial Logit (MNL) model of case outcomes and a cause-specific proportional hazards model of \citet{Cox1972}, estimated on individual-level microdata from the National Center for Historical Memory \citep{cnmh_datos} ($n=1{,}125$ analytical sample; full specification, robustness checks, and sample-selection diagnostics in Appendix~B). Table~\ref{tab:hazard-prior-summary} consolidates the resulting per-type technology fingerprint for the four captor types $\ThetaK=\{\text{DC},\text{PAR},\text{ELN},\text{FARC}\}$.
-
-\begin{table}[H]
+\begin{figure}[H]
 \centering
-\caption{Consolidated per-type hazard and outcome fingerprint (DC, PAR, ELN, FARC)}
-\label{tab:hazard-prior-summary}
-\begin{tabular}{lccc}
-\toprule
-Type $\theta_K$ & Mortality margin (MNL) & Payment hazard ratio (Cox, ref.\ FARC) & Cum.\ Rescue @ day 100 (Cox) \\
-\midrule
-FARC & 0.002 & 1.00 (reference) & 0.27 \\
-ELN  & 0.007 & $\approx 1.00$ (n.s., $p=0.317$) & 0.28 \\
-PAR  & 0.026 & $4.28$ ($p<0.001$) & 0.33 \\
-DC   & 0.071 & $1.71$ ($p=0.021$) & n.r.\ (see Appendix~B) \\
-\bottomrule
-\end{tabular}
-\end{table}
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\subfigheight}{Fig_2a.pdf}
+  \caption{Temporal evolution of kidnappings}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\subfigheight}{Fig_2b.pdf}
+  \caption{Municipal geographic distribution}
+\end{subfigure}
+\caption{Temporal evolution and geographic distribution of kidnappings in Colombia.}
+\label{fig:evolucion-geo}
+\figurenote{\textit{Note:} Panel (a) shows the evolution of the total number of kidnapping cases in Colombia, 1964--2025, highlighting the main phases of escalation and decline. Panel (b) presents the geographic distribution of kidnapping cases by Colombian municipalities, 1964--2025. \textit{Source:} Author's calculations based on \citet{cnmh_datos}.}
+\end{figure}
 
-The mapping from these estimates to the theoretical model of Section~\ref{sec:model} is direct. The mortality margins order the reservation utility of release $U^K_{\mathrm{rel}}(\theta)=-\kappa_{\mathrm{rel}}(\theta)$ across types, since organizations with lower logistical retention capacity (higher mortality) face a correspondingly different calculus in the $IR^K$ participation constraint. The Cox hazard ratios are transferred to the mechanism as the type-specific effective intensities $\tilde\lambda_j(t\mid\theta_K)$ that govern the daily competing-risks signal $\zeta_t$ and, through it, the Bayesian update of $\mu_t$; their empirical separation across types is the observational counterpart of the uniform total-variation separation hypothesis in Lemma~\ref{lem:hazard-separation}, on which Theorem~\ref{thm:posterior-consistency} rests. The scenario-specific initial beliefs $\mu_0(\theta\mid z,\theta_V)$ used in the calibration of Section~\ref{sec:calibracion} are reported there together with each simulated scenario.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{Fig_4.pdf}
+\caption{Evolution of kidnappings in Colombia: armed conflict, security policy, and institutional change (1962--2025).}
+\label{fig:evolucion-historica}
+\figurenote{\textit{Note:} The figure presents the total number of kidnappings per presidential term in Colombia from 1962 to 2025. Shading distinguishes phases of the armed conflict, and annotations highlight developments related to armed groups, legal reforms, and security policies. \textit{Source:} Author's elaboration based on \citet{cnmh_datos} and \citet{pinto2004}.}
+\end{figure}
+
+A Multinomial Logit and a cause-specific proportional hazards model of \citet{Cox1972}, estimated on $n=1{,}125$ individual-level cases from the National Center for Historical Memory, per \citet{cnmh_datos} (full specification, robustness checks, and sample-selection diagnostics in Appendix~B), quantify this heterogeneity directly at the organizational level: the static MNL mortality margin in captivity ranges from 0.002 for the FARC to 0.071 for common delinquency (DC), payment hazard ratios relative to the FARC reach 4.28 for paramilitaries (PAR) and 1.71 for DC while the ELN is statistically indistinguishable from the reference group, and the cumulative probability of tactical rescue by day 100 varies from 0.27 to 0.33 across types; post-2011, the rescue hazard multiplies by 4.86 and the payment hazard falls by 49\%, consistent with the GAULA's strengthened deterrent capacity, as shown in Figure~\ref{fig:cox-a}. The dynamic Cox mortality profile in Figure~\ref{fig:cox-b} reproduces the same ordering across organizations, with comparable magnitudes (0.002 to 0.079). These estimates supply the mechanism's type menu $\ThetaK=\{\text{DC},\text{PAR},\text{ELN},\text{FARC}\}$, order the reservation utility of release $U^K_{\mathrm{rel}}(\theta)$ across types, and anchor the type-specific effective intensities $\tilde\lambda_j(t\mid\theta_K)$ whose empirical separation is the observational counterpart of the total-variation separation hypothesis in Lemma~\ref{lem:hazard-separation}.
+
+\begin{figure}[H]
+\centering
+\captionsetup[subfigure]{justification=centering,singlelinecheck=false}
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \parbox[t][\subfigheight][b]{\linewidth}{%
+    \centering\includegraphics[width=\linewidth,height=\subfigheight,keepaspectratio]{Fig_9a.pdf}%
+  }
+  \caption{Rescue by GAULA intervention and duration}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \parbox[t][\subfigheight][b]{\linewidth}{%
+    \centering\includegraphics[width=\linewidth,height=\subfigheight,keepaspectratio]{Fig_9b.pdf}%
+  }
+  \caption{Survival of duration by perpetrator}
+\end{subfigure}
+\caption{Temporal dynamics of rescue and heterogeneity in captivity duration.}
+\label{fig:cox-a}
+\figurenote{\textit{Note:} Panel (a) reports the probability of Rescue by GAULA intervention and duration category. Panel (b) presents the survival curves of captivity duration by perpetrator group. \textit{Source:} Author's calculations based on \citet{cnmh_datos}.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\subfigheight}{Fig_10a.pdf}
+  \caption{Cumulative state Rescue probability}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\subfigheight}{Fig_10b.pdf}
+  \caption{Mortality in captivity by perpetrator group}
+\end{subfigure}
+\caption{Cumulative rescue probability and mortality in captivity by armed group.}
+\label{fig:cox-b}
+\figurenote{\textit{Note:} Panel (a) shows the cumulative state Rescue probability by armed group, 1964--2025. Panel (b) reports the probability of Death in captivity by perpetrator group. \textit{Source:} Author's calculations based on \citet{cnmh_datos}.}
+\end{figure}
 
 \subsection{From estimators to structural inputs}\label{sec:pertinencia}
 
-The theoretical model in Section~\ref{sec:model} requires two empirical inputs so as not to depend on ad hoc assumptions: a persistent macroeconomic environment that disciplines retention costs and a type structure with differentiated priors, technologies, and hazards. The VEC system, the Gonzalo--Granger decomposition, and the trend-equivalence corollary (Appendix~A) provide the first input. The cointegration among $K^E$, $K^{NE}$, and $r$ establishes that kidnapping for ransom does not evolve as an isolated series, but as part of a long-run system in which coercive capacity and macro-financial conditions act as permanent forces. The equivalence between the VEC--GG trend and the LLT trend prevents calibration from depending on a single econometric specification, while the adjustment structure of the VEC shows that $K^E$ is the margin that absorbs disequilibria. Therefore, the state vector of the mechanism, the feasible set $\Gamma_t(\mu_t)$, and the constraints $IC^K$ and $IR^{K,F}$ are anchored in persistent regularities, not in a purely theoretical normalization.
-
-On this basis, the MNL and the Cox model connect microeconomic evidence with the initial distribution $\mu_0\in\Delta(\ThetaK)$ and the technology vectors $\beta_{K,j}(\theta_K)$. The MNL provides the static fingerprint of each type by relating perpetrator, victim, context, and tactics to the conditional distribution of outcomes; thus, the initial belief and terminal payments are set with observed weights. The Cox model provides the dynamic dimension: its cause-specific hazards are transferred to the mechanism as rates $\lambda_j(\theta_K,t)$ that govern the daily signal $\zeta_t$, update the posterior $\mu_t$, and determine the speed of learning. The empirical separation of those rates across organizations is the observational basis of Lemma~\ref{lem:hazard-separation} and the criterion of \citet{Kakutani1948}: if the trajectories induced by the types generate sufficiently distinct laws, the posterior can concentrate on the true type. Together, the empirical block converts macro and micro data into priors, costs, hazards, and constraints directly usable by the dynamic mechanism. The explicit translation protocol between estimators and structural parameters is detailed at the beginning of Section~\ref{sec:calibracion}.
+The MNL and the Cox model connect microeconomic evidence with the initial distribution $\mu_0\in\Delta(\ThetaK)$ and the technology vectors $\beta_{K,j}(\theta_K)$. The MNL provides the static fingerprint of each type by relating perpetrator, victim, context, and tactics to the conditional distribution of outcomes; thus, the initial belief and terminal payments are set with observed weights. The Cox model provides the dynamic dimension: its cause-specific hazards are transferred to the mechanism as rates $\lambda_j(\theta_K,t)$ that govern the daily signal $\zeta_t$, update the posterior $\mu_t$, and determine the speed of learning. The empirical separation of those rates across organizations is the observational basis of Lemma~\ref{lem:hazard-separation} and the criterion of \citet{Kakutani1948}: if the trajectories induced by the types generate sufficiently distinct laws, the posterior can concentrate on the true type. Together, this microeconometric block converts case-level data into priors, costs, hazards, and constraints directly usable by the dynamic mechanism. The explicit translation protocol between estimators and structural parameters is detailed at the beginning of Section~\ref{sec:calibracion}.
 
 \section{Calibration of the mechanism and simulations}\label{sec:calibracion}
 \normalfont\normalsize
