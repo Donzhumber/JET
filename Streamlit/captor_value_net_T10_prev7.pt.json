@@ -1,0 +1,77 @@
+{
+  "T": 10,
+  "N": 2000,
+  "loss_history": [
+    {
+      "tau": 10,
+      "final_loss": 0.0031852866522967815,
+      "n_points": 8000,
+      "oracle_seconds": 17.061285495758057,
+      "level_seconds": 17.751330137252808
+    },
+    {
+      "tau": 9,
+      "final_loss": 0.005379847250878811,
+      "n_points": 8000,
+      "oracle_seconds": 213.80600142478943,
+      "level_seconds": 214.4908218383789
+    },
+    {
+      "tau": 8,
+      "final_loss": 0.0033347338903695345,
+      "n_points": 8000,
+      "oracle_seconds": 215.78011751174927,
+      "level_seconds": 216.47362303733826
+    },
+    {
+      "tau": 7,
+      "final_loss": 0.0025168510619550943,
+      "n_points": 8000,
+      "oracle_seconds": 215.50418376922607,
+      "level_seconds": 216.19100999832153
+    },
+    {
+      "tau": 6,
+      "final_loss": 0.0033353299368172884,
+      "n_points": 8000,
+      "oracle_seconds": 213.59034609794617,
+      "level_seconds": 214.27027893066406
+    },
+    {
+      "tau": 5,
+      "final_loss": 0.003961304202675819,
+      "n_points": 8000,
+      "oracle_seconds": 213.34267902374268,
+      "level_seconds": 214.0284538269043
+    },
+    {
+      "tau": 4,
+      "final_loss": 0.0027933574747294188,
+      "n_points": 8000,
+      "oracle_seconds": 213.92962670326233,
+      "level_seconds": 214.61328291893005
+    },
+    {
+      "tau": 3,
+      "final_loss": 0.0018600268522277474,
+      "n_points": 8000,
+      "oracle_seconds": 212.9936785697937,
+      "level_seconds": 213.67583203315735
+    },
+    {
+      "tau": 2,
+      "final_loss": 0.001438568695448339,
+      "n_points": 8000,
+      "oracle_seconds": 213.829660654068,
+      "level_seconds": 214.51351594924927
+    },
+    {
+      "tau": 1,
+      "final_loss": 0.0011608245549723506,
+      "n_points": 8000,
+      "oracle_seconds": 213.52963185310364,
+      "level_seconds": 214.21463704109192
+    }
+  ],
+  "total_seconds": 1950.9674031734467
+}

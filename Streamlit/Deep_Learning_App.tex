@@ -1,0 +1,742 @@
+% !TEX program = pdflatex
+% !TEX root = Deep_Learning_App.tex
+% Documentación técnica detallada de app_DL.py
+% Mismo documentclass, márgenes y tipografía que Bernal_H.tex (Main/tex/)
+% Requiere econsocart.cls y econsocart.cfg (copiados en esta misma carpeta)
+\documentclass[ecta,nameyear,draft]{econsocart}
+
+% Desactiva los numeros de linea al margen que activa la opcion "draft".
+% El flag @econsocart@numberlines solo se lee UNA VEZ, al cargar la clase,
+% para decidir si engancha \put@numberlines@box en el encabezado; por eso
+% no basta con poner el flag en false despues. En cambio, anulamos
+% directamente esa macro para que el enganche no imprima nada.
+\makeatletter
+\def\put@numberlines@box{}%
+\makeatother
+
+% La opcion "draft" tambien fija \baselinestretch=1.304 (interlineado
+% ampliado para dejar espacio a los numeros de linea de revision). Como ya
+% no se muestran esos numeros, volvemos al interlineado normal de 1.0 para
+% evitar espacios verticales exagerados entre lineas y parrafos.
+\renewcommand{\baselinestretch}{1}
+
+\RequirePackage[colorlinks,citecolor=blue,linkcolor=blue,urlcolor=blue,pagebackref]{hyperref}
+\RequirePackage{amsmath,amssymb,mathtools}
+\RequirePackage{booktabs}
+\RequirePackage{longtable}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{etoolbox}
+\RequirePackage{enumitem}
+\RequirePackage{xcolor}
+\RequirePackage{listings}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.96,0.96,0.94}
+
+\lstdefinestyle{pystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},XDZHGZY
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=6pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    language=Python
+}
+\lstset{style=pystyle}
+
+\newcommand{\pyfile}[1]{\texttt{#1}}
+\newcommand{\pyvar}[1]{\texttt{#1}}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Documentación Técnica Detallada del Motor de Simulación \texttt{app\_DL.py}: RegretNet, Lagrangiano Aumentado y Generación de la Tabla 5.2}
+\runtitle{Documentación Técnica: app\_DL.py (RegretNet)}
+
+\begin{aug}
+\author[add1]{\fnms{Humberto}~\snm{Bernal}}
+\address[add1]{\orgname{Universidad Colegio Mayor de Cundinamarca}}
+\end{aug}
+
+\begin{abstract}
+Este documento describe, a nivel de código y de fórmula, cómo la aplicación
+Streamlit \pyfile{app\_DL.py} transforma los parámetros elegidos por el usuario en la
+trayectoria simulada que compone la Tabla~5.2 del artículo principal. La versión actual del
+motor reemplazó por completo el solver analítico cerrado de versiones anteriores por una red
+neuronal de política (\pyvar{StateNetwork}) genuinamente entrenada en PyTorch mediante
+descenso de gradiente (Adam) y un esquema de Lagrangiano Aumentado que penaliza el
+arrepentimiento (\emph{regret}) de incentivos, al estilo de la literatura de
+\emph{Differentiable Economics} (RegretNet). Se detalla (i) la arquitectura de archivos,
+(ii) el cálculo de priors dinámicos y el mapeo de la barra lateral al estado inicial,
+(iii) la fase de entrenamiento del planificador social, (iv) los pasos del bucle de
+simulación período a período que usa la red ya entrenada para inferir la política óptima,
+(v) el ensamblaje de la Tabla~5.2 (ahora transpuesta) y (vi) las visualizaciones de
+diagnóstico, incluyendo la curva de convergencia del entrenamiento. Se señalan además dos
+particularidades de implementación no evidentes a primera vista: el entrenamiento ocurre
+sobre un único punto de estado fijo repetido en cada época, y la verificación de $IC^K$
+dentro del bucle de simulación es un marcador de posición que siempre se satisface
+trivialmente.
+\end{abstract}
+
+\begin{keyword}
+\kwd{deep learning}
+\kwd{RegretNet}
+\kwd{mechanism design}
+\kwd{Lagrangiano aumentado}
+\kwd{simulación}
+\end{keyword}
+
+\end{frontmatter}
+
+\begin{quotation}
+\noindent\textbf{Nota de vigencia (añadida posteriormente).} Las Secciones
+\ref{sec:training}--\ref{sec:loop} documentan el motor \pyvar{StateNetwork}/RegretNet de
+\pyfile{dl\_mechanism.py}. Se deja constancia de que, a la fecha, \textbf{\pyfile{dl\_mechanism.py}
+no está importado en ningún punto de \pyfile{app\_DL.py}} --- ese código no se ejecuta en la
+aplicación actual. La Sección~\ref{sec:tau1-opt} documenta, de forma independiente y
+autocontenida, el mecanismo que sí está activo hoy en la pestaña 3 (\emph{Results}): la
+optimización dinámica del Estado en $\tau=1$ mediante \pyfile{train\_captor\_value\_net.py}.
+\end{quotation}
+
+% =====================================================================
+\section{Arquitectura de archivos}
+% =====================================================================
+
+El motor de simulación se compone de los siguientes archivos bajo
+\texttt{Streamlit/Deep\_Learning/}:
+
+\begin{center}
+\footnotesize
+\begin{tabular}{@{}p{3.0cm}p{6.1cm}p{3.6cm}@{}}
+\toprule
+\textbf{Archivo} & \textbf{Rol} & \textbf{¿Se ejecuta?} \\
+\midrule
+\pyfile{app\_DL.py} & Interfaz Streamlit; calcula priors, entrena la red de política y corre el bucle de simulación período a período & Es el punto de entrada \\
+\pyfile{dl\_mechanism.py} & \pyvar{PARAMS\_ORGANIZACION}; clases \pyvar{KidnappingEnvironment} (riesgos de Cox + madurez), \pyvar{StateNetwork} (red de política, \texttt{torch.nn.Module}), \pyvar{MDGLayer} (temperatura y sorteo MDG), \pyvar{RegretNetTrainer} (entrenador con Lagrangiano Aumentado) & Las cuatro clases se instancian y se usan activamente \\
+\pyfile{dl\_engine.py} & \pyvar{BackwardInductionMLP}, \linebreak \pyvar{run\_backward\_induction\_dl} (emulador NumPy de una versión previa) & \textbf{No se importa} desde \pyfile{app\_DL.py} --- módulo huérfano heredado de una iteración anterior del proyecto \\
+\bottomrule
+\end{tabular}
+\normalsize
+\end{center}
+
+\begin{quotation}
+\noindent\textbf{Nota metodológica.} A diferencia de una versión previa de este mismo archivo
+--- donde la rama ``Deep Learning'' era en realidad un solver analítico cerrado sin ninguna
+red neuronal entrenada de por medio ---, la implementación actual sí ejecuta un entrenamiento
+genuino: \pyvar{RegretNetTrainer} hace \emph{backpropagation} y pasos de \pyvar{optimizer.step()}
+sobre los parámetros de \pyvar{StateNetwork} en cada corrida de la app (\S\ref{sec:training}).
+Con todo, subsiste una particularidad importante: como se explica en
+\S\ref{sec:training-caveat}, el entrenamiento se realiza sobre un \emph{único} punto del espacio
+de estados (creencia inicial $\mu_0$ y $t=T_{\mathrm{horizon}}/2$ fijos), repetido en cada época,
+y no sobre trayectorias variadas del juego. La red generaliza después a estados nunca vistos
+durante el entrenamiento cuando se usa para inferencia en el bucle de simulación
+(\S\ref{sec:loop}).
+\end{quotation}
+
+% =====================================================================
+\section{Entrada de datos: de la barra lateral al estado inicial}
+% =====================================================================
+
+Todo el ``dato'' que alimenta la simulación es sintético: no se carga ningún archivo externo
+en este módulo. Los controles del usuario parametrizan (i) la creencia previa $\mu_0$, ya sea
+de forma fija, manual, o \emph{model-driven} vía un logit multinomial de covariables, y (ii)
+los hiperparámetros del entorno, de la capa MDG y del entrenador RegretNet.
+
+\subsection{Priors dinámicos \emph{model-driven}}
+
+Cuando el escenario es \emph{Custom} y el modo de prior es \emph{Model-Driven}, la función
+\pyvar{calculate\_dynamic\_priors(\allowbreak region, victim\_profile)} construye la creencia
+inicial como un logit multinomial sobre covariables observables de tipo, región y perfil de
+víctima:
+\begin{equation}
+s(\theta) = \delta(\theta) + \eta_z(\theta) + \xi_v(\theta),
+\qquad
+\mu_0(\theta) = \frac{e^{s(\theta)}}{\sum_{\theta'} e^{s(\theta')}}
+\label{eq:dynamic-priors}
+\end{equation}
+donde $\delta(\theta)$ es un efecto fijo por tipo (\pyvar{COEF\_DELTA}: FARC$=0$, ELN$=-0{,}63$,
+PAR$=-0{,}03$, DC$=-1{,}25$), $\eta_z(\theta)$ es un efecto de región geográfica $z$
+(\pyvar{COEF\_ETA}, igual para los 4 tipos dentro de cada región: Metropolitan$=0$,
+Andean$=-0{,}45$, Caribbean$=-0{,}70$, Pacific/Zone Red$=-0{,}20$, East/Jungle$=-0{,}32$), y
+$\xi_v(\theta)$ es un efecto del perfil de la víctima (\pyvar{COEF\_XI}: Public$=1{,}36$,
+Private$=0$, igual para los 4 tipos). La ecuación~\eqref{eq:dynamic-priors} es un softmax
+estándar sobre estos tres efectos aditivos --- nótese que $\eta_z$ y $\xi_v$ no varían por tipo
+dentro de cada nivel de la covariable, por lo que en la práctica solo $\delta(\theta)$
+diferencia a los cuatro tipos; región y perfil de víctima desplazan la escala pero no la forma
+relativa entre tipos.
+
+\subsection{Controles de la barra lateral}
+
+\begin{center}
+\footnotesize
+\begin{tabular}{@{}p{3.2cm}p{3.5cm}p{6.0cm}@{}}
+\toprule
+\textbf{Control} & \textbf{Variable} & \textbf{Efecto} \\
+\midrule
+\pyvar{escenario} (selectbox) & \pyvar{tipo\_real}, \pyvar{priors\_init}, \ldots & Escenario I (ELN) y II (PAR) fijan tipo real, priors, perfil y todos los hiperparámetros de calibración; \emph{Custom} habilita todos los controles manuales \\
+\pyvar{prior\_mode\_val} (solo en Custom) & \emph{Model-Driven} vs.\ \emph{Manual (Sliders)} & \emph{Model-Driven} usa la ecuación~\eqref{eq:dynamic-priors}; \emph{Manual} usa 4 sliders normalizados a 100\% \\
+\pyvar{T\_horizon}, $\psi_H$, $\underline{c}$ (sliders) & \pyvar{T\_horizon}, \pyvar{psi\_H}, \pyvar{c\_bar} & Horizonte temporal, peso de exploración activa, piso de temperatura MDG \\
+Expander \emph{Model Calibration} & $\alpha_0,\gamma_0, T_{\mathrm{mad}}, \lambda_4, T_0, \eta_{\mathrm{cal}}$ & Alimentan \pyvar{KidnappingEnvironment} (madurez, tasa exógena de liberación) y \pyvar{MDGLayer} (temperatura inicial y decaimiento) \\
+Expander \emph{RegretNet Hyperparameters} & \pyvar{learning\_rate}, \pyvar{rho\_lagrangian}, \pyvar{epochs\_training} & Tasa de aprendizaje de Adam, coeficiente de penalización cuadrática $\rho$, número de épocas de entrenamiento \\
+botón \emph{Start Simulation} & \pyvar{st.session\_state.}\linebreak\pyvar{simulation\_run} & Ver nota de comportamiento abajo \\
+\bottomrule
+\end{tabular}
+\normalsize
+\end{center}
+
+\begin{quotation}
+\noindent\textbf{Comportamiento del botón \emph{Start Simulation}.} A diferencia de una
+versión previa, la variable de control ahora vive en
+\pyvar{st.session\_state.simulation\_run}, inicializada a \pyvar{True} la primera vez que se
+carga la página (\pyfile{app\_DL.py}, líneas 250--251), \emph{antes} de que el usuario
+presione ningún botón. En consecuencia, la simulación completa (entrenamiento + bucle) se
+ejecuta automáticamente en cada carga o \emph{rerun} de la app; el botón simplemente reafirma
+el mismo valor \pyvar{True}. El efecto práctico es que basta con cambiar cualquier slider para
+disparar un nuevo entrenamiento y una nueva simulación, sin necesidad de pulsar el botón.
+\end{quotation}
+
+\subsection{Inicialización del estado}
+
+\begin{equation}
+p_{\mathrm{init}} = \frac{\mathrm{priors\_init}}{\sum \mathrm{priors\_init}},
+\qquad
+\mu_0(\theta) = p_{\mathrm{init}}[\theta], \quad \theta \in \{DC, PAR, ELN, FARC\}
+\end{equation}
+con parámetros de escala fijos $R_{\mathrm{base}}=100$, $\omega_p = 0{,}5$ (ponderador del
+costo de transferencia), $\omega_k = 2{,}0$ (ponderador del costo de pérdida de vida), y
+generador \texttt{rng = np.random.default\_rng(1007)} para todos los sorteos estocásticos del
+bucle de simulación (determinístico dado el mismo conjunto de inputs).
+
+% =====================================================================
+\section{Fase de entrenamiento: RegretNet con Lagrangiano Aumentado}\label{sec:training}
+% =====================================================================
+
+Antes de correr la simulación período a período, la app entrena una red neuronal de política
+que representa al planificador social (el Estado). Esta es la novedad central respecto a
+versiones anteriores del motor.
+
+\subsection{Arquitectura de \pyvar{StateNetwork}}
+
+\begin{equation}
+\text{entrada } (7) \;\xrightarrow{\text{Linear+ReLU}}\; 32 \;\xrightarrow{\text{Linear+ReLU}}\; 32 \;\xrightarrow{\text{Linear+Sigmoid}}\; (\alpha_t, \gamma_t) \in [0,1]^2
+\end{equation}
+con vector de entrada
+\begin{equation}
+\text{state} = \bigl(\mu_t(DC),\, \mu_t(PAR),\, \mu_t(ELN),\, \mu_t(FARC),\, \theta_F,\, \theta_V,\, t/150\bigr)
+\end{equation}
+donde $\theta_F \in \{0,1\}$ codifica \emph{Family Payment Capacity} (\emph{High}$=1$) y
+$\theta_V \in \{0,1\}$ codifica \emph{Victim Profile} (\emph{Public}$=1$). La activación
+sigmoide en la capa de salida garantiza $(\alpha,\gamma) \in [0,1]^2$ sin necesidad de
+proyección posterior (a diferencia del solver analítico previo, que sí requería recorte
+explícito de bordes).
+
+\subsection{Pérdida social esperada}
+
+Para un estado de entrada dado, la red produce una política honesta
+$(\alpha_h,\gamma_h)=\pyvar{net(state\_in)}$. La pérdida social ponderada por la creencia
+actual es
+\begin{equation}
+\mathcal{L}_{\mathrm{social}} = \sum_{\theta} \mu_t(\theta) \Bigl[
+\underbrace{\omega_p R_{\mathrm{base}}(1-\alpha_h) + \omega_k\,\lambda_{\mathrm{kill}}(\theta)(1+\gamma_h)}_{\text{costo de transferencia + riesgo de muerte esperado}}
++ \underbrace{c_\alpha(\theta)\,\alpha_h^2 + c_\gamma(\theta)\,\gamma_h^2 + 0{,}2\,(c_\alpha(\theta)+c_\gamma(\theta))\,\alpha_h\gamma_h}_{C_{\mathrm{maint}}(\theta):\ \text{costo de mantenimiento cuadrático}}
+\Bigr]
++ \psi_H\, H(\mu_t)
+\label{eq:social-loss}
+\end{equation}
+donde el último término $\psi_H H(\mu_t)$ es el subsidio de exploración: penaliza la pérdida
+en proporción a la entropía actual de la creencia, incentivando indirectamente que el
+entrenamiento favorezca políticas que --- a través del término de arrepentimiento descrito
+abajo --- ayuden a reducir la incertidumbre.
+
+\subsection{Arrepentimiento empírico (\emph{regret}) y restricciones IC}
+
+Para cada tipo verdadero candidato $\theta$, se calcula la utilidad del secuestrador si
+reporta honestamente frente a la mejor utilidad posible si mintiera reportando otro tipo
+$\theta' \neq \theta$:
+\begin{align}
+u_{\mathrm{honesto}}(\theta) &= \lambda_{\mathrm{pay}}(\theta)\, R_{\mathrm{base}}\,(1-\alpha_h) - c_\gamma(\theta)\,\gamma_h \\
+u_{\mathrm{mentira}}(\theta) &= \max_{\theta' \neq \theta} \Bigl\{ \lambda_{\mathrm{pay}}(\theta)\, R_{\mathrm{base}}\,(1-\alpha_{h}(\theta')) - c_\gamma(\theta)\,\gamma_h(\theta') \Bigr\}
+\end{align}
+donde $(\alpha_h(\theta'),\gamma_h(\theta'))$ es la política que la red produciría si el
+Estado observara una creencia degenerada $\mu = \delta_{\theta'}$ (reporte de tipo
+$\theta'$ con certeza total). El arrepentimiento por tipo es
+\begin{equation}
+\mathrm{Regret}(\theta) = \max\bigl\{0,\ u_{\mathrm{mentira}}(\theta) - u_{\mathrm{honesto}}(\theta)\bigr\}
+\end{equation}
+Esta construcción --- evaluar la red en reportes contrafactuales y penalizar cuando mentir es
+más rentable que ser honesto --- es exactamente el mecanismo de \emph{RegretNet}
+(\emph{Differentiable Economics}) adaptado a este entorno de 4 tipos.
+
+\subsection{Lagrangiano Aumentado y ascenso dual}
+
+La pérdida total que se retropropaga combina la pérdida social con una penalización sobre el
+arrepentimiento de cada tipo, usando multiplicadores de Lagrange $\lambda_\theta \geq 0$
+actualizados por ascenso dual:
+\begin{equation}
+\mathcal{L}_{\mathrm{total}} = \mathcal{L}_{\mathrm{social}}
++ \sum_\theta \lambda_\theta\, \mathrm{Regret}(\theta)
++ \frac{\rho}{2} \sum_\theta \mathrm{Regret}(\theta)^2
+\label{eq:augmented-lagrangian}
+\end{equation}
+\begin{align}
+\text{(primal)} \quad & \text{Adam step sobre los pesos de \pyvar{StateNetwork} minimizando \eqref{eq:augmented-lagrangian}} \\
+\text{(dual)} \quad & \lambda_\theta \leftarrow \max\{0,\ \lambda_\theta + \rho\, \mathrm{Regret}(\theta)\}
+\end{align}
+El paso dual ocurre \emph{después} de cada \pyvar{optimizer.step()}, incrementando el
+multiplicador de un tipo cada vez que su restricción IC se viola, lo cual --- en la siguiente
+época --- encarece más ese arrepentimiento en la pérdida total. Este es el patrón estándar del
+método de Lagrangiano Aumentado para imponer restricciones de desigualdad en optimización
+diferenciable.
+
+\subsection{Bucle de entrenamiento y su particularidad}\label{sec:training-caveat}
+
+\begin{lstlisting}
+net = StateNetwork()
+trainer = RegretNetTrainer(net, lr=learning_rate, rho=rho_lagrangian)
+for epoch in range(epochs_training):
+    loss_val, regrets_val = trainer.train_step(
+        mu_t=mu_t,                      # creencia INICIAL, fija en todas las epocas
+        theta_F=..., theta_V=...,
+        t=int(T_horizon / 2),           # periodo FIJO, punto medio del horizonte
+        psi_H=psi_H
+    )
+\end{lstlisting}
+
+\begin{quotation}
+\noindent\textbf{Particularidad importante.} Nótese que \pyvar{mu\_t} y \pyvar{t} permanecen
+\textbf{constantes} durante todo el bucle de entrenamiento: \pyvar{mu\_t} es la creencia
+inicial $\mu_0$ (aún no se ha actualizado, pues la actualización bayesiana ocurre más adelante,
+dentro del bucle de simulación) y $t$ está fijo en $T_{\mathrm{horizon}}/2$. Es decir, el
+entrenamiento consiste en \pyvar{epochs\_training} pasos de descenso de gradiente sobre un
+\'unico punto del espacio de entrada, no sobre un conjunto de trayectorias o estados
+muestreados. La red converge a una buena política \emph{para ese estado particular} (y, por
+construcción del término de \emph{regret}, también aprende algo sobre los estados degenerados
+$\delta_{\theta'}$ usados como reportes contrafactuales). Cuando posteriormente se usa la red
+para inferencia en el bucle de simulación (\S\ref{sec:loop}) con creencias $\mu_t$ y períodos
+$t$ que sí varían y se alejan del punto de entrenamiento, la política inferida es una
+\textbf{extrapolación} de la red fuera de su régimen de entrenamiento explícito, no una
+política verificada en esos estados. Esto no invalida el ejercicio --- ReLU + Sigmoid con
+solo 2 capas ocultas tiende a generalizar suavemente cerca del punto de entrenamiento --- pero
+es una limitación metodológica a tener en cuenta al interpretar la Tabla~5.2 como una
+política óptima verificada en todo el horizonte, y no solo en $t=T_{\mathrm{horizon}}/2$.
+\end{quotation}
+
+La interfaz muestra en vivo, época a época, la pérdida social y el arrepentimiento total
+agregado (\pyvar{progress\_bar}, \pyvar{status\_text}), y al finalizar reporta el tiempo total
+de entrenamiento en milisegundos.
+
+% =====================================================================
+\section{El bucle de simulación: \texttt{for t in range(T\_horizon)}}\label{sec:loop}
+% =====================================================================
+
+Una vez entrenada la red, se instancian \pyvar{env = KidnappingEnvironment(\allowbreak T\_mad,
+lambda\_4)} y \pyvar{mdg = MDGLayer(\allowbreak T0, c\_bar, eta\_cal)}, y arranca el bucle que sí
+varía $\mu_t$ y $t$ período a período, produciendo una fila del DataFrame final por iteración.
+
+\subsection{Paso 1: Filtro de madurez}
+
+\begin{equation}
+M(t) = \min\left\{1,\ \left(\frac{t}{T_{\mathrm{mad}}}\right)^2\right\}
+\end{equation}
+Multiplicador que escala las intensidades de riesgo (paso~8) desde 0 hasta 1 a medida que el
+caso ``madura'' operativamente; alcanza su tope de 1 cuando $t \geq T_{\mathrm{mad}}$.
+
+\subsection{Paso 2: Entropía y precisión de la creencia}
+
+\begin{align}
+H(\mu_t) &= -\sum_\theta \mu_t(\theta)\ln\mu_t(\theta), \qquad
+H(\mu_0) = -\sum_\theta \mu_0(\theta)\ln\mu_0(\theta) \\
+\iota_t &= \max_\theta \mu_t(\theta), \qquad \hat{\theta}_t = \operatorname*{arg\,max}_\theta \mu_t(\theta)
+\end{align}
+
+\subsection{Paso 3: Temperatura MDG (con escala $T_0$)}
+
+\begin{equation}
+T_t = T_0 \cdot \max\left\{ \frac{H(\mu_t)}{H(\mu_0)}\, e^{-\eta_{\mathrm{cal}}\, t},\; \underline{c} \right\}
+\end{equation}
+A diferencia de una versión previa (donde el piso $\underline{c}$ actuaba directamente sobre
+la temperatura sin escala), aquí la temperatura inicial $T_0$ multiplica todo el término,
+permitiendo calibrar tanto el nivel base de ruido MDG como su piso asintótico.
+
+\subsection{Paso 4: Inferencia de política vía la red entrenada}
+
+\begin{equation}
+(\alpha_t^\ast, \gamma_t^\ast) = \pyvar{net}\bigl(\mu_t(DC),\mu_t(PAR),\mu_t(ELN),\mu_t(FARC),\theta_F,\theta_V,\, t/150\bigr)
+\end{equation}
+evaluado con \pyvar{torch.no\_grad()} (inferencia pura, sin retropropagación). Este paso
+reemplaza por completo al solver cuadrático analítico de versiones anteriores: la política
+óptima del Estado en cada período es ahora una \emph{forward pass} de la red ya entrenada en
+\S\ref{sec:training}.
+
+\subsection{Paso 5: Rescate vs.\ Negociación}
+
+\begin{align}
+p_{\mathrm{surv}} &= \frac{1}{1+\exp\bigl(-(\mathrm{alpha\_leth}(\theta_K^\ast) + 1{,}2\,\iota_t\,\mathbf{1}\{\hat{\theta}_t=\theta_K^\ast\})\bigr)} \\
+V_{\mathrm{rescate}} &= \omega_k(1-p_{\mathrm{surv}}) + 1{,}5\,(\gamma_t^\ast)^2 \\
+V_{\mathrm{negociar}} &= \omega_p R_{\mathrm{base}}(1-\alpha_t^\ast) + \omega_k\,\lambda_{\mathrm{kill}}(\theta_K^\ast)(1+\gamma_t^\ast)
+\end{align}
+Si $V_{\mathrm{rescate}} < V_{\mathrm{negociar}}$: $a_S^\ast=$ ``Rescue'', forzando
+$\alpha_t^\ast \leftarrow 0$, $\gamma_t^\ast \leftarrow 0{,}9$; en otro caso, $a_S^\ast=$
+``Negotiate''. La probabilidad de supervivencia $p_{\mathrm{surv}}$ ahora se modela con una
+función logística explícita (antes era una expresión condicional \emph{ad hoc}).
+
+\subsection{Paso 6: Mejor respuesta del secuestrador real y de la familia}
+
+Idéntica en forma a versiones anteriores, evaluada con los parámetros del tipo verdadero
+$\theta_K^\ast$ y las políticas $(\alpha_t^\ast,\gamma_t^\ast)$ recién inferidas:
+\begin{align}
+u_{\mathrm{cont}} &= \lambda_{\mathrm{pay}}(\theta_K^\ast)\,R_{\mathrm{base}}(1-\alpha_t^\ast) - c_\gamma(\theta_K^\ast)\,\gamma_t^\ast, &
+u_{\mathrm{kill}} &= -\mathrm{alpha\_leth}(\theta_K^\ast), \\
+u_{\mathrm{rel}} &= -k_{\mathrm{rel}}(\theta_K^\ast), &
+a_K^\ast &= \operatorname*{arg\,max}\{u_{\mathrm{cont}},u_{\mathrm{kill}},u_{\mathrm{rel}}\}
+\end{align}
+\begin{equation}
+u_{\mathrm{coop}} = 0{,}8\,R_{\mathrm{base}} - 0{,}5\,\gamma_t^\ast, \qquad
+u_{\mathrm{col}} = 0{,}5\,R_{\mathrm{base}} - 2{,}0\,\alpha_t^\ast, \qquad
+a_F^\ast = \begin{cases}\text{Cooperate} & u_{\mathrm{coop}}>u_{\mathrm{col}} \\ \text{Collude} & \text{en otro caso}\end{cases}
+\end{equation}
+
+\subsection{Paso 7: Sorteo MDG}
+
+\pyvar{mdg.sample\_action(\allowbreak intent, alternatives, temp\_t, rng)} implementa la misma ley logit
+de implementación MDG que en versiones anteriores, ahora encapsulada como método de
+\pyvar{MDGLayer}:
+\begin{equation}
+\mathbb{P}(\tilde{a}=a \mid a^\ast, T_t) = \frac{\exp(\mathbf{1}\{a=a^\ast\}/T_t)}{\sum_{a'} \exp(\mathbf{1}\{a'=a^\ast\}/T_t)}
+\end{equation}
+aplicada independientemente a las tres decisiones del Estado, el secuestrador y la familia,
+produciendo $\tilde{a}_S, \tilde{a}_K, \tilde{a}_F$ (acciones \emph{realizadas}) frente a
+$a_S^\ast, a_K^\ast, a_F^\ast$ (acciones \emph{intencionadas}).
+
+\subsection{Paso 8: Riesgos en competencia con filtro de madurez}
+
+\pyvar{env.compute\_cox\_hazards(\allowbreak alpha, gamma, theta, t)} calcula, para el tipo dado:
+\begin{align}
+\lambda_{\mathrm{pago}}(\theta) &= \lambda_{\mathrm{pay}}(\theta)\,(1-\alpha)\,M(t), &
+\lambda_{\mathrm{muerte}}(\theta) &= \lambda_{\mathrm{kill}}(\theta)\,(1+\gamma)\,M(t), \\
+\lambda_{\mathrm{rescate}}(\theta) &= \lambda_{\mathrm{res}}(\theta)\,(1+\gamma)\,M(t), &
+\lambda_{\text{liberación}} &= \lambda_4 \quad \text{(constante, sin madurez)}
+\end{align}
+A diferencia de versiones previas, las tres primeras tasas ahora se escalan por el filtro de
+madurez $M(t)$ (\S\ref{sec:loop}, Paso~1): al inicio del caso ($t \ll T_{\mathrm{mad}}$) todas
+las intensidades de resolución se atenúan, reflejando que la organización aún no ha
+``madurado'' operativamente; la tasa de liberación exógena $\lambda_4$ no se ve afectada. Con
+$p_{\mathrm{Cont}} = \exp(-\sum_j \lambda_j)$, se sortea si el caso absorbe (termina) este
+período, igual que en versiones anteriores.
+
+\subsection{Paso 9: Actualización bayesiana de creencias}
+
+Idéntica en estructura a versiones previas, mas ahora usando
+\pyvar{env.compute\_cox\_hazards(...)} evaluado en cada tipo candidato $\theta$ para calcular
+la verosimilitud:
+\begin{equation}
+\mu_{t+1}(\theta) = \frac{\mu_t(\theta)\,\mathrm{lik}_t(\theta)}{\sum_{\theta'}\mu_t(\theta')\,\mathrm{lik}_t(\theta')},
+\qquad
+\mathrm{lik}_t(\theta) = \begin{cases} p_{\mathrm{Cont}}(\theta) & \text{outcome}=\text{Continue} \\ \lambda_{\mathrm{outcome}}(\theta) & \text{en otro caso}\end{cases}
+\end{equation}
+con reinicio a la uniforme $0{,}25$ si el denominador colapsa numéricamente ($<10^{-12}$).
+
+\subsection{Paso 10: Restricciones ex-post --- y una particularidad en $IC^K$}
+
+Se registran tres indicadores de cumplimiento:
+\begin{itemize}
+\item $IR^K$: $u_{\mathrm{cont}} \geq -1{,}5$ (el umbral cambió de $-1$ a $-1{,}5$ respecto a
+versiones anteriores).
+\item $IR^F$: $u_{\mathrm{coop}} \geq u_{\mathrm{col}}$.
+\item $IC^K$: calculado mediante
+\begin{lstlisting}
+u_lying_max = -1e9
+for other in TIPOS_SECUESTRADOR:
+    if other == tipo_real:
+        continue
+    u_lying_max = max(u_lying_max,
+        p_opt["lambda_pay"] * R_base * (1 - alpha_opt) - p_opt["c_gamma"] * gamma_opt)
+ic_k_ok = u_cont >= u_lying_max
+\end{lstlisting}
+\end{itemize}
+
+\begin{quotation}
+\noindent\textbf{Particularidad en la verificación de $IC^K$.} El comentario en el código
+señala expresamente que esta expresión está ``simplificada para evaluación''. En efecto,
+\pyvar{p\_opt} es siempre \pyvar{PARAMS\_ORGANIZACION[tipo\_real]} --- los parámetros del tipo
+\emph{verdadero} --- independientemente de la variable de bucle \pyvar{other}; la expresión
+dentro del \pyvar{max} no depende de \pyvar{other} en absoluto y es idéntica, término a
+término, a la definición de \pyvar{u\_cont} ya calculada arriba. En consecuencia,
+\pyvar{u\_lying\_max} termina siendo exactamente igual a \pyvar{u\_cont}, y
+\pyvar{ic\_k\_ok = (u\_cont >= u\_cont)} es \textbf{siempre verdadero} por construcción, sin
+importar la política inferida. A diferencia del \emph{regret} genuino calculado durante el
+entrenamiento (\S\ref{sec:training}, que sí evalúa la red en reportes contrafactuales), esta
+verificación ex-post dentro del bucle de simulación es un marcador de posición (\emph{placeholder})
+que no prueba nada sobre incentivos --- la columna \pyvar{IC\_K} en la Tabla~5.2 mostrará
+siempre ``Complies''.
+\end{quotation}
+
+Finalmente se agrega la fila al registro, con \pyvar{Calculo\_ms} midiendo únicamente el
+tiempo de la inferencia \pyvar{net(state\_in)} del Paso~4 (no el resto de los cálculos del
+período).
+
+% =====================================================================
+\section{Generación de la Tabla 5.2}\label{sec:tabla52}
+% =====================================================================
+
+\begin{enumerate}
+\item \pyvar{df\_sim = pd.DataFrame(\allowbreak t\_records)} --- una fila por período simulado
+($T_{\mathrm{horizon}}$ filas en total).
+\item \textbf{Métricas de desempeño} (tarjetas superiores de la pestaña 2): tiempo total de
+simulación, tiempo promedio de inferencia por paso, y el factor de aceleración
+(\emph{speedup}) respecto a un límite de referencia de 2 minutos:
+\begin{equation}
+\text{Speedup} = \frac{120\,000\ \text{ms}}{\text{tiempo total (ms)}}
+\end{equation}
+\item \textbf{Formato de 3 decimales}: las columnas de creencias e instrumentos
+($\mu_{DC},\mu_{PAR},\mu_{ELN},\mu_{FARC},\alpha^\ast,\gamma^\ast$) se formatean como cadenas
+de texto con \pyvar{f"\{x:,.3f\}"}.
+\item \textbf{Renombrado descriptivo} de columnas (p.\,ej.\ \pyvar{alpha*} $\to$
+``Interdiction ($\alpha^\ast$)'', \pyvar{mu\_DC} $\to$ ``Belief DC ($\mu_{DC}$)'').
+\item \textbf{Transposición}: \pyvar{df\_t52\_display.set\_index(\allowbreak "Period (t)").T} --- a
+diferencia de versiones previas donde los períodos eran \emph{filas}, ahora cada período es
+una \textbf{columna} y cada variable (creencias, instrumentos, acciones) es una \textbf{fila}.
+Se muestran las primeras 15 columnas (\pyvar{.iloc[:, :15]}), es decir, los primeros 15
+períodos, igual que antes, pero en formato transpuesto.
+\end{enumerate}
+
+\begin{quotation}
+\noindent\textbf{Determinismo.} La tabla se reconstruye por completo en cada \emph{rerun} de
+la app (incluyendo un nuevo entrenamiento de la red, \S\ref{sec:training}). Con
+\texttt{rng = np.random.default\_rng(1007)} fijo para el bucle de simulación, la parte
+estocástica es reproducible; sin embargo, dado que \pyvar{StateNetwork} se reinicializa con
+pesos aleatorios de PyTorch (sin semilla fija establecida explícitamente para
+\pyvar{torch}) y se re-entrena desde cero en cada \emph{rerun}, la política
+$(\alpha_t^\ast,\gamma_t^\ast)$ --- y por tanto la tabla completa --- \textbf{puede variar
+ligeramente entre ejecuciones} con los mismos inputs, a diferencia del comportamiento
+enteramente determinístico del solver analítico de versiones anteriores.
+\end{quotation}
+
+% =====================================================================
+\section{Optimización dinámica del Estado en $\tau=1$ (pestaña 3, botón \emph{Run State Optimization})}\label{sec:tau1-opt}
+% =====================================================================
+
+Esta sección documenta el mecanismo realmente activo hoy en \pyfile{app\_DL.py}, disparado por
+el botón \emph{``Run State Optimization ($\tau=1$, dynamic)''} en la parte superior de la
+pestaña 3. Toda la lógica de optimización vive en el script independiente
+\pyfile{train\_captor\_value\_net.py} (función \pyvar{solve\_state\_problem}), que
+\pyfile{app\_DL.py} importa directamente; la red de valor se entrena \emph{offline} (no dentro
+de la sesión de Streamlit) y se carga ya entrenada desde \pyfile{captor\_value\_net\_T10.pt}.
+
+\subsection{El problema formal}
+
+Para $\tau=1$, dado $\mu_1$ (ya calculado vía la regla de Bayes de la Sección~\S\ref{sec:bayes-mu1}
+más abajo), el Estado resuelve, por rama $b\in\{\text{Rescate},\text{Negociar}\}$:
+\begin{equation}
+\label{eq:tau1-objective}
+V_1^b(\mu_1) = \min_{(\alpha,\gamma)\,\in\,[0,1]^2 \,:\, \Gamma_1(\mu_1)}
+\left\{\sum_\theta \mu_1(\theta)\,L_1^b(\theta,\alpha,\gamma) + \Pi^S_b(\alpha,\gamma;\mu_1) -
+\psi_H\,\Delta H_1(\alpha,\gamma)\right\},
+\end{equation}
+resuelto por \textbf{búsqueda exhaustiva en malla} $101\times101$ sobre $(\alpha,\gamma)$
+(\pyvar{GA, GG = np.meshgrid(np.linspace(0,1,101), ...)}), \textbf{no} por descenso de
+gradiente ni por una red que produzca $(\alpha^\ast,\gamma^\ast)$ directamente --- la red
+entrenada solo aproxima el valor de continuación $\mathbb{E}[V_2]$ (ec.~\ref{eq:v-cont-net}
+más abajo), no la política. Después de resolver ambas ramas, $a_1^{S\ast}=\arg\min\{V_1^R,V_1^N\}$.
+
+\subsubsection*{Términos de $L_1^b$}
+\begin{align}
+L_1^R(\theta,\alpha,\gamma) &= \omega_k\bigl(1-\tilde p_{surv}(\theta)\bigr) + C_{ops}(\gamma,\alpha;\theta), \label{eq:l1r}\\
+L_1^N(\theta,\alpha,\gamma) &= \omega_p R(1-\alpha) + \omega_k\,\bar h_2(\theta,\alpha,\gamma) + C_{maint}(\gamma,\alpha;\theta), \label{eq:l1n}
+\end{align}
+con $C_{ops}(\gamma,\alpha;\theta)=c_0+c_1\gamma+\tfrac{c_2}{2}\gamma^2+c_3\alpha+\tfrac{c_4}{2}\alpha^2+c_5\gamma\alpha$
+(análogo para $C_{maint}$ con $m_0,\ldots,m_5$); los coeficientes son específicos por tipo y
+\textbf{recalibrados} en \pyfile{app\_DL.py}/\pyfile{train\_captor\_value\_net.py} respecto a
+los valores crudos de \pyfile{app.py} (véase \S\ref{sec:tau1-limitaciones}, ítem sobre
+$C_{ops}/C_{maint}$).
+
+\subsection{Probabilidades como funciones de $(\alpha,\gamma)$}
+
+Todas se recalculan, vectorizadas sobre la malla, en cada llamada al oráculo (función
+\pyvar{outcome\_probs\_grid}, \pyvar{p\_cap\_eff\_grid}, \pyvar{p\_pay\_eff\_grid} de
+\pyfile{train\_captor\_value\_net.py}):
+\begin{align}
+p_{det}(\theta,\alpha,\gamma) &= \Lambda\bigl(\eta_0(\theta)+\eta_1\alpha+\eta_2\gamma\bigr), \\
+idx_j(\theta,\alpha,\gamma) &= \beta_{K,j}(\theta)+\beta_z\pm\zeta_\alpha(\theta)\alpha\pm\zeta_\gamma(\theta)\gamma\mp\zeta_d\,p_{det}, \quad j\in\{\text{pago,muerte,rescate}\}, \\
+\lambda_j &= M_\tau\cdot\lambda_{j,0}\cdot e^{idx_j}, \qquad \bar h_j = \bigl(1-e^{-\sum_j\lambda_j}\bigr)\cdot\frac{\lambda_j}{\sum_j\lambda_j}, \\
+\tilde p_{cap}(\theta,\alpha,\gamma) &= p_{rescue}\,\Lambda(\cdots)+p_{nego}\,\Lambda(\cdots) \quad\text{(Block F)}, \\
+\tilde p_{pay}(\theta,\alpha,\gamma) &= p_{coop}\,h_1^{coop}+p_{col}\,h_1^{pay} \quad\text{(ramas hipotéticas ``coop''/``pay'')}.
+\end{align}
+$M_\tau$ se recalcula en cada $\tau$ vía $M_\tau=T_0\max\{H_{ratio}\,e^{-\eta_{cal}\tau},\underline c\}$,
+usando $\tau$ directamente (no la variable \pyvar{t\_days} de la pestaña 1, que aquí no se
+utiliza para este cómputo). $\Delta H_1(\alpha,\gamma)$ reutiliza exactamente el mecanismo de
+Bayes de 10 ramas $(m,d)$ ya descrito para la fila $\Delta H$ de $\tau=0$
+(\S\ref{sec:tabla52}), evaluado en cada uno de los $10{,}201$ puntos de la malla.
+
+\subsection{Las tres restricciones (conjunto factible $\Gamma_1(\mu_1)$)}
+
+Siguiendo Bernal\_H.tex (eq:gamma-factible) y Appendix\_3.tex (Definición del conjunto
+factible, Teorema de implementabilidad condicional), las tres condiciones se imponen
+\textbf{durante} la búsqueda (máscara booleana sobre la malla, con $+\infty$ en los puntos
+infactibles), no como verificación posterior:
+\begin{align}
+IC^K:&\quad \min_{\theta_j}\ \sum_{\theta_i}\mu_1(\theta_i)\bigl[\text{mejor}(\theta_i)-U_{b(\theta_j)}(\theta_i)\bigr] \ge 0, \\
+IR^K:&\quad \sum_\theta\mu_1(\theta)\bigl[U_{rel}(\theta)-\max\{V_{cont}(\theta),U_{kill}(\theta)\}\bigr]\ge 0, \\
+IR^F:&\quad U_{coop}(\theta_F)\ge U_{col}(\theta_F), \quad U_{coop}=-\mathbb{E}_\mu[\tilde p_{pay}]R-e_\tau(\gamma,\theta_F),\ \ U_{col}=-\mathbb{E}_\mu[\tilde p_{pay}]R(1+\varrho).
+\end{align}
+$\Gamma_1(\mu_1) = IC^K \wedge IR^K \wedge IR^F$; el \pyvar{argmin} de la ec.~\eqref{eq:tau1-objective}
+solo puede caer en un punto con $\Gamma_1=\text{verdadero}$.
+
+\subsection{La red de valor entrenada ($\hat V$)}
+
+\begin{equation}
+\label{eq:v-cont-net}
+V_{cont}(\theta,\alpha,\gamma) = \tilde p_{pay}R(1-\alpha) - C_\tau(\gamma,\theta) - \tilde p_{cap}F_{cap}(\theta) +
+\tilde\beta(\theta)\bigl(1-\tilde p_{cap}\bigr)\cdot\underbrace{\sum_{m,d}\Pr(m,d\mid\mu_\tau,\alpha,\gamma)\,\hat V\bigl(\theta,\mu_{\tau+1}^{m,d},\tau{+}1\bigr)}_{\mathbb{E}[V_{\tau+1}]}.
+\end{equation}
+$\hat V$ es un MLP (\pyvar{CaptorValueNet}, 2 capas ocultas de 96 neuronas, activación
+\pyvar{Tanh}) con \textbf{34 variables de entrada}: $\mu$ (4), $\tau$ normalizado (1),
+$\theta$ \emph{one-hot} (4), $R$ (1), $\tilde\beta(\theta)$ (4), zona (5, \emph{one-hot}),
+riqueza (2), víctima (2), tipo de Estado (2), $T_{mad}$, $T_0$, $\eta_{cal}$, $\underline c$,
+$H_{ratio}$, $\lambda_4$, $\eta_1$, $\eta_2$, $\beta_R$ (9 escalares) --- todos los parámetros
+ajustables de la pestaña 1 salvo los que se vuelven endógenos en la recursión
+(\pyvar{a\_S\_star}, \pyvar{a\_K\_star}, \pyvar{a\_F\_star}, \pyvar{iota\_t},
+\pyvar{correct\_id}, \pyvar{t\_days}; véase \S\ref{sec:tau1-limitaciones}).
+
+Se entrenó por \emph{backward induction} secuencial, $\tau=10\to1$: en cada nivel, $2{,}000$
+puntos $\mu$ muestreados vía simulación Monte Carlo (con los 34 parámetros también
+muestreados dentro de sus rangos de \emph{slider}) se resuelven con el oráculo
+(usando la red \textbf{ya entrenada y congelada} de $\tau+1$, o la condición terminal
+$\hat V\equiv 0$ en $\tau=T_{max}+1$), generando $V_\tau(\theta\mid\mu)=\max\{U_{rel},U_{kill},V_{cont}\}$
+como etiqueta de regresión (pérdida MSE, Adam). No hay punto fijo ni iteración externa: cada
+nivel usa exclusivamente el nivel siguiente, ya resuelto.
+
+\begin{quotation}
+\noindent\textbf{Corrida realizada.} $T=10$, $N=2{,}000$ puntos por nivel, $200$ épocas de
+ajuste por nivel. Tiempo total de entrenamiento: $\approx 32$ minutos (offline, una sola vez;
+no se repite en cada sesión de la app salvo que cambien los 34 parámetros estructurales usados
+para generar las etiquetas). Pérdida final por nivel: de $0.0069$ ($\tau=10$) a $0.0009$
+($\tau=1$), decreciente y estable en los 10 niveles.
+\end{quotation}
+
+\subsection{Cálculo de cada variable de la Tabla~5.2 en $\tau=1$}
+
+\begin{description}[leftmargin=1.4cm, style=nextline]
+\item[$\mu_1(\theta)$] Regla de Bayes de registro completo (Bernal\_H.tex eq:bayes-update):
+$\mu_1(\theta)\propto\mu_0(\theta)\cdot\mathcal{L}_{I,K}(\theta)\cdot\Pr(m\mid\theta)\cdot\Pr(d\mid\theta)\cdot\mathcal{L}_{C}(\theta\mid V_t)$,
+usando $m$ y $d$ \textbf{realizados} (botones ``Draw Physical Outcome'' y ``Draw Detection
+Signal'' de la pestaña 1). Requisito previo al botón de optimización.\label{sec:bayes-mu1}
+\item[$a_1^{S\ast},\ \alpha_1^\ast,\ \gamma_1^\ast$] Salida directa de \pyvar{solve\_state\_problem}
+(ec.~\ref{eq:tau1-objective}), comparando $V_1^R$ vs.\ $V_1^N$ ya restringidos por $\Gamma_1$.
+\item[$H(\mu_1)$] $-\sum_\theta\mu_1(\theta)\ln\mu_1(\theta)$, calculado directamente de $\mu_1$
+(no requiere la red).
+\item[$\Delta H$ Estado ($\tau=1$)] $\Delta H_1$ evaluado en el punto $(\alpha_1^\ast,\gamma_1^\ast)$
+ya encontrado (no en toda la malla; se extrae del mismo arreglo usado para restar $-\psi_H\Delta H_1$
+del objetivo).
+\item[$\Gamma_t(\mu_t)$ bajo EV ($\tau=1$)] El booleano \pyvar{feasible} devuelto por el
+oráculo: verdadero si \emph{algún} punto de la malla satisface $IC^K\wedge IR^K\wedge IR^F$
+(en cuyo caso el punto elegido, por construcción, lo satisface); falso si $\Gamma_1=\emptyset$
+en toda la malla.
+\item[$IR^K(\theta_K)$ tipo verdadero ($\tau=1$)] No es la versión ponderada por $\mu_1$ usada
+en $\Gamma_1$: se recalcula específicamente para el tipo verdadero (\pyvar{cov\_perp}),
+$U_{rel}(\theta^\ast)-\max\{V_{cont}(\theta^\ast),U_{kill}(\theta^\ast)\}$, en el mismo punto
+$(\alpha_1^\ast,\gamma_1^\ast)$.
+\item[$\alpha_R^\mu,\gamma_R^\mu,\alpha_N^\mu,\gamma_N^\mu$ ($\tau=1$)] Los mismos 16 benchmarks
+estructurales por tipo (siguiente ítem), reponderados por $\mu_1$ en vez de $\mu_0$:
+$\alpha_R^\mu(\mu_1)=\sum_\theta\mu_1(\theta)\,\alpha_R^{\theta,\ast}$, etc.
+\item[$\gamma_R^{\theta,\ast},\alpha_R^{\theta,\ast},\gamma_N^{\theta,\ast},\alpha_N^{\theta,\ast}$
+(16 filas, $\tau=1$)] Se reportan tras presionar el botón, como argmins \textbf{genuinamente
+recalculados} en $\tau=1$ (no copiados de $\tau=0$): rama rescate,
+$\arg\min_{(\alpha,\gamma)}\{\omega_K(1-p_{surv}(\theta,\theta))+C_{ops}(\gamma,\alpha;\theta)\}$
+usando \pyvar{cvn.p\_surv\_raw}; rama negociación,
+$\arg\min_{(\alpha,\gamma)}\{\omega_P R(1-\alpha)+\omega_K\bar h_2(\alpha,\gamma;\theta,M_{\tau=1})+C_{maint}(\gamma,\alpha;\theta)\}$
+usando \pyvar{cvn.outcome\_probs\_grid} con $M_{\tau=1}=$\pyvar{cvn.m\_t(1,p)} (el filtro de
+maduración específico de $\tau=1$, no el $M_t$ fijo de la pestaña 1). Verificado numéricamente
+que la rama rescate coincide exactamente con $\tau=0$ (invarianza estructural correcta, no
+reutilización), mientras la rama negociación difiere (p.ej.\ $\gamma_N^{PAR,\ast}$: $0.64\to0.61$
+con $\mu_{cal}$ de referencia), confirmando que ahora sí depende de $\tau$.
+\end{description}
+
+\subsection{Limitaciones documentadas explícitamente}\label{sec:tau1-limitaciones}
+
+\begin{itemize}
+\item \textbf{$C_{ops}/C_{maint}$ recalibrados.} Los coeficientes usados (interior, no de
+esquina) son una recalibración propia de esta app, distinta de los valores crudos de
+\pyfile{app.py} --- necesaria para que el óptimo de $(\alpha,\gamma)$ no colapse siempre a
+$(0,0)$ o $(1,0)$ (véase discusión en el historial de cambios de \pyfile{app\_DL.py}).
+\item \textbf{$\varrho$ (prima de colusión) no calibrado en \pyfile{app.py}.} Se fijó
+$\varrho=2.0$ tras encontrar que $\varrho=0$ hace $IR^F$ \textbf{estructuralmente imposible}
+de satisfacer para cualquier $\phi_F,\nu_F>0$ ($U_{coop}-U_{col}=-e_\tau<0$ siempre). $\phi_F,\nu_F,\kappa_F$
+también se recalibraron a la baja por la misma razón.
+\item \textbf{Horizonte truncado en $T=10$}, no $T=100$. La red aproxima el problema de parada
+óptima del Secuestrador solo hasta ese horizonte; escalar a $T=100$ (aprobado como próximo
+paso, pendiente de ejecución) requiere $\approx 9$--$11$ horas de entrenamiento offline con la
+misma configuración ($N=2{,}000$ puntos/nivel).
+\item \textbf{Hallazgo de calibración, no error de código.} Con la calibración verificada
+contra \pyfile{app.py} ($\kappa_{rel}$ bajo frente a $C_\tau$ alto), ``Liberar'' domina a
+``Continuar'' para los 4 tipos incluso con el valor de continuación dinámico ya incorporado
+--- confirmado explorando el mejor caso posible dentro de los rangos de parámetros existentes
+(sin encontrar ningún punto donde ``Continuar'' gane).
+\end{itemize}
+
+% =====================================================================
+\section{Visualizaciones de diagnóstico (pestaña 3)}
+% =====================================================================
+
+\begin{center}
+\footnotesize
+\begin{tabular}{@{}p{3.3cm}p{3.9cm}p{5.1cm}@{}}
+\toprule
+\textbf{Gráfico} & \textbf{Datos graficados} & \textbf{Propósito} \\
+\midrule
+Convergencia de creencias & $\mu_t(\theta)$ para los 4 tipos vs.\ $t$; línea vertical en \pyvar{absorb\_step} & Verificar si el Estado converge a identificar $\theta_K^\ast$ antes de la absorción \\
+Trayectoria de instrumentos & $\alpha_t^\ast,\gamma_t^\ast$ vs.\ $t$ & Evolución de interdicción y presión, ahora inferidas por la red \\
+Incertidumbre y precisión & $H(\mu_t),\ \iota_t$ vs.\ $t$ & Entropía (incertidumbre) vs.\ precisión (confianza) \\
+Factibilidad de restricciones & $IC^K, IR^F$ (1/0) vs.\ $t$ & Verificación ex-post (nota: $IC^K$ siempre 1, \S\ref{sec:loop}) \\
+\textbf{Convergencia de RegretNet} \emph{(nuevo)} & Pérdida social y arrepentimiento total agregado vs.\ época de entrenamiento & Diagnóstico de la fase de entrenamiento (\S\ref{sec:training}): verificar que la red efectivamente reduce pérdida y arrepentimiento \\
+\bottomrule
+\end{tabular}
+\normalsize
+\end{center}
+
+% =====================================================================
+\section{Diagrama de flujo resumen}
+% =====================================================================
+
+\begin{description}[leftmargin=1.6cm, style=nextline]
+\item[Entrada] Sidebar (escenario, $T$, $\psi_H$, $\underline{c}$, calibración, hiperparámetros RegretNet) $\rightarrow$ priors (fijos / manuales / \emph{model-driven} vía logit) $\rightarrow$ $\mu_0$ normalizado.
+\item[Entrenamiento RegretNet] (fase única, punto fijo $\mu_0$, $t=T_{\mathrm{horizon}}/2$, repetido por \pyvar{epochs\_training} épocas):
+\begin{enumerate}[label=(\arabic*), nosep]
+\item \emph{Forward}: $\pyvar{StateNetwork}(\mu_0,\theta_F,\theta_V,t) \to (\alpha_h,\gamma_h)$.
+\item Pérdida social ponderada por $\mu_0$ + subsidio de entropía (ec.~\eqref{eq:social-loss}).
+\item $\mathrm{Regret}(\theta) = \max\{0,\ u_{\mathrm{mentira}}(\theta)-u_{\mathrm{honesto}}(\theta)\}$.
+\item $\mathcal{L}_{\mathrm{total}} = \mathcal{L}_{\mathrm{social}} + \sum_\theta \lambda_\theta\,\mathrm{Regret}(\theta) + \tfrac{\rho}{2}\sum_\theta \mathrm{Regret}(\theta)^2$.
+\item Paso de Adam (primal) + $\lambda_\theta \leftarrow \max\{0,\lambda_\theta+\rho\,\mathrm{Regret}(\theta)\}$ (dual).
+\end{enumerate}
+\item[Inicialización del entorno] $\pyvar{env} = \pyvar{KidnappingEnvironment}(T_{\mathrm{mad}},\lambda_4)$; \ $\pyvar{mdg} = \pyvar{MDGLayer}(T_0,\underline{c},\eta_{\mathrm{cal}})$.
+\item[Bucle de simulación] \pyvar{for t in range(T\_horizon)} (aquí $\mu_t$ sí varía período a período):
+\begin{enumerate}[label=(\arabic*), nosep]
+\item $M(t) = \min\{1,(t/T_{\mathrm{mad}})^2\}$.
+\item $H(\mu_t)$, $\iota_t$.
+\item $T_t = T_0 \max\{(H(\mu_t)/H(\mu_0))\,e^{-\eta_{\mathrm{cal}} t},\underline{c}\}$.
+\item $(\alpha_t^\ast,\gamma_t^\ast) = \pyvar{net}(\mu_t,\theta_F,\theta_V,t/150)$ --- inferencia pura.
+\item Rescatar vs.\ Negociar ($p_{\mathrm{surv}}$ logística).
+\item Mejor respuesta del secuestrador real y de la familia.
+\item Sorteo MDG (\pyvar{mdg.sample\_action}).
+\item Riesgos en competencia con $M(t)$ $\to$ outcome / absorción.
+\item Actualización bayesiana de $\mu_t$.
+\item $IR^K$, $IR^F$, $IC^K$ (\emph{placeholder}, siempre verdadero) $\to$ se registra la fila.
+\end{enumerate}
+\item[Salida] $\pyvar{df\_sim}$ ($T_{\mathrm{horizon}}$ filas) $\to$ Tabla~5.2 transpuesta (primeros 15 períodos) $\to$ gráficos de diagnóstico + curva de convergencia de RegretNet (pestaña 3).
+\end{description}
+
+\end{document}

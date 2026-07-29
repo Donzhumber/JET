@@ -1,0 +1,8 @@
+[server]
+# Desactivar el monitor de archivos para carpetas de nube (OneDrive) para evitar latencia extrema y escaneo constante de archivos
+fileWatcherType = "none"
+
+# Optimizar la velocidad de la interfaz
+headless = true
+enableCORS = false
+enableXsrfProtection = false
