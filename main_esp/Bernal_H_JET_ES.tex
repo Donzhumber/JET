@@ -999,10 +999,10 @@ El MNL y el modelo de Cox conectan la evidencia microeconómica con la distribuc
 
 \section{Calibración del mecanismo y simulaciones}\label{sec:calibracion}
 \normalfont\normalsize
-Esta sección calibra el mecanismo especializado de la Sección~\ref{sec:application} en dos episodios simulados de horizonte finito, manteniendo fija la arquitectura general de la Sección~\ref{sec:model}. El ejercicio combina priors y diagnósticos macro y microeconométricos para estudiar cuatro objetos: la evolución de las creencias $\mu_\tau(\theta)$, las señales observadas por el Estado, la respuesta de los instrumentos $(\alpha_t,\gamma_t)$, y el cumplimiento de las restricciones IR e IC. El \emph{Escenario~I} corresponde al ELN, con $\theta_K^\ast=\mathrm{ELN}$, Estado laxo, familia de baja riqueza, víctima pública, y localización Caribe; el \emph{Escenario~II} corresponde al PAR, con $\theta_K^\ast=\mathrm{PAR}$, Estado laxo, familia de alta riqueza, víctima privada, y localización Oriente-Selva. Ambos se simulan sobre un horizonte fijo $\bar{T}=150$ períodos (un parámetro de calibración distinto del tiempo de parada endógeno $\tau$ definido en~\eqref{eq:stopping-time}), y la política óptima se calcula a partir de la minimización del costo social del Estado. En el orden $(\mathrm{DC},\mathrm{PAR},\mathrm{ELN},\mathrm{FARC})$, los priors iniciales son $\mu_0^{\mathrm{ELN}}=(0.25,0.35,0.05,0.35)$ y $\mu_0^{\mathrm{PAR}}=(0.55,0.05,0.35,0.05)$. En las figuras, la barra gris marca el tiempo de parada realizado $\tau$ (el primer período con $m_\tau\in\mathcal{M}_{\mathrm{term}}$); la trayectoria posterior a esa barra es una extensión contrafactual bajo un estado absorbente (la ley del mecanismo condicionada a la no absorción) que ilustra la dinámica de aprendizaje e identificación independientemente del momento de cierre, sin constituir una trayectoria real de episodio.
+Esta sección calibra el mecanismo especializado de la Sección~\ref{sec:application} en cuatro episodios simulados de horizonte finito, manteniendo fija la arquitectura general de la Sección~\ref{sec:model}. El ejercicio combina priors y diagnósticos microeconométricos para estudiar cuatro objetos: la evolución de las creencias $\mu_t(\theta)$, las señales observadas por el Estado, la respuesta de los instrumentos $(\alpha_t,\gamma_t)$, y el cumplimiento de las restricciones IR e IC. El \emph{Escenario~I} corresponde a DC (delincuencia común), con $\theta_K^\ast=\mathrm{DC}$, Estado laxo, familia de alta riqueza, víctima privada, y localización Metrópoli; el \emph{Escenario~II} corresponde a PAR, con $\theta_K^\ast=\mathrm{PAR}$, Estado estricto, familia de riqueza estándar, víctima pública, y localización Caribe; el \emph{Escenario~III} corresponde a ELN, con $\theta_K^\ast=\mathrm{ELN}$, Estado estricto, familia de alta riqueza, víctima privada, y localización Oriente-Selva; y el \emph{Escenario~IV} corresponde a FARC, con $\theta_K^\ast=\mathrm{FARC}$, Estado laxo, familia de alta riqueza, víctima pública, y localización Pacífico / Zona Roja. Ambos se simulan sobre un horizonte fijo $\bar{T}=150$ períodos (un parámetro de calibración distinto del tiempo de parada endógeno $\tau$ definido en~\eqref{eq:stopping-time}), y la política óptima se calcula a partir de la minimización del costo social del Estado. En el orden $(\mathrm{DC},\mathrm{PAR},\mathrm{ELN},\mathrm{FARC})$, los priors iniciales son $\mu_0^{\mathrm{DC}}=(0.35,0.35,0.15,0.15)$, $\mu_0^{\mathrm{PAR}}=(0.15,0.15,0.25,0.45)$, $\mu_0^{\mathrm{ELN}}=(0.05,0.35,0.25,0.35)$, y $\mu_0^{\mathrm{FARC}}=(0.35,0.35,0.15,0.15)$. En las figuras, la barra gris marca el tiempo de parada realizado $\tau$ (el primer período con $m_\tau\in\mathcal{M}_{\mathrm{term}}$); la trayectoria posterior a esa barra es una extensión contrafactual bajo un estado absorbente (la ley del mecanismo condicionada a la no absorción) que ilustra la dinámica de aprendizaje e identificación independientemente del momento de cierre, sin constituir una trayectoria real de episodio.
 
 \paragraph{Qué buscan mostrar las simulaciones}
-Respecto a una política puramente miope que ignora $-\psi_H\Delta H_t$, la regla calibrada internaliza el subsidio informacional y reasigna $(\alpha_t,\gamma_t)$ hacia instrumentos que separan verosimilitudes. Los ejercicios ELN y PAR ilustran así tres implicaciones operativas de la teoría: (i) concentración posterior en horizonte finito en la dirección predicha por el Teorema~\ref{thm:posterior-consistency}; (ii) actualización con soporte completo a lo largo de la senda habilitada por el MDG; y (iii) cumplimiento ex-post de $IC^K$, $IR^K$ e $IR^F$ bajo la lógica de implementabilidad del Teorema~\ref{thm:ebp-implementabilidad}. No afirman la identificación asintótica sobre $\mathcal{T}$, que permanece como enunciado teórico de límite.
+Respecto a una política puramente miope que ignora $-\psi_H\Delta H_t$, la regla calibrada internaliza el subsidio informacional y reasigna $(\alpha_t,\gamma_t)$ hacia instrumentos que separan verosimilitudes. Los ejercicios DC, PAR, ELN y FARC ilustran así tres implicaciones operativas de la teoría: (i) concentración posterior en horizonte finito en la dirección predicha por el Teorema~\ref{thm:posterior-consistency}; (ii) actualización con soporte completo a lo largo de la senda habilitada por el MDG; y (iii) cumplimiento ex-post de $IC^K$, $IR^K$ e $IR^F$ bajo la lógica de implementabilidad del Teorema~\ref{thm:ebp-implementabilidad}. No afirman la identificación asintótica sobre $\mathcal{T}$, que permanece como enunciado teórico de límite.
 
 
 \begin{figure}[H]
@@ -1010,95 +1010,155 @@ Respecto a una política puramente miope que ignora $-\psi_H\Delta H_t$, la regl
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calbeliefheight}{Fig_11a.pdf}
-  \caption{Escenario I: ELN}
+  \caption{Escenario I: DC}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calbeliefheight}{Fig_11b.pdf}
   \caption{Escenario II: PAR}
 \end{subfigure}
-\caption{Creencias bayesianas de cada tipo $\mu_\tau(\theta)$ (ELN: $\tau\leq 150$; PAR: $\tau\leq 150$).}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calbeliefheight}{Fig_11c.pdf}
+  \caption{Escenario III: ELN}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calbeliefheight}{Fig_11d.pdf}
+  \caption{Escenario IV: FARC}
+\end{subfigure}
+\caption{Creencias bayesianas de cada tipo $\mu_\tau(\theta)$ en los diferentes escenarios.}
 \label{fig:cal-eln-par-mu}
-\figurenote{\textit{Nota:} El panel (a) corresponde al Escenario~I: $\theta_K^\ast=\mathrm{ELN}$, $\theta_S$ laxo, $\theta_F$ de baja riqueza, $\theta_V$ público, y $z$ Caribe. El panel (b) corresponde al Escenario~II: $\theta_K^\ast=\mathrm{PAR}$, $\theta_S$ laxo, $\theta_F$ de alta riqueza, $\theta_V$ privado, y $z$ Oriente-Selva. La banda gris marca $\tau^{\mathrm{hyp}}$, el primer período en el que el resultado del mecanismo difiere de la continuación.}
+\figurenote{\textit{Nota:} El panel (a) corresponde al Escenario~I: $\theta_K^\ast=\mathrm{DC}$, $\theta_S$ laxo, $\theta_F$ de alta riqueza, $\theta_V$ privado, y $z$ Metrópoli. El panel (b) corresponde al Escenario~II: $\theta_K^\ast=\mathrm{PAR}$, $\theta_S$ estricto, $\theta_F$ de riqueza estándar, $\theta_V$ público, y $z$ Caribe. El panel (c) corresponde al Escenario~III: $\theta_K^\ast=\mathrm{ELN}$, $\theta_S$ estricto, $\theta_F$ de alta riqueza, $\theta_V$ privado, y $z$ Oriente-Selva. El panel (d) corresponde al Escenario~IV: $\theta_K^\ast=\mathrm{FARC}$, $\theta_S$ laxo, $\theta_F$ de alta riqueza, $\theta_V$ público, y $z$ Pacífico / Zona Roja. La banda gris marca $\tau^{\mathrm{hyp}}$, el primer período en el que el resultado del mecanismo difiere de la continuación.}
 \end{figure}
 \vspace{-8pt}
-El posterior del tipo verdadero permite evaluar la capacidad del mecanismo para separar tipos a partir de la secuencia de señales. En el escenario ELN, reportado en la Figura~\ref{fig:cal-eln-par-mu}, la masa posterior se desplaza gradualmente hacia ELN hasta alcanzar $\mu_{150}(\mathrm{ELN})\approx 1{,}000$; esto implica que el mecanismo acumula identificación incluso en un entorno con menor riqueza familiar y una víctima pública. En PAR, el posterior del tipo verdadero parte de $\mu_0(\mathrm{PAR})=0{,}050$ y alcanza $\mu_{150}(\mathrm{PAR})\approx 1{,}000$; la trayectoria no es monótona en la fase inicial, porque el evento combina señales tempranas compatibles con otros tipos y luego desplaza la masa hacia PAR. Las barras grises marcan el tiempo de parada realizado ($\tau=16$ en ELN, $\tau=5$ en PAR); la extensión contrafactual subsiguiente muestra que la velocidad de aprendizaje y el momento de absorción son objetos distintos del modelo. En conjunto, la figura ilustra el comportamiento a horizonte finito: la masa posterior se desplaza hacia el tipo verdadero a medida que las señales acumulan separación, en la dirección predicha por el Teorema~\ref{thm:posterior-consistency} bajo $\mathcal{T}$, sin constituir evidencia directa del resultado asintótico; la velocidad de convergencia depende del entorno institucional, territorial, y de visibilidad del caso.
+El posterior del tipo verdadero permite evaluar la capacidad del mecanismo para separar tipos a partir de la secuencia de señales. Como se reporta en la Figura~\ref{fig:cal-eln-par-mu}, la masa posterior se desplaza gradualmente hacia el tipo verdadero en los cuatro escenarios, alcanzando $\mu_{150}(\theta_K^\ast)\approx 1{,}000$; esto implica que el mecanismo acumula identificación bajo diferentes niveles de riqueza, regiones y visibilidad. En el Escenario~I (DC) y el Escenario~IV (FARC), la concentración posterior es rápida ($\tau=35$ y $\tau=20$, respectivamente). En el Escenario~II (PAR) y el Escenario~III (ELN), las trayectorias son menos monótonas en la fase inicial, lo que refleja señales tempranas compatibles con tipos alternativos antes de que la masa se desplace definitivamente hacia el verdadero captor. Las barras grises marcan el tiempo de parada realizado ($\tau=35$ en DC, $\tau=105$ en PAR, $\tau=75$ en ELN y $\tau=20$ en FARC); la extensión contrafactual subsiguiente muestra que la velocidad de aprendizaje y el momento de absorción son objetos distintos del modelo. En conjunto, la figura ilustra el comportamiento a horizonte finito: la masa posterior se desplaza hacia el tipo verdadero a medida que las señales acumulan separación, en la dirección predicha por el Teorema~\ref{thm:posterior-consistency} bajo $\mathcal{T}$, sin constituir evidencia directa del resultado asintótico; la velocidad de convergencia depende del entorno institucional, territorial, y de visibilidad del caso.
 
 \begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_12a.pdf}
-  \caption{Escenario I: ELN}
+  \caption{Escenario I: DC}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_12b.pdf}
   \caption{Escenario II: PAR}
 \end{subfigure}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_12c.pdf}
+  \caption{Escenario III: ELN}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_12d.pdf}
+  \caption{Escenario IV: FARC}
+\end{subfigure}
 \caption{Presión operativa $\gamma_t^\ast$ y punto de referencia $\gamma^R$ frente a $\tau$.}
 \label{fig:cal-eln-par-gamma}
-\figurenote{\textit{Nota:} El panel (a) muestra la trayectoria de presión operativa en el Escenario~I (ELN). El panel (b) muestra la trayectoria equivalente en el Escenario~II (PAR). La línea punteada corresponde al punto de referencia de Rescate $\gamma^R$. La banda gris marca $\tau^{\mathrm{hyp}}$.}
+\figurenote{\textit{Nota:} El panel (a) muestra la trayectoria de presión operativa en el Escenario~I (DC). El panel (b) muestra la trayectoria equivalente en el Escenario~II (PAR). El panel (c) muestra el Escenario~III (ELN). El panel (d) muestra el Escenario~IV (FARC). La línea punteada corresponde al punto de referencia de Rescate $\gamma^R$. La banda gris marca $\tau^{\mathrm{hyp}}$.}
 \end{figure}
-La presión operativa óptima permite evaluar cómo ajusta el Estado la intensidad de la intervención a medida que aprende sobre el tipo del captor. La Figura~\ref{fig:cal-eln-par-gamma} compara la trayectoria de $\gamma_t^\ast$ con el punto de referencia de Rescate $\gamma^R$, que toma el valor $\gamma^R=0{,}92$ en ELN y $\gamma^R=0{,}86$ en PAR. En el escenario ELN, $\gamma_t^\ast$ se ubica en promedio alrededor de $\bar\gamma^\ast\approx 0{,}908$ y permanece cercano, aunque por debajo, del punto de referencia de Rescate, consistente con un entorno Caribe y Estado laxo. En PAR, la presión permanece cerca del punto de referencia de Rescate y alcanza $\bar\gamma^\ast\approx 0{,}868$, consistente con un entorno Oriente-Selva y Estado laxo donde la intervención conserva valor incluso cuando el desenlace focal del evento es el pago. En ambos casos, $\gamma_t^\ast$ no replica mecánicamente ni la rama de Rescate ni la de Negociación: el control dual combina la explotación del instrumento y la información esperada, de modo que la serie fluctúa entre puntos de referencia según el riesgo material del episodio y el valor de separar tipos.
+La presión operativa óptima permite evaluar cómo ajusta el Estado la intensidad de la intervención a medida que aprende sobre el tipo del captor. La Figura~\ref{fig:cal-eln-par-gamma} compara la trayectoria de $\gamma_t^\ast$ con el punto de referencia de Rescate $\gamma^R$, que toma el valor $\gamma^R=0{,}23$ en DC, $\gamma^R=0{,}37$ en PAR, $\gamma^R=0{,}50$ en ELN y $\gamma^R=0{,}64$ en FARC. En el Escenario~I (DC), $\gamma_t^\ast$ se ubica en promedio alrededor de $\bar\gamma^\ast\approx 0{,}564$. En el Escenario~II (PAR), la presión alcanza $\bar\gamma^\ast\approx 0{,}662$. En el Escenario~III (ELN), la presión promedio es $\bar\gamma^\ast\approx 0{,}663$, y en el Escenario~IV (FARC) alcanza $\bar\gamma^\ast\approx 0{,}715$. En todos los casos, $\gamma_t^\ast$ no replica mecánicamente ni la rama de Rescate ni la de Negociación: el control dual combina la explotación del instrumento y la información esperada, de modo que la serie fluctúa entre puntos de referencia según el riesgo material del episodio y el valor de separar tipos.
 
-La interdicción financiera óptima resume la intensidad con la que el Estado restringe la capacidad de pago y la coordinación económica durante el episodio. La Figura~\ref{fig:cal-eln-par-alpha} compara la trayectoria de $\alpha_t^\ast$ con el punto de referencia de Rescate $\alpha^R$, que toma el valor $\alpha^R=0{,}90$ en ELN y $\alpha^R=0{,}84$ en PAR. En ELN, $\bar\alpha^\ast\approx 0{,}908$ y el instrumento permanece en niveles elevados, compatible con un caso de víctima pública y baja riqueza donde el bloqueo opera más como contención estratégica que como cierre de una alta capacidad de pago. En PAR, $\bar\alpha^\ast\approx 0{,}901$ y la trayectoria permanece elevada durante gran parte del soporte, indicando que el bloqueo conserva un alto valor estratégico cuando el Estado es laxo, la familia tiene alta riqueza, y la región Oriente-Selva abre espacio para los pagos. Así, $\alpha_t^\ast$ no replica mecánicamente una rama pura: se mueve entre los puntos de referencia de Rescate y Negociación según la información acumulada, la capacidad de pago de la familia, y el valor de inducir separación entre tipos.
+La interdicción financiera óptima resume la intensidad con la que el Estado restringe la capacidad de pago y la coordinación económica durante el episodio. La Figura~\ref{fig:cal-eln-par-alpha} compara la trayectoria de $\alpha_t^\ast$ con el punto de referencia de Rescate $\alpha^R$, que toma el valor $\alpha^R=0{,}18$ en DC, $\alpha^R=0{,}31$ en PAR, $\alpha^R=0{,}45$ en ELN y $\alpha^R=0{,}59$ en FARC. En el Escenario~I (DC), $\bar\alpha^\ast\approx 0{,}896$. En el Escenario~II (PAR), $\bar\alpha^\ast\approx 0{,}730$. En el Escenario~III (ELN), $\bar\alpha^\ast\approx 0{,}737$, y en el Escenario~IV (FARC), $\bar\alpha^\ast\approx 0{,}755$. Así, $\alpha_t^\ast$ no replica mecánicamente una rama pura: se mueve entre los puntos de referencia de Rescate y Negociación según la información acumulada, la capacidad de pago de la familia, y el valor de inducir separación entre tipos.
 
-La precisión posterior, definida como $\iota_t=\max_{\theta\in\ThetaK}\mu_t(\theta)$, permite observar cómo cambia la presión operativa cuando el Estado gana confianza sobre la identidad del tipo verdadero. La Figura~\ref{fig:cal-eln-par-iota-gamma} reordena la simulación sobre el plano $(\iota_t,\gamma_t^\ast)$; las flechas indican el avance de $\tau$ y evitan interpretar las observaciones como una interpolación lineal. En ELN, la precisión posterior aumenta gradualmente mientras la presión operativa permanece alta pero contenida, reflejando aprendizaje sin colapso inmediato hacia una única señal dominante. En PAR, la trayectoria se concentra en una zona de alta presión y precisión creciente, consistente con un episodio en el que la información requiere una ventana más larga antes de resolver la identidad del captor.
+La precisión posterior, definida como $\iota_t=\max_{\theta\in\ThetaK}\mu_t(\theta)$, permite observar cómo cambia la presión operativa cuando el Estado gana confianza sobre la identidad del tipo verdadero. La Figura~\ref{fig:cal-eln-par-iota-gamma} reordena la simulación sobre el plano $(\iota_t,\gamma_t^\ast)$; las flechas indican el avance de $\tau$ y evitan interpretar las observaciones como una interpolación lineal. La trayectoria se concentra en zonas de alta presión y precisión creciente, reflejando aprendizaje sin colapso inmediato hacia una única señal dominante, y mostrando las diferentes dinámicas entre casos.
 \vspace{-4pt}
 \begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_13a.pdf}
-  \caption{Escenario I: ELN}
+  \caption{Escenario I: DC}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_13b.pdf}
   \caption{Escenario II: PAR}
 \end{subfigure}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_13c.pdf}
+  \caption{Escenario III: ELN}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_13d.pdf}
+  \caption{Escenario IV: FARC}
+\end{subfigure}
 \caption{Interdicción financiera $\alpha_t^\ast$ y punto de referencia $\alpha^R$ frente a $\tau$.}
 \label{fig:cal-eln-par-alpha}
-\figurenote{\textit{Nota:} El panel (a) presenta la interdicción financiera óptima en el Escenario~I (ELN). El panel (b) presenta el mismo instrumento en el Escenario~II (PAR). La línea punteada corresponde al punto de referencia de Rescate $\alpha^R$. La banda gris marca $\tau^{\mathrm{hyp}}$.}
+\figurenote{\textit{Note:} El panel (a) presenta la interdicción financiera óptima en el Escenario~I (DC). El panel (b) presenta el Escenario~II (PAR). El panel (c) presenta el Escenario~III (ELN). El panel (d) presenta el Escenario~IV (FARC). La línea punteada corresponde al punto de referencia de Rescate $\alpha^R$. La banda gris marca $\tau^{\mathrm{hyp}}$.}
 \end{figure}
 \vspace{-6pt}
-La interdicción financiera frente a la precisión posterior permite evaluar si el aprendizaje reduce o refuerza la necesidad de restringir la capacidad de pago. En el escenario ELN, reportado en la Figura~\ref{fig:cal-eln-par-iota-alpha}, $\alpha_t^\ast$ permanece alto mientras $\iota_t$ aumenta, indicando que identificar el tipo insurgente no elimina el valor de mantener la interdicción preventiva en un caso de víctima pública y baja riqueza. Algo similar ocurre en PAR: aunque el posterior acumula precisión, $\alpha_t^\ast$ permanece en niveles altos durante gran parte del soporte. Este patrón es consistente con entornos donde el Estado es laxo y la interdicción financiera conserva relevancia como instrumento de control, contención de pagos, e inducción de separación entre tipos.
+La interdicción financiera frente a la precisión posterior permite evaluar si el aprendizaje reduce o refuerza la necesidad de restringir la capacidad de pago. Como se reporta en la Figura~\ref{fig:cal-eln-par-iota-alpha}, $\alpha_t^\ast$ permanece alto mientras $\iota_t$ aumenta en todos los escenarios, lo que indica que identificar el tipo verdadero no elimina el valor de mantener la interdicción preventiva. Este patrón es consistente con entornos donde la interdicción financiera conserva relevancia como instrumento de control, contención de pagos, e inducción de separación entre tipos.
 \vspace{-4pt}
 \begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calfigheight}{Fig_14a.pdf}
-  \caption{Escenario I: ELN}
+  \caption{Escenario I: DC}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calfigheight}{Fig_14b.pdf}
   \caption{Escenario II: PAR}
 \end{subfigure}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calfigheight}{Fig_14c.pdf}
+  \caption{Escenario III: ELN}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calfigheight}{Fig_14d.pdf}
+  \caption{Escenario IV: FARC}
+\end{subfigure}
 \caption{Trayectoria $(\iota_t,\gamma_t^\ast)$ con flechas que indican el avance temporal.}
 \label{fig:cal-eln-par-iota-gamma}
-\figurenote{\textit{Nota:} El panel (a) corresponde al Escenario~I (ELN) y el panel (b) al Escenario~II (PAR). Cada trayectoria muestra 20 flechas trazadas sobre intervalos homogéneos de $\tau$; el círculo identifica el punto final de la simulación, $\tau=150$.}
+\figurenote{\textit{Nota:} El panel (a) corresponde al Escenario~I (DC), el panel (b) al Escenario~II (PAR), el panel (c) al Escenario~III (ELN), y el panel (d) al Escenario~IV (FARC). Cada trayectoria muestra 20 flechas indicadoras; el círculo identifica el punto final, $\tau=150$.}
 \end{figure}
 \vspace{-6pt}
-El diagnóstico de restricciones confirma que la factibilidad estratégica del mecanismo se preserva en ambos escenarios. Como muestra la Figura~\ref{fig:cal-eln-par-iric}, la restricción de incentivos del captor ($\mathrm{IC}^K$), la restricción de participación del captor ($\mathrm{IR}^K$), y la restricción de participación de la familia ($\mathrm{IR}^F$) se satisfacen en los 150 ciclos simulados en ELN y PAR. La verificación es \emph{a posteriori} respecto al tipo verdadero $\theta_K^\ast$: los instrumentos óptimos $(a_S^\ast,\alpha_t^\ast,\gamma_t^\ast)$ se evalúan directamente sobre las utilidades del tipo verdadero, sin ponderar por la creencia $\mu_t$. El mecanismo es por lo tanto factible en un sentido ex-post: dado $\theta_K^\ast$, la política óptima satisface la compatibilidad de incentivos y la participación sin abandonar el componente informacional.
+El diagnóstico de restricciones confirma que la factibilidad estratégica del mecanismo se preserva en todos los escenarios. Como muestra la Figura~\ref{fig:cal-eln-par-iric}, la restricción de incentivos del captor ($\mathrm{IC}^K$), la restricción de participación del captor ($\mathrm{IR}^K$), y la restricción de participación de la familia ($\mathrm{IR}^F$) se satisfacen en los 150 ciclos simulados en los cuatro escenarios. La verificación es \emph{a posteriori} respecto al tipo verdadero $\theta_K^\ast$: los instrumentos óptimos $(a_S^\ast,\alpha_t^\ast,\gamma_t^\ast)$ se evalúan directamente sobre las utilidades del tipo verdadero, sin ponderar por la creencia $\mu_t$. El mecanismo es por lo tanto factible en un sentido ex-post: dado $\theta_K^\ast$, la política óptima satisface la compatibilidad de incentivos y la participación sin abandonar el componente informacional.
 \vspace{-4pt}
 \begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calfigheight}{Fig_15a.pdf}
-  \caption{Escenario I: ELN}
+  \caption{Escenario I: DC}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calfigheight}{Fig_15b.pdf}
   \caption{Escenario II: PAR}
 \end{subfigure}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calfigheight}{Fig_15c.pdf}
+  \caption{Escenario III: ELN}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calfigheight}{Fig_15d.pdf}
+  \caption{Escenario IV: FARC}
+\end{subfigure}
 \caption{Trayectoria $(\iota_t,\alpha_t^\ast)$ con flechas que indican el avance temporal.}
 \label{fig:cal-eln-par-iota-alpha}
-\figurenote{\textit{Nota:} El panel (a) corresponde al Escenario~I (ELN) y el panel (b) al Escenario~II (PAR). Cada trayectoria muestra 20 flechas trazadas sobre intervalos homogéneos de $\tau$; el círculo identifica el punto final de la simulación, $\tau=150$.}
+\figurenote{\textit{Note:} El panel (a) corresponde al Escenario~I (DC), el panel (b) al Escenario~II (PAR), el panel (c) al Escenario~III (ELN), y el panel (d) al Escenario~IV (FARC). Cada trayectoria muestra 20 flechas indicadoras; el círculo identifica el punto final, $\tau=150$.}
 \end{figure}
 \clearpage
 \begin{figure}[H]
@@ -1106,57 +1166,93 @@ El diagnóstico de restricciones confirma que la factibilidad estratégica del m
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calfigheight}{Fig_16a.pdf}
-  \caption{Escenario I: ELN}
+  \caption{Escenario I: DC}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calfigheight}{Fig_16b.pdf}
   \caption{Escenario II: PAR}
 \end{subfigure}
-\caption{Frecuencia de cumplimiento de $\mathrm{IC}^K$, $\mathrm{IR}^K$, e $\mathrm{IR}^F$ (\% de ciclos; ELN: $\tau\leq 150$; PAR: $\tau\leq 150$).}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calfigheight}{Fig_16c.pdf}
+  \caption{Escenario III: ELN}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calfigheight}{Fig_16d.pdf}
+  \caption{Escenario IV: FARC}
+\end{subfigure}
+\caption{Frecuencia de cumplimiento de $\mathrm{IC}^K$, $\mathrm{IR}^K$, e $\mathrm{IR}^F$ (\% de ciclos).}
 \label{fig:cal-eln-par-iric}
-\figurenote{\textit{Nota:} El panel (a) resume el cumplimiento de la compatibilidad de incentivos del captor, la participación del captor, y la participación de la familia en el Escenario~I (ELN). El panel (b) presenta el mismo diagnóstico para el Escenario~II (PAR). Los porcentajes se calculan sobre los ciclos simulados de cada escenario.}
+\figurenote{\textit{Nota:} El panel (a) resume el cumplimiento en el Escenario~I (DC), el panel (b) en el Escenario~II (PAR), el panel (c) en el Escenario~III (ELN), y el panel (d) en el Escenario~IV (FARC). Los porcentajes se calculan sobre los ciclos simulados de cada escenario.}
 \end{figure}
 \vspace{-6pt}
-La ganancia informacional esperada $\Delta H_t$ cuantifica la reducción anticipada de entropía inducida por los instrumentos del Estado, en el sentido de la adquisición dinámica óptima de información de \citet{Zhong2022}. Ese subsidio informacional se concentra al inicio de la simulación, como se ilustra en la Figura~\ref{fig:cal-eln-par-dh}: en ELN alcanza su máximo en $\tau=10$ con $\Delta H_{10}\approx 0{,}043$, y en PAR en $\tau=6$ con $\Delta H_6\approx 0{,}035$. A medida que $\Delta H_t$ converge a cero, las observaciones adicionales dejan de reducir la incertidumbre posterior y la decisión óptima pasa a estar gobernada por las pérdidas materiales y una creencia ya concentrada en el tipo verdadero.
+La ganancia informacional esperada $\Delta H_t$ cuantifica la reducción anticipada de entropía inducida por los instrumentos del Estado, en el sentido de la adquisición dinámica óptima de información de \citet{Zhong2022}. Ese subsidio informacional se concentra al inicio de la simulación, como se ilustra en la Figura~\ref{fig:cal-eln-par-dh}: en DC alcanza su máximo en $\tau=10$ con $\Delta H_{10}\approx 0{,}043$, y en PAR en $\tau=6$ con $\Delta H_6\approx 0{,}035$. A medida que $\Delta H_t$ converge a cero, las observaciones adicionales dejan de reducir la incertidumbre posterior y la decisión óptima pasa a estar gobernada por las pérdidas materiales y una creencia ya concentrada en el tipo verdadero.
 \vspace{-4pt}
 \begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calfigheight}{Fig_17a.pdf}
-  \caption{Escenario I: ELN}
+  \caption{Escenario I: DC}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calfigheight}{Fig_17b.pdf}
   \caption{Escenario II: PAR}
 \end{subfigure}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calfigheight}{Fig_17c.pdf}
+  \caption{Escenario III: ELN}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calfigheight}{Fig_17d.pdf}
+  \caption{Escenario IV: FARC}
+\end{subfigure}
 \caption{Ganancia informacional esperada $\Delta H_t$ frente a $\tau$.}
 \label{fig:cal-eln-par-dh}
-\figurenote{\textit{Nota:} El panel (a) corresponde al Escenario~I (ELN) y el panel (b) al Escenario~II (PAR). La serie reporta la reducción esperada de entropía inducida por la política óptima del Estado en cada ciclo simulado.}
+\figurenote{\textit{Nota:} El panel (a) corresponde al Escenario~I (DC), el panel (b) al Escenario~II (PAR), el panel (c) al Escenario~III (ELN), y el panel (d) al Escenario~IV (FARC). La serie reporta la reducción esperada de entropía en cada ciclo simulado.}
 \end{figure}
 \vspace{-6pt}
-En ambos escenarios y para todos los tipos, $\kappa_h(\theta_K^\ast,t)>0$ en el 100\,\% de los ciclos simulados, como se muestra en la Figura~\ref{fig:cal-eln-par-kh}. Por la relación $\operatorname{sgn}(\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast)=-\operatorname{sgn}(\kappa_h)$, esto implica $\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast<0$: una mayor presión operativa \emph{reduce} la duración esperada del cautiverio sin excepción. El mecanismo no enfrenta un trade-off entre explotar el instrumento y aprender: la presión operativa acorta el cautiverio y, al modificar los hazards de cierre, genera simultáneamente señales que separan las verosimilitudes de los tipos rivales y aceleran la convergencia posterior.
+En todos los escenarios y para todos los tipos, $\kappa_h(\theta_K^\ast,t)>0$ en el 100\,\% de los ciclos simulados, como se muestra en la Figura~\ref{fig:cal-eln-par-kh}. Por la relación $\operatorname{sgn}(\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast)=-\operatorname{sgn}(\kappa_h)$, esto implica $\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast<0$: una mayor presión operativa \emph{reduce} la duración esperada del cautiverio sin excepción. El mecanismo no enfrenta un trade-off entre explotar el instrumento y aprender: la presión operativa acorta el cautiverio y, al modificar los hazards de cierre, genera simultáneamente señales que separan las verosimilitudes de los tipos rivales y aceleran la convergencia posterior.
 \vspace{-4pt}
 \begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_18a.pdf}
-  \caption{Escenario I: ELN}
+  \caption{Escenario I: DC}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_18b.pdf}
   \caption{Escenario II: PAR}
 \end{subfigure}
-\caption{Sensibilidad neta $\kappa_h(\theta_K^\ast,t)$ de la duración esperada del cautiverio respecto a $\gamma_t^\ast$ (ELN: $\tau\leq 150$; PAR: $\tau\leq 150$).}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_18c.pdf}
+  \caption{Escenario III: ELN}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_18d.pdf}
+  \caption{Escenario IV: FARC}
+\end{subfigure}
+\caption{Sensibilidad neta $\kappa_h(\theta_K^\ast,t)$ de la duración esperada del cautiverio respecto a $\gamma_t^\ast$.}
 \label{fig:cal-eln-par-kh}
-\figurenote{\textit{Nota:} Cada panel traza $\kappa_h(\theta_K^\ast,t)$ para el tipo verdadero del escenario. Un valor constante de $+1$ implica $-\operatorname{sgn}(\kappa_h)=-1$ en el 100\,\% de los ciclos, es decir, $\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast<0$: la presión operativa $\gamma_t^\ast$ \emph{reduce} la duración esperada del cautiverio en todo el soporte; la línea punteada horizontal marca el cero de referencia.}
+\figurenote{\textit{Nota:} Cada panel traza $\kappa_h(\theta_K^\ast,t)$ para el tipo verdadero del escenario. Un valor constante de $+1$ implica $-\operatorname{sgn}(\kappa_h)=-1$ en el 100\,\% de los ciclos, es decir, $\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast<0$; la línea punteada horizontal marca el cero de referencia.}
 \end{figure}
 \vspace{-6pt}
-Los desenlaces terminales hipotéticos difieren entre escenarios: \emph{Liberación} en ELN ($\tau^{\mathrm{hyp}}=16$) y \emph{Muerte} en PAR ($\tau^{\mathrm{hyp}}=5$). En ambos casos el posterior parte de $\mu_0(\theta^\ast)=0{,}050$ y converge a $\mu_{150}(\theta^\ast)\approx 1{,}000$, con $\bar\alpha^\ast$ y $\bar\gamma^\ast$ por encima de 0{,}86 en todos los escenarios. Estos resultados se resumen en la Tabla~\ref{tab:calibracion-resumen}.
+Los desenlaces terminales hipotéticos difieren entre escenarios: \emph{Pago} en DC ($\tau^{\mathrm{hyp}}=35$), \emph{Rescate} en PAR ($\tau^{\mathrm{hyp}}=105$), \emph{Liberación} en ELN ($\tau^{\mathrm{hyp}}=75$), y \emph{Rescate} en FARC ($\tau^{\mathrm{hyp}}=20$). En todos los casos el posterior parte de su prior inicial y converge a $\mu_{150}(\theta^\ast)\approx 1{,}000$, con $\bar\alpha^\ast$ y $\bar\gamma^\ast$ por encima de 0{,}56 en todos los escenarios. Estos resultados se resumen en la Tabla~\ref{tab:calibracion-resumen}.
 
 \begin{table}[htbp]
 \centering
@@ -1167,13 +1263,13 @@ Los desenlaces terminales hipotéticos difieren entre escenarios: \emph{Liberaci
 \toprule
 $\theta_K^\ast$ & $\mu_0(\theta^\ast)$ & $\mu_{\tau_{\max}}(\theta^\ast)$ & $\bar{\alpha}^\ast$ & $\bar{\gamma}^\ast$ & $\tau^{\mathrm{hyp}}$ & $m_{\tau^{\mathrm{hyp}}}$ \\
 \midrule
-ELN & 0.050 & 1.000 & 0.908 & 0.908 & 16 & Liberación \\
-PAR & 0.050 & 1.000 & 0.901 & 0.868 & 5 & Muerte \\
+DC & 0.350 & 1.000 & 0.896 & 0.564 & 35 & Pago \\
+PAR & 0.150 & 1.000 & 0.730 & 0.662 & 105 & Rescate \\
+ELN & 0.250 & 1.000 & 0.737 & 0.663 & 75 & Liberación \\
+FARC & 0.150 & 1.000 & 0.755 & 0.715 & 20 & Rescate \\
 \bottomrule
 \end{tabular}
-\end{table}
-
-En conjunto, el contraste ELN--PAR muestra que el mismo mecanismo bayesiano genera trayectorias de aprendizaje, intensidades de instrumentos, y tasas de viabilidad de restricciones distintas cuando, conjuntamente, cambian el tipo verdadero del captor y los márgenes institucional, familiar, de víctima, y geográfico descritos en el protocolo. Las simulaciones no sustituyen al Teorema~\ref{thm:posterior-consistency}, que requiere separación recurrente en el evento $\mathcal{T}$; ilustran que, con priors y hazards calibrados a la evidencia colombiana, el subsidio entrópico desplaza la política lejos de regímenes puramente miopes y acelera o disciplina la concentración posterior en horizontes finitos, en la dirección predicha por el resultado de identificación.
+\end{table}En conjunto, el contraste ELN--PAR muestra que el mismo mecanismo bayesiano genera trayectorias de aprendizaje, intensidades de instrumentos, y tasas de viabilidad de restricciones distintas cuando, conjuntamente, cambian el tipo verdadero del captor y los márgenes institucional, familiar, de víctima, y geográfico descritos en el protocolo. Las simulaciones no sustituyen al Teorema~\ref{thm:posterior-consistency}, que requiere separación recurrente en el evento $\mathcal{T}$; ilustran que, con priors y hazards calibrados a la evidencia colombiana, el subsidio entrópico desplaza la política lejos de regímenes puramente miopes y acelera o disciplina la concentración posterior en horizontes finitos, en la dirección predicha por el resultado de identificación.
 
 \section{Discusión y conclusiones}\label{sec:conclusiones}
 

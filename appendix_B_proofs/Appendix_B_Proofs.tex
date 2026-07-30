@@ -1,10 +1,10 @@
 % !TEX program = pdflatex
-% !TEX root = Appendix_3.tex
+% !TEX root = Appendix_B_Proofs.tex
 % !TEX outputDirectory = out
 % =========================================================================
-% APPENDIX C -- FORMAL PROOFS AND LEAN VERIFICATION
+% APPENDIX B -- FORMAL PROOFS AND LEAN VERIFICATION
 % Econometrica / Econometric Society supplement format.
-% Formal proofs supporting the identification argument. Replication: Appendix_3/
+% Formal proofs supporting the identification argument. Replication: Appendix_B_Proofs/
 % =========================================================================
 \documentclass[ecta,nameyear,final,supplement]{econsocart}
 
@@ -60,7 +60,7 @@
 % APA 7-style table notes (Publication Manual, \S7.21)
 \newcommand{\tabnote}{\par\addvspace{0.4em}\noindent\emph{Note.}}
 \newcommand{\tabsource}{\ \textit{Source:} Analytical proofs in this supplement;
-  Lean identifiers in \texttt{lean/Appendix3Proofs.lean}. Software: Lean~4
+  Lean identifiers in \texttt{lean/AppendixBProofs.lean}. Software: Lean~4
   (\texttt{lean-toolchain}); Mathlib via Lake.}
 \endlocaldefs
 
@@ -69,7 +69,7 @@
 \begin{frontmatter}
 
 \title{Supplement to ``Identifying Rational Types in Unknown Environments''\\
-Appendix C: Formal Proofs and Lean Verification}
+Appendix B: Formal Proofs and Lean Verification}
 \runtitle{Formal Proofs Supplement}
 
 \begin{aug}
@@ -107,7 +107,7 @@ equilibrium implementability (Section~\ref{sec:equilibrio}), and the abstract
 Kakutani identification criterion (Section~\ref{sec:id-abstracta}), plus
 machine-checked verification (Section~\ref{sec:lean-formalization}). Analytical
 proofs are self-contained in this document; algebraic steps verified in Lean~4
-are reproduced from the \texttt{Appendix\_3/} replication package
+are reproduced from the \texttt{Appendix\_B\_Proofs/} replication package
 (Section~\ref{sec:repro}). Classical measure-theoretic inputs (Kakutani,
 Blackwell--Dubins, fixed-point existence) remain proved here and are not
 re-derived inside the proof assistant.
@@ -1413,7 +1413,7 @@ $\mathcal{T}$.
 \begin{sloppypar}
 \noindent
 This replication package includes a standalone Lean~4 project in folder
-\texttt{lean/} (main file \texttt{Appendix3Proofs.lean}) that
+\texttt{lean/} (main file \texttt{AppendixBProofs.lean}) that
 formalizes the logical dependency graph of this supplement. The development is
 independent of earlier project-specific files and mirrors Sections
 \ref{sec:main}--\ref{sec:id-abstracta}. Each declaration is tagged with its TeX
@@ -1563,9 +1563,9 @@ supplement or cited literature.
 
 \begin{sloppypar}
 All analytical proofs in this supplement are self-contained in
-\texttt{tex/Appendix\_3.tex}. Machine-checked algebraic steps are reproduced by
+\texttt{tex/Appendix\_B\_Proofs.tex}. Machine-checked algebraic steps are reproduced by
 the Lean~4 project in \texttt{lean/}. Set the working directory to
-\texttt{Appendix\_3/} and run \texttt{replicate.sh}. See \texttt{README.txt} at the
+\texttt{Appendix\_B\_Proofs/} and run \texttt{replicate.sh}. See \texttt{README.txt} at the
 root of that folder for software requirements (Lean~4, elan,
 \texttt{lean-toolchain}) and Lake; Mathlib is fetched automatically on first
 build (network required; estimated first-build time 15--45 minutes).
@@ -1574,18 +1574,18 @@ build (network required; estimated first-build time 15--45 minutes).
 \begin{enumerate}
 \item \texttt{replicate.sh} at the package root runs \texttt{lake build} in
   \texttt{lean/} and writes a log to \texttt{lean/build.log}.
-\item Main formal file: \texttt{lean/Appendix3Proofs.lean}. Project metadata:
+\item Main formal file: \texttt{lean/AppendixBProofs.lean}. Project metadata:
   \texttt{lakefile.lean}, \texttt{lean-toolchain}, \texttt{lake-manifest.json}.
 \item Section~\ref{sec:lean-formalization} and Table~\ref{tab:lean-status}
   document which results are \texttt{[Proved]} vs.\ \texttt{[Hyp.]}.
-\item (Optional) Compile \texttt{tex/Appendix\_3.pdf} from \texttt{tex/} with
+\item (Optional) Compile \texttt{tex/Appendix\_B\_Proofs.pdf} from \texttt{tex/} with
   \texttt{pdflatex} and \texttt{bibtex}.
 \end{enumerate}
 
 \begin{sloppypar}
 Section~\ref{sec:lean-formalization} (Table~\ref{tab:lean-status}) documents
 which results are machine-checked vs.\ hypothetical. All paths are relative to
-\texttt{Appendix\_3/}; see \texttt{README.txt} for the full build workflow.
+\texttt{Appendix\_B\_Proofs/}; see \texttt{README.txt} for the full build workflow.
 \end{sloppypar}
 
 \bibliographystyle{econsoc}

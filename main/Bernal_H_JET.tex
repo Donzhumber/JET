@@ -176,7 +176,7 @@ Identification alone does not make a mechanism executable. The Conditional Mecha
 \paragraph{Applied validation.}
 Sections~\ref{sec:application}--\ref{sec:calibracion} map the abstract environment to kidnapping for ransom in Colombia. Multinomial logit and competing-risks estimates from National Center for Historical Memory microdata supply type-specific hazards; ELN and PAR calibrations then report posterior paths, instrument trajectories, informational gain, and IR/IC compliance. The application is a validation layer, not the theoretical primitive.
 
-The remainder of the article proceeds as follows. Section~\ref{sec:model} presents the general indirect mechanism, the MDG kernel, competing risks, and best responses for arbitrary unknown types. Section~\ref{subsec:formal-defs} states the Type Identification Theorem. Section~\ref{sec:implementabilidad} establishes conditional PBE implementability and policy implications. Section~\ref{sec:application} specializes the environment to Colombian kidnapping and anchors parameters empirically. Section~\ref{sec:calibracion} reports calibration and simulations. Section~\ref{sec:conclusiones} concludes. Supplemental Appendices contain macroeconometrics, microeconometric detail, and Lean~4 proofs.
+The remainder of the article proceeds as follows. Section~\ref{sec:model} presents the general indirect mechanism, the MDG kernel, competing risks, and best responses for arbitrary unknown types. Section~\ref{subsec:formal-defs} states the Type Identification Theorem. Section~\ref{sec:implementabilidad} establishes conditional PBE implementability and policy implications. Section~\ref{sec:application} specializes the environment to Colombian kidnapping and anchors parameters empirically. Section~\ref{sec:calibracion} reports calibration and simulations. Section~\ref{sec:conclusiones} concludes. Supplemental Appendices contain microeconometric detail and Lean~4 proofs.
 
 
 \section{General Environment and Indirect Mechanism}\label{sec:model}
@@ -583,7 +583,7 @@ The process $\{\mu_t\}_{t\ge 0}$ is said to be consistent with the PBE if, under
 where the equality is interpreted $\ProbE$-almost surely upon fixing regular versions of the conditional probabilities. It is assumed that $\theta_K:(\Omega,\mathcal{F})\to(\ThetaK,\mathcal{B}(\ThetaK))$ is measurable and that $\{\theta\}\in\mathcal{B}(\ThetaK)$ for all $\theta\in\ThetaK$; in particular, if $\ThetaK$ is finite, it suffices to take the power set $\sigma$-algebra. Thus, $\mathbf{1}\{\theta_K=\theta\}$ is measurable and integrable under $\ProbE$, and the posterior $\mu_t$ coincides with the conditional marginal of the type given the observed public history. Furthermore, $\mu_0$ coincides with the initial marginal of $\theta_K$ once conditioned on $(z, \theta_V)$, before the signals of the episode refine the structural prior.
 \end{definition}
 
-Definition~\ref{def:beliefs-martingale} implies that $\mu_t(\theta)$ is a bounded martingale under $\ProbE$: the current belief is the unbiased prediction of the future belief given the accumulated public history. The following lemma formalizes the almost sure convergence that follows, relying on the convergence theorem of \citet{Doob1953Stochastic}. Its proof is presented in Appendix~C.
+Definition~\ref{def:beliefs-martingale} implies that $\mu_t(\theta)$ is a bounded martingale under $\ProbE$: the current belief is the unbiased prediction of the future belief given the accumulated public history. The following lemma formalizes the almost sure convergence that follows, relying on the convergence theorem of \citet{Doob1953Stochastic}. Its proof is presented in Appendix~B.
 
 \begin{lemma}[Asymptotic stability of beliefs]\label{lem:asymptotic-beliefs}
 Under the ex-ante law $\ProbE$, the belief process $\{\mu_t(\theta)\}_{t\ge 0}$ is a bounded martingale that converges $\ProbE$-almost surely to a limit random variable $Z_\theta$ with $Z_\theta\in[0,1]$ $\ProbE$-a.s.
@@ -591,7 +591,7 @@ Under the ex-ante law $\ProbE$, the belief process $\{\mu_t(\theta)\}_{t\ge 0}$ 
 
 \smallskip
 
-To establish the asymptotic properties of the learning process under the true probability measure $\mathbb{P}_{\theta_0}$, a fundamental tension must be resolved regarding the conditional independence of the observable history. In the live perfect Bayesian equilibrium, the planner's active dual control couples the policy instruments sequentially with past realized signals, as in \citet{AghionBoltonHarrisJullien1991} and \citet{EasleyKiefer1988}. However, structural identification can be formally established by evaluating the system's filtering capacity over a frozen, deterministic policy path, following \citet{BlackwellDubins1962}. This conceptual device is formalized here under the notion of an informational slicing of the game tree, deferring the formal measure-theoretic proofs and regularities to Appendix~C, where the mutual singularity of infinite product measures is derived via the product-measure criterion of \citet{Kakutani1948}.
+To establish the asymptotic properties of the learning process under the true probability measure $\mathbb{P}_{\theta_0}$, a fundamental tension must be resolved regarding the conditional independence of the observable history. In the live perfect Bayesian equilibrium, the planner's active dual control couples the policy instruments sequentially with past realized signals, as in \citet{AghionBoltonHarrisJullien1991} and \citet{EasleyKiefer1988}. However, structural identification can be formally established by evaluating the system's filtering capacity over a frozen, deterministic policy path, following \citet{BlackwellDubins1962}. This conceptual device is formalized here under the notion of an informational slicing of the game tree, deferring the formal measure-theoretic proofs and regularities to Appendix~B, where the mutual singularity of infinite product measures is derived via the product-measure criterion of \citet{Kakutani1948}.
 
 Before defining the asymptotic event, it is useful to separate two planes of the model. Following the distinction between structure and measurement in dynamic estimation of \citet{Rust1987} and \citet{MagnacThesmar2002}, the measures $\ProbC{\theta}$ used in the following definitions and in the Identification Theorem refer to the strategic competing-risks block, $j\in\{1,2,3\}$. In that domain, $\lambda_4=0$ is fixed, so the residual closure channel does not determine asymptotic type identification. In the data and in calibration, by contrast, $\lambda_4>0$ captures type-invariant residual closures; its contribution is therefore treated as an orthogonal component of the likelihood, in the sense of \citet{Lancaster1990} and \citet{AbbringVanDenBerg2003}. This separation allows the singularity criterion of \citet{Kakutani1948} to operate on the signals generated by strategic risks. For the convergence of Lemma~\ref{lem:asymptotic-beliefs} to concentrate on the true type rather than a diffuse limit, the analysis is restricted to the event in which captivity generates an infinite sequence of informative public signals.
 
@@ -613,7 +613,7 @@ The model is asymptotically identifiable in $\mathcal{T}$ if, for all $\theta\in
 \end{enumerate}
 \end{definition}
 
-The heterogeneity in the risk coefficients $\beta_{K,j}(\theta_K)$ is the structural channel that operationalizes the separation of Definition~\ref{def:asymptotic-id}: different criminal organizations generate distinct survival and detection signatures in total variation, preventing sustained observational equivalence and activating the singularity criterion of \citet{Kakutani1948}. The state's ability to distinguish types in the asymptotic limit does not depend on a specific functional form, but on a fundamental property of information theory: any family of predictive models that guarantees recurrent separation in total variation between its signal laws will induce mutual singularity of the trajectory measures and the consequent concentration of Bayesian beliefs. The following lemma specializes this principle to the case of competing risks, demonstrating how the architecture of \citet{Cox1972} operationalizes this separation through the heterogeneity in the coefficients $\beta_{K,j}$. Its proof is presented in Appendix~C.
+The heterogeneity in the risk coefficients $\beta_{K,j}(\theta_K)$ is the structural channel that operationalizes the separation of Definition~\ref{def:asymptotic-id}: different criminal organizations generate distinct survival and detection signatures in total variation, preventing sustained observational equivalence and activating the singularity criterion of \citet{Kakutani1948}. The state's ability to distinguish types in the asymptotic limit does not depend on a specific functional form, but on a fundamental property of information theory: any family of predictive models that guarantees recurrent separation in total variation between its signal laws will induce mutual singularity of the trajectory measures and the consequent concentration of Bayesian beliefs. The following lemma specializes this principle to the case of competing risks, demonstrating how the architecture of \citet{Cox1972} operationalizes this separation through the heterogeneity in the coefficients $\beta_{K,j}$. Its proof is presented in Appendix~B.
 
 \begin{lemma}[Structural identifiability and asymptotic learning]\label{lem:hazard-separation}
 \normalfont
@@ -680,7 +680,7 @@ This is a transparent regime sufficiency; outside of it, the law of $(Y_t)$ may 
 \end{list}
 \end{lemma}
 
-With the three ingredients in place, the bounded martingale of Lemma~\ref{lem:asymptotic-beliefs}, the asymptotic identification of Definition~\ref{def:asymptotic-id}, and the structural separation of Lemma~\ref{lem:hazard-separation}, the following theorem establishes that the state's beliefs converge almost surely to the true type. Its proof is presented in Appendix~C.
+With the three ingredients in place, the bounded martingale of Lemma~\ref{lem:asymptotic-beliefs}, the asymptotic identification of Definition~\ref{def:asymptotic-id}, and the structural separation of Lemma~\ref{lem:hazard-separation}, the following theorem establishes that the state's beliefs converge almost surely to the true type. Its proof is presented in Appendix~B.
 
 \begin{theorem}[Identification and Consistency of True Types]\label{thm:posterior-consistency}
 \normalfont
@@ -812,7 +812,7 @@ The simultaneous compatibility of this constraint with $IC^K$ and $IR^K$ is not 
 IC^K,\;IR^K,\;IR^F
 \text{ are satisfied}\Bigr\}.
 \end{equation}
-Building on the existence framework of \citet{KadanRenySwinkels2017}, Theorem~\ref{thm:ebp-implementabilidad} treats the non-emptiness of $\Gamma_t(\mu_t)$ as the primitive robust-feasibility condition ensuring the existence of an implementable PBE. The proof is presented in Appendix~C.
+Building on the existence framework of \citet{KadanRenySwinkels2017}, Theorem~\ref{thm:ebp-implementabilidad} treats the non-emptiness of $\Gamma_t(\mu_t)$ as the primitive robust-feasibility condition ensuring the existence of an implementable PBE. The proof is presented in Appendix~B.
 \end{definition}
 
 \begin{theorem}[Conditional implementability of the mechanism in PBE]\label{thm:ebp-implementabilidad}
@@ -947,7 +947,7 @@ Between 1964 and 2025, Colombia registered 61,341 kidnapping cases, according to
 \figurenote{\textit{Note:} The figure presents the total number of kidnappings per presidential term in Colombia from 1962 to 2025. Shading distinguishes phases of the armed conflict, and annotations highlight developments related to armed groups, legal reforms, and security policies. \textit{Source:} Author's elaboration based on \citet{cnmh_datos} and \citet{pinto2004}.}
 \end{figure}
 
-Through a Multinomial Logit (MNL) model and a cause-specific proportional hazards model of \citet{Cox1972}, this heterogeneity is quantified at the organizational level. Both models are estimated on $n=1{,}125$ individual-level cases from the National Center for Historical Memory, per \citet{cnmh_datos}, with full specification, robustness checks, and sample-selection diagnostics in Appendix~B. The static MNL marginal probability of mortality in captivity ranges from 0.002 for the FARC to 0.071 for common delinquency (DC). Payment hazard ratios relative to the FARC reach 4.28 for paramilitaries (PAR) and 1.71 for DC, while the ELN is statistically indistinguishable from the reference group. The cumulative probability of tactical rescue by day 100 varies from 0.27 to 0.33 across types; post-2011, the rescue hazard multiplies by 4.86 and the payment hazard falls by 49\%, consistent with the GAULA's strengthened deterrent capacity, as shown in Figure~\ref{fig:cox-a}. The dynamic Cox mortality profile in Figure~\ref{fig:cox-b} reproduces the same ordering across organizations, with comparable magnitudes (0.002 to 0.079). These estimates supply the mechanism's type menu $\ThetaK=\{\text{DC},\text{PAR},\text{ELN},\text{FARC}\}$, order the reservation utility of release $U^K_{\mathrm{rel}}(\theta)$ across types, and anchor the type-specific effective intensities $\tilde\lambda_j(t\mid\theta_K)$ whose empirical separation is the observational counterpart of the total-variation separation hypothesis in Lemma~\ref{lem:hazard-separation}.
+By estimating two complementary models, a Multinomial Logit (MNL) model and a cause-specific proportional hazards model of \citet{Cox1972}, on $n=1{,}125$ individual-level cases from the National Center for Historical Memory \citep{cnmh_datos}, with full specification, robustness checks, and sample-selection diagnostics detailed in Appendix A, organizational heterogeneity in Colombian kidnapping is quantified. First, static marginal probabilities of outcome are derived from the MNL; specifically, the marginal probability of mortality in captivity ranges from 0.002 for the FARC to 0.071 for common delinquency (DC). Second, cause-specific hazard ratios (HR) are derived from the proportional hazards model of \citet{Cox1972}; estimates show that payment hazard ratios relative to the FARC reach 4.28 for paramilitaries (PAR) and 1.71 for DC, while the ELN is statistically indistinguishable from the reference group; post-2011, the rescue hazard multiplies by 4.86 and the payment hazard falls by 49\%, reflecting the impact of the GAULA's strengthened deterrent and operational capacity. Lastly, temporal profiles of survival, rescue, and mortality are analyzed. Temporal rescue dynamics by duration category and the heterogeneity in captivity duration survival curves by perpetrator are presented in Figure~\ref{fig:cox-a}. In turn, the cumulative probability of tactical rescue by day 100 varies from 0.27 to 0.33 across types, and the dynamic mortality profile in captivity reproduces the same organizational ordering of the MNL with comparable magnitudes of 0.002 to 0.079, as shown in Figure~\ref{fig:cox-b}. These estimates supply the mechanism's type menu $\ThetaK=\{\text{DC},\text{PAR},\text{ELN},\text{FARC}\}$, order the reservation utility of release $U^K_{\mathrm{rel}}(\theta)$ across types, and anchor the type-specific effective intensities $\tilde\lambda_j(t\mid\theta_K)$ whose empirical separation is the observational counterpart of the total-variation separation hypothesis in Lemma~\ref{lem:hazard-separation}.
 
 \begin{figure}[H]
 \centering
@@ -994,10 +994,10 @@ The MNL and the Cox model connect microeconomic evidence with the initial distri
 
 \section{Calibration of the mechanism and simulations}\label{sec:calibracion}
 \normalfont\normalsize
-This section calibrates the specialized mechanism of Section~\ref{sec:application} in two simulated episodes of finite horizon, holding fixed the general architecture of Section~\ref{sec:model}. The exercise combines macro and microeconometric priors and diagnostics to study four objects: the evolution of beliefs $\mu_\tau(\theta)$, the signals observed by the state, the response of the instruments $(\alpha_t,\gamma_t)$, and compliance with the IR and IC constraints. \emph{Scenario~I} corresponds to ELN, with $\theta_K^\ast=\mathrm{ELN}$, lax state, low-wealth family, public victim, and Caribbean location; \emph{Scenario~II} corresponds to PAR, with $\theta_K^\ast=\mathrm{PAR}$, lax state, high-wealth family, private victim, and East--Jungle location. Both are simulated over a fixed horizon $\bar{T}=150$ periods (a calibration parameter distinct from the endogenous stopping time $\tau$ defined in~\eqref{eq:stopping-time}), and optimal policy is computed from the state's minimization of social cost. In the order $(\mathrm{DC},\mathrm{PAR},\mathrm{ELN},\mathrm{FARC})$, the initial priors are $\mu_0^{\mathrm{ELN}}=(0.25,0.35,0.05,0.35)$ and $\mu_0^{\mathrm{PAR}}=(0.55,0.05,0.35,0.05)$. In the figures, the gray bar marks the realized stopping time $\tau$ (the first period with $m_\tau\in\mathcal{M}_{\mathrm{term}}$); the trajectory after that bar is a counterfactual extension under an absorbing state (the mechanism law conditioned on non-absorption) that illustrates learning and identification dynamics independently of the closure moment, without constituting a real episode trajectory.
+This section calibrates the specialized mechanism of Section~\ref{sec:application} in four simulated episodes of finite horizon, holding fixed the general architecture of Section~\ref{sec:model}. The exercise combines microeconometric priors and diagnostics to study four objects: the evolution of beliefs $\mu_t(\theta)$, the signals observed by the state, the response of the instruments $(\alpha_t,\gamma_t)$, and compliance with the IR and IC constraints. \emph{Scenario~I} corresponds to DC (Common Criminal), with $\theta_K^\ast=\mathrm{DC}$, lax state, high-wealth family, private victim, and Metropolis location; \emph{Scenario~II} corresponds to PAR, with $\theta_K^\ast=\mathrm{PAR}$, strict state, standard-wealth family, public victim, and Caribbean location; \emph{Scenario~III} corresponds to ELN, with $\theta_K^\ast=\mathrm{ELN}$, strict state, high-wealth family, private victim, and Eastern Plains/Jungle location; and \emph{Scenario~IV} corresponds to FARC, with $\theta_K^\ast=\mathrm{FARC}$, lax state, high-wealth family, public victim, and Pacific / Red Zone location. Both are simulated over a fixed horizon $\bar{T}=150$ periods (a calibration parameter distinct from the endogenous stopping time $\tau$ defined in~\eqref{eq:stopping-time}), and optimal policy is computed from the state's minimization of social cost. In the order $(\mathrm{DC},\mathrm{PAR},\mathrm{ELN},\mathrm{FARC})$, the initial priors are $\mu_0^{\mathrm{DC}}=(0.35,0.35,0.15,0.15)$, $\mu_0^{\mathrm{PAR}}=(0.15,0.15,0.25,0.45)$, $\mu_0^{\mathrm{ELN}}=(0.05,0.35,0.25,0.35)$, and $\mu_0^{\mathrm{FARC}}=(0.35,0.35,0.15,0.15)$. In the figures, the gray bar marks the realized stopping time $\tau$ (the first period with $m_\tau\in\mathcal{M}_{\mathrm{term}}$); the trajectory after that bar is a counterfactual extension under an absorbing state (the mechanism law conditioned on non-absorption) that illustrates learning and identification dynamics independently of the closure moment, without constituting a real episode trajectory.
 
 \paragraph{What the simulations are designed to show.}
-Relative to a purely myopic policy that ignores $-\psi_H\Delta H_t$, the calibrated rule internalizes the informational subsidy and reallocates $(\alpha_t,\gamma_t)$ toward instruments that separate likelihoods. The ELN and PAR exercises therefore illustrate three operational implications of the theory: (i) finite-horizon posterior concentration in the direction predicted by Theorem~\ref{thm:posterior-consistency}; (ii) MDG-enabled full-support updating along the path; and (iii) ex-post compliance with $IC^K$, $IR^K$, and $IR^F$ under the implementability logic of Theorem~\ref{thm:ebp-implementabilidad}. They do not claim asymptotic identification on $\mathcal{T}$, which remains a theoretical limit statement.
+Relative to a purely myopic policy that ignores $-\psi_H\Delta H_t$, the calibrated rule internalizes the informational subsidy and reallocates $(\alpha_t,\gamma_t)$ toward instruments that separate likelihoods. The DC, PAR, ELN, and FARC exercises therefore illustrate three operational implications of the theory: (i) finite-horizon posterior concentration in the direction predicted by Theorem~\ref{thm:posterior-consistency}; (ii) MDG-enabled full-support updating along the path; and (iii) ex-post compliance with $IC^K$, $IR^K$, and $IR^F$ under the implementability logic of Theorem~\ref{thm:ebp-implementabilidad}. They do not claim asymptotic identification on $\mathcal{T}$, which remains a theoretical limit statement.
 
 
 \begin{figure}[H]
@@ -1005,95 +1005,155 @@ Relative to a purely myopic policy that ignores $-\psi_H\Delta H_t$, the calibra
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calbeliefheight}{Fig_11a.pdf}
-  \caption{Scenario I: ELN}
+  \caption{Scenario I: DC}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calbeliefheight}{Fig_11b.pdf}
   \caption{Scenario II: PAR}
 \end{subfigure}
-\caption{Bayesian beliefs of each type $\mu_\tau(\theta)$ (ELN: $\tau\leq 150$; PAR: $\tau\leq 150$).}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calbeliefheight}{Fig_11c.pdf}
+  \caption{Scenario III: ELN}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calbeliefheight}{Fig_11d.pdf}
+  \caption{Scenario IV: FARC}
+\end{subfigure}
+\caption{Bayesian beliefs of each type $\mu_\tau(\theta)$ across scenarios.}
 \label{fig:cal-eln-par-mu}
-\figurenote{\textit{Note:} Panel (a) corresponds to Scenario~I: $\theta_K^\ast=\mathrm{ELN}$, lax $\theta_S$, low-wealth $\theta_F$, public $\theta_V$, and Caribbean $z$. Panel (b) corresponds to Scenario~II: $\theta_K^\ast=\mathrm{PAR}$, lax $\theta_S$, high-wealth $\theta_F$, private $\theta_V$, and East--Jungle $z$. The gray band marks $\tau^{\mathrm{hyp}}$, the first period in which the mechanism outcome differs from continuation.}
+\figurenote{\textit{Note:} Panel (a) corresponds to Scenario~I: $\theta_K^\ast=\mathrm{DC}$, lax $\theta_S$, high-wealth $\theta_F$, private $\theta_V$, and Metropolis $z$. Panel (b) corresponds to Scenario~II: $\theta_K^\ast=\mathrm{PAR}$, strict $\theta_S$, standard-wealth $\theta_F$, public $\theta_V$, and Caribbean $z$. Panel (c) corresponds to Scenario~III: $\theta_K^\ast=\mathrm{ELN}$, strict $\theta_S$, high-wealth $\theta_F$, private $\theta_V$, and Eastern Plains/Jungle $z$. Panel (d) corresponds to Scenario~IV: $\theta_K^\ast=\mathrm{FARC}$, lax $\theta_S$, high-wealth $\theta_F$, public $\theta_V$, and Pacific / Red Zone $z$. The gray band marks $\tau^{\mathrm{hyp}}$, the first period in which the mechanism outcome differs from continuation.}
 \end{figure}
 \vspace{-8pt}
-The posterior of the true type allows evaluating the capability of the mechanism to separate types from the sequence of signals. In the ELN scenario, reported in Figure~\ref{fig:cal-eln-par-mu}, posterior mass shifts gradually toward ELN until reaching $\mu_{150}(\mathrm{ELN})\approx 1{,}000$; this implies that the mechanism accumulates identification even in an environment with lower family wealth and a public victim. In PAR, the posterior of the true type starts from $\mu_0(\mathrm{PAR})=0{,}050$ and reaches $\mu_{150}(\mathrm{PAR})\approx 1{,}000$; the trajectory is not monotone in the initial phase, because the event combines early signals compatible with other types and then shifts mass toward PAR. The gray bars mark the realized stopping time ($\tau=16$ in ELN, $\tau=5$ in PAR); the subsequent counterfactual extension shows that the speed of learning and the absorption moment are distinct objects of the model. Taken together, the figure illustrates finite-horizon behavior: posterior mass shifts toward the true type as signals accumulate separation, in the direction predicted by Theorem~\ref{thm:posterior-consistency} under $\mathcal{T}$, without constituting direct evidence for the asymptotic result; the speed of convergence depends on the institutional, territorial, and case-visibility environment.
+The posterior of the true type allows evaluating the capability of the mechanism to separate types from the sequence of signals. As reported in Figure~\ref{fig:cal-eln-par-mu}, posterior mass shifts gradually toward the true type in all four scenarios, reaching $\mu_{150}(\theta_K^\ast)\approx 1{,}000$; this implies that the mechanism accumulates identification across different wealth levels, locations, and victim sectors. In Scenario~I (DC) and Scenario~IV (FARC), the posterior concentration is rapid ($\tau=35$ and $\tau=20$, respectively). In Scenario~II (PAR) and Scenario~III (ELN), the trajectories are less monotonic in the initial phase, reflecting early signals compatible with alternative types before eventually shifting mass toward the true perpetrator. The gray bars mark the realized stopping times ($\tau=35$ in DC, $\tau=105$ in PAR, $\tau=75$ in ELN, and $\tau=20$ in FARC); the subsequent counterfactual extensions show that the speed of learning and the absorption moment are distinct objects of the model. Taken together, the figure illustrates finite-horizon behavior: posterior mass shifts toward the true type as signals accumulate separation, in the direction predicted by Theorem~\ref{thm:posterior-consistency} under $\mathcal{T}$, without constituting direct evidence for the asymptotic result; the speed of convergence depends on the institutional, territorial, and case-visibility environment.
 
 \begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_12a.pdf}
-  \caption{Scenario I: ELN}
+  \caption{Scenario I: DC}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_12b.pdf}
   \caption{Scenario II: PAR}
 \end{subfigure}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_12c.pdf}
+  \caption{Scenario III: ELN}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_12d.pdf}
+  \caption{Scenario IV: FARC}
+\end{subfigure}
 \caption{Operational pressure $\gamma_t^\ast$ and benchmark $\gamma^R$ against $\tau$.}
 \label{fig:cal-eln-par-gamma}
-\figurenote{\textit{Note:} Panel (a) shows the operational pressure trajectory in Scenario~I (ELN). Panel (b) shows the equivalent trajectory in Scenario~II (PAR). The dashed line corresponds to the Rescue benchmark $\gamma^R$. The gray band marks $\tau^{\mathrm{hyp}}$.}
+\figurenote{\textit{Note:} Panel (a) shows the operational pressure trajectory in Scenario~I (DC). Panel (b) shows the equivalent trajectory in Scenario~II (PAR). Panel (c) shows Scenario~III (ELN). Panel (d) shows Scenario~IV (FARC). The dashed line corresponds to the Rescue benchmark $\gamma^R$. The gray band marks $\tau^{\mathrm{hyp}}$.}
 \end{figure}
-The optimal operational pressure allows evaluating how the state adjusts the intensity of intervention as it learns about the captor's type. Figure~\ref{fig:cal-eln-par-gamma} compares the trajectory of $\gamma_t^\ast$ with the Rescue benchmark $\gamma^R$, which takes the value $\gamma^R=0{,}92$ in ELN and $\gamma^R=0{,}86$ in PAR. In the ELN scenario, $\gamma_t^\ast$ is located on average around $\bar\gamma^\ast\approx 0{,}908$ and remains close, though below, the Rescue benchmark, consistent with a Caribbean environment and lax state. In PAR, pressure remains near the Rescue benchmark and reaches $\bar\gamma^\ast\approx 0{,}868$, consistent with an East--Jungle environment and lax state where intervention retains value even when the focal outcome of the event is payment. In both cases, $\gamma_t^\ast$ does not mechanically replicate either the Rescue or the Negotiate branch: dual control combines exploitation of the instrument and expected information, so the series fluctuates between benchmarks according to the material risk of the episode and the value of separating types.
+The optimal operational pressure allows evaluating how the state adjusts the intensity of intervention as it learns about the captor's type. Figure~\ref{fig:cal-eln-par-gamma} compares the trajectory of $\gamma_t^\ast$ with the Rescue benchmark $\gamma^R$, which takes the value $\gamma^R=0{,}23$ in DC, $\gamma^R=0{,}37$ in PAR, $\gamma^R=0{,}50$ in ELN, and $\gamma^R=0{,}64$ in FARC. In Scenario~I (DC), $\gamma_t^\ast$ is located on average around $\bar\gamma^\ast\approx 0{,}564$. In Scenario~II (PAR), pressure reaches $\bar\gamma^\ast\approx 0{,}662$. In Scenario~III (ELN), average pressure is $\bar\gamma^\ast\approx 0{,}663$, and in Scenario~IV (FARC), it is $\bar\gamma^\ast\approx 0{,}715$. In all cases, $\gamma_t^\ast$ does not mechanically replicate either the Rescue or the Negotiate branch: dual control combines exploitation of the instrument and expected information, so the series fluctuates between benchmarks according to the material risk of the episode and the value of separating types.
 
-The optimal financial interdiction summarizes the intensity with which the state restricts payment capacity and economic coordination during the episode. Figure~\ref{fig:cal-eln-par-alpha} compares the trajectory of $\alpha_t^\ast$ with the Rescue benchmark $\alpha^R$, which takes the value $\alpha^R=0{,}90$ in ELN and $\alpha^R=0{,}84$ in PAR. In ELN, $\bar\alpha^\ast\approx 0{,}908$ and the instrument remains at elevated levels, compatible with a public victim and low-wealth case where the block operates more as strategic containment than as closure of a high payment capacity. In PAR, $\bar\alpha^\ast\approx 0{,}901$ and the trajectory remains elevated over much of the support, indicating that the block retains high strategic value when the state is lax, the family has high wealth, and the East--Jungle region opens room for payments. Thus, $\alpha_t^\ast$ does not mechanically replicate a pure branch: it moves between Rescue and Negotiate benchmarks according to accumulated information, family payment capacity, and the value of inducing separation among types.
+The optimal financial interdiction summarizes the intensity with which the state restricts payment capacity and economic coordination during the episode. Figure~\ref{fig:cal-eln-par-alpha} compares the trajectory of $\alpha_t^\ast$ with the Rescue benchmark $\alpha^R$, which takes the value $\alpha^R=0{,}18$ in DC, $\alpha^R=0{,}31$ in PAR, $\alpha^R=0{,}45$ in ELN, and $\alpha^R=0{,}59$ in FARC. In Scenario~I (DC), $\bar\alpha^\ast\approx 0{,}896$. In Scenario~II (PAR), $\bar\alpha^\ast\approx 0{,}730$. In Scenario~III (ELN), $\bar\alpha^\ast\approx 0{,}737$, and in Scenario~IV (FARC), $\bar\alpha^\ast\approx 0{,}755$. Thus, $\alpha_t^\ast$ does not mechanically replicate a pure branch: it moves between Rescue and Negotiate benchmarks according to accumulated information, family payment capacity, and the value of inducing separation among types.
 
-The posterior precision, defined as $\iota_t=\max_{\theta\in\ThetaK}\mu_t(\theta)$, allows observing how operational pressure changes when the state gains confidence about the identity of the true type. Figure~\ref{fig:cal-eln-par-iota-gamma} reorders the simulation on the plane $(\iota_t,\gamma_t^\ast)$; the arrows indicate the advance of $\tau$ and avoid interpreting the observations as a linear interpolation. In ELN, posterior precision increases gradually while operational pressure remains high but contained, reflecting learning without immediate collapse toward a single dominant signal. In PAR, the trajectory concentrates in a zone of high pressure and rising precision, consistent with an episode in which information requires a longer window before resolving the captor's identity.
+The posterior precision, defined as $\iota_t=\max_{\theta\in\ThetaK}\mu_t(\theta)$, allows observing how operational pressure changes when the state gains confidence about the identity of the true type. Figure~\ref{fig:cal-eln-par-iota-gamma} reorders the simulation on the plane $(\iota_t,\gamma_t^\ast)$; the arrows indicate the advance of $\tau$ and avoid interpreting the observations as a linear interpolation. The trajectory concentrates in zones of high pressure and rising precision, reflecting learning without immediate collapse toward a single dominant signal, and showcasing the distinct dynamics across cases.
 \vspace{-4pt}
 \begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_13a.pdf}
-  \caption{Scenario I: ELN}
+  \caption{Scenario I: DC}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_13b.pdf}
   \caption{Scenario II: PAR}
 \end{subfigure}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_13c.pdf}
+  \caption{Scenario III: ELN}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_13d.pdf}
+  \caption{Scenario IV: FARC}
+\end{subfigure}
 \caption{Financial interdiction $\alpha_t^\ast$ and benchmark $\alpha^R$ against $\tau$.}
 \label{fig:cal-eln-par-alpha}
-\figurenote{\textit{Note:} Panel (a) presents the optimal financial interdiction in Scenario~I (ELN). Panel (b) presents the same instrument in Scenario~II (PAR). The dashed line corresponds to the Rescue benchmark $\alpha^R$. The gray band marks $\tau^{\mathrm{hyp}}$.}
+\figurenote{\textit{Note:} Panel (a) presents the optimal financial interdiction in Scenario~I (DC). Panel (b) presents Scenario~II (PAR). Panel (c) presents Scenario~III (ELN). Panel (d) presents Scenario~IV (FARC). The dashed line corresponds to the Rescue benchmark $\alpha^R$. The gray band marks $\tau^{\mathrm{hyp}}$.}
 \end{figure}
 \vspace{-6pt}
-Financial interdiction against posterior precision allows evaluating whether learning reduces or reinforces the need to restrict payment capacity. In the ELN scenario, reported in Figure~\ref{fig:cal-eln-par-iota-alpha}, $\alpha_t^\ast$ remains high while $\iota_t$ increases, indicating that identifying the insurgent type does not eliminate the value of maintaining preventive interdiction in a public-victim, low-wealth case. Something similar occurs in PAR: although the posterior accumulates precision, $\alpha_t^\ast$ remains at high levels over much of the support. This pattern is consistent with environments where the state is lax and financial interdiction retains relevance as an instrument of control, payment containment, and induction of separation among types.
+Financial interdiction against posterior precision allows evaluating whether learning reduces or reinforces the need to restrict payment capacity. As reported in Figure~\ref{fig:cal-eln-par-iota-alpha}, $\alpha_t^\ast$ remains high while $\iota_t$ increases across all scenarios, indicating that identifying the true type does not eliminate the value of maintaining preventive interdiction. This pattern is consistent with environments where financial interdiction retains relevance as an instrument of control, payment containment, and induction of separation among types.
 \vspace{-4pt}
 \begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calfigheight}{Fig_14a.pdf}
-  \caption{Scenario I: ELN}
+  \caption{Scenario I: DC}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calfigheight}{Fig_14b.pdf}
   \caption{Scenario II: PAR}
 \end{subfigure}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calfigheight}{Fig_14c.pdf}
+  \caption{Scenario III: ELN}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calfigheight}{Fig_14d.pdf}
+  \caption{Scenario IV: FARC}
+\end{subfigure}
 \caption{Trajectory $(\iota_t,\gamma_t^\ast)$ with arrows indicating temporal advance.}
 \label{fig:cal-eln-par-iota-gamma}
-\figurenote{\textit{Note:} Panel (a) corresponds to Scenario~I (ELN) and panel (b) to Scenario~II (PAR). Each trajectory shows 20 arrows traced over homogeneous intervals of $\tau$; the circle identifies the end point of the simulation, $\tau=150$.}
+\figurenote{\textit{Note:} Panel (a) corresponds to Scenario~I (DC), panel (b) to Scenario~II (PAR), panel (c) to Scenario~III (ELN), and panel (d) to Scenario~IV (FARC). Each trajectory shows 20 arrows indicating direction; the circle identifies the end point, $\tau=150$.}
 \end{figure}
 \vspace{-6pt}
-The constraints diagnostic confirms that the strategic feasibility of the mechanism is preserved in both scenarios. As Figure~\ref{fig:cal-eln-par-iric} shows, the captor's incentive constraint ($\mathrm{IC}^K$), the captor's participation constraint ($\mathrm{IR}^K$), and the family's participation constraint ($\mathrm{IR}^F$) are satisfied in all 150 simulated cycles in ELN and PAR. The verification is \emph{a posteriori} with respect to the true type $\theta_K^\ast$: the optimal instruments $(a_S^\ast,\alpha_t^\ast,\gamma_t^\ast)$ are evaluated directly on the utilities of the true type, without weighting by the belief $\mu_t$. The mechanism is therefore feasible in an ex-post sense: given $\theta_K^\ast$, optimal policy satisfies incentive compatibility and participation without abandoning the informational component.
+The constraints diagnostic confirms that the strategic feasibility of the mechanism is preserved across all scenarios. As Figure~\ref{fig:cal-eln-par-iric} shows, the captor's incentive constraint ($\mathrm{IC}^K$), the captor's participation constraint ($\mathrm{IR}^K$), and the family's participation constraint ($\mathrm{IR}^F$) are satisfied in all 150 simulated cycles in all four scenarios. The verification is \emph{a posteriori} with respect to the true type $\theta_K^\ast$: the optimal instruments $(a_S^\ast,\alpha_t^\ast,\gamma_t^\ast)$ are evaluated directly on the utilities of the true type, without weighting by the belief $\mu_t$. The mechanism is therefore feasible in an ex-post sense: given $\theta_K^\ast$, optimal policy satisfies incentive compatibility and participation without abandoning the informational component.
 \vspace{-4pt}
 \begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calfigheight}{Fig_15a.pdf}
-  \caption{Scenario I: ELN}
+  \caption{Scenario I: DC}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calfigheight}{Fig_15b.pdf}
   \caption{Scenario II: PAR}
 \end{subfigure}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calfigheight}{Fig_15c.pdf}
+  \caption{Scenario III: ELN}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calfigheight}{Fig_15d.pdf}
+  \caption{Scenario IV: FARC}
+\end{subfigure}
 \caption{Trajectory $(\iota_t,\alpha_t^\ast)$ with arrows indicating temporal advance.}
 \label{fig:cal-eln-par-iota-alpha}
-\figurenote{\textit{Note:} Panel (a) corresponds to Scenario~I (ELN) and panel (b) to Scenario~II (PAR). Each trajectory shows 20 arrows traced over homogeneous intervals of $\tau$; the circle identifies the end point of the simulation, $\tau=150$.}
+\figurenote{\textit{Note:} Panel (a) corresponds to Scenario~I (DC), panel (b) to Scenario~II (PAR), panel (c) to Scenario~III (ELN), and panel (d) to Scenario~IV (FARC). Each trajectory shows 20 arrows indicating direction; the circle identifies the end point, $\tau=150$.}
 \end{figure}
 \clearpage
 \begin{figure}[H]
@@ -1101,57 +1161,93 @@ The constraints diagnostic confirms that the strategic feasibility of the mechan
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calfigheight}{Fig_16a.pdf}
-  \caption{Scenario I: ELN}
+  \caption{Scenario I: DC}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calfigheight}{Fig_16b.pdf}
   \caption{Scenario II: PAR}
 \end{subfigure}
-\caption{Frequency of compliance with $\mathrm{IC}^K$, $\mathrm{IR}^K$, and $\mathrm{IR}^F$ (\% of cycles; ELN: $\tau\leq 150$; PAR: $\tau\leq 150$).}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calfigheight}{Fig_16c.pdf}
+  \caption{Scenario III: ELN}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calfigheight}{Fig_16d.pdf}
+  \caption{Scenario IV: FARC}
+\end{subfigure}
+\caption{Frequency of compliance with $\mathrm{IC}^K$, $\mathrm{IR}^K$, and $\mathrm{IR}^F$ (\% of cycles).}
 \label{fig:cal-eln-par-iric}
-\figurenote{\textit{Note:} Panel (a) summarizes compliance with the captor's incentive compatibility, the captor's participation, and the family's participation in Scenario~I (ELN). Panel (b) presents the same diagnostic for Scenario~II (PAR). Percentages are computed over the simulated cycles of each scenario.}
+\figurenote{\textit{Note:} Panel (a) summarizes compliance in Scenario~I (DC), panel (b) in Scenario~II (PAR), panel (c) in Scenario~III (ELN), and panel (d) in Scenario~IV (FARC). Percentages are computed over the simulated cycles of each scenario.}
 \end{figure}
 \vspace{-6pt}
-The expected informational gain $\Delta H_t$ quantifies the anticipated reduction in entropy induced by the state's instruments, in the sense of the optimal dynamic acquisition of information of \citet{Zhong2022}. That informational subsidy concentrates at the start of the simulation, as illustrated in Figure~\ref{fig:cal-eln-par-dh}: in ELN it reaches its maximum at $\tau=10$ with $\Delta H_{10}\approx 0{,}043$, and in PAR at $\tau=6$ with $\Delta H_6\approx 0{,}035$. As $\Delta H_t$ converges to zero, additional observations cease to reduce posterior uncertainty and optimal decision comes to be governed by material losses and a belief already concentrated on the true type.
+The expected informational gain $\Delta H_t$ quantifies the anticipated reduction in entropy induced by the state's instruments, in the sense of the optimal dynamic acquisition of information of \citet{Zhong2022}. That informational subsidy concentrates at the start of the simulation, as illustrated in Figure~\ref{fig:cal-eln-par-dh}: in DC it reaches its maximum at $\tau=10$ with $\Delta H_{10}\approx 0{,}043$, and in PAR at $\tau=6$ with $\Delta H_6\approx 0{,}035$. As $\Delta H_t$ converges to zero, additional observations cease to reduce posterior uncertainty and optimal decision comes to be governed by material losses and a belief already concentrated on the true type.
 \vspace{-4pt}
 \begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calfigheight}{Fig_17a.pdf}
-  \caption{Scenario I: ELN}
+  \caption{Scenario I: DC}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calfigheight}{Fig_17b.pdf}
   \caption{Scenario II: PAR}
 \end{subfigure}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calfigheight}{Fig_17c.pdf}
+  \caption{Scenario III: ELN}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calfigheight}{Fig_17d.pdf}
+  \caption{Scenario IV: FARC}
+\end{subfigure}
 \caption{Expected informational gain $\Delta H_t$ against $\tau$.}
 \label{fig:cal-eln-par-dh}
-\figurenote{\textit{Note:} Panel (a) corresponds to Scenario~I (ELN) and panel (b) to Scenario~II (PAR). The series reports the expected entropy reduction induced by the state's optimal policy in each simulated cycle.}
+\figurenote{\textit{Note:} Panel (a) corresponds to Scenario~I (DC), panel (b) to Scenario~II (PAR), panel (c) to Scenario~III (ELN), and panel (d) to Scenario~IV (FARC). The series reports expected entropy reduction in each simulated cycle.}
 \end{figure}
 \vspace{-6pt}
-In both scenarios and for all types, $\kappa_h(\theta_K^\ast,t)>0$ in 100\,\% of simulated cycles, as shown in Figure~\ref{fig:cal-eln-par-kh}. By the relation $\operatorname{sgn}(\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast)=-\operatorname{sgn}(\kappa_h)$, this implies $\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast<0$: higher operational pressure \emph{reduces} expected captivity duration without exception. The mechanism does not face a trade-off between exploiting the instrument and learning: operational pressure shortens captivity and, by modifying closure hazards, simultaneously generates signals that separate the likelihoods of rival types and accelerate posterior convergence.
+In all scenarios and for all types, $\kappa_h(\theta_K^\ast,t)>0$ in 100\,\% of simulated cycles, as shown in Figure~\ref{fig:cal-eln-par-kh}. By the relation $\operatorname{sgn}(\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast)=-\operatorname{sgn}(\kappa_h)$, this implies $\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast<0$: higher operational pressure \emph{reduces} expected captivity duration without exception. The mechanism does not face a trade-off between exploiting the instrument and learning: operational pressure shortens captivity and, by modifying closure hazards, simultaneously generates signals that separate the likelihoods of rival types and accelerate posterior convergence.
 \vspace{-4pt}
 \begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_18a.pdf}
-  \caption{Scenario I: ELN}
+  \caption{Scenario I: DC}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_18b.pdf}
   \caption{Scenario II: PAR}
 \end{subfigure}
-\caption{Net sensitivity $\kappa_h(\theta_K^\ast,t)$ of expected captivity duration with respect to $\gamma_t^\ast$ (ELN: $\tau\leq 150$; PAR: $\tau\leq 150$).}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_18c.pdf}
+  \caption{Scenario III: ELN}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_18d.pdf}
+  \caption{Scenario IV: FARC}
+\end{subfigure}
+\caption{Net sensitivity $\kappa_h(\theta_K^\ast,t)$ of expected captivity duration with respect to $\gamma_t^\ast$.}
 \label{fig:cal-eln-par-kh}
-\figurenote{\textit{Note:} Each panel traces $\kappa_h(\theta_K^\ast,t)$ for the true type of the scenario. A constant value of $+1$ implies $-\operatorname{sgn}(\kappa_h)=-1$ in 100\,\% of cycles, that is, $\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast<0$: operational pressure $\gamma_t^\ast$ \emph{reduces} expected captivity duration over the entire support; the horizontal dashed line marks the reference zero.}
+\figurenote{\textit{Note:} Each panel traces $\kappa_h(\theta_K^\ast,t)$ for the true type of the scenario. A constant value of $+1$ implies $-\operatorname{sgn}(\kappa_h)=-1$ in 100\,\% of cycles, that is, $\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast<0$; the horizontal dashed line marks the reference zero.}
 \end{figure}
 \vspace{-6pt}
-The hypothetical terminal outcomes differ across scenarios: \emph{Release} in ELN ($\tau^{\mathrm{hyp}}=16$) and \emph{Death} in PAR ($\tau^{\mathrm{hyp}}=5$). In both cases the posterior starts from $\mu_0(\theta^\ast)=0{,}050$ and converges to $\mu_{150}(\theta^\ast)\approx 1{,}000$, with $\bar\alpha^\ast$ and $\bar\gamma^\ast$ above 0{,}86 in all scenarios. These results are summarized in Table~\ref{tab:calibracion-resumen}.
+The hypothetical terminal outcomes differ across scenarios: \emph{Ransom Paid} in DC ($\tau^{\mathrm{hyp}}=35$), \emph{Rescue} in PAR ($\tau^{\mathrm{hyp}}=105$), \emph{Release} in ELN ($\tau^{\mathrm{hyp}}=75$), and \emph{Rescue} in FARC ($\tau^{\mathrm{hyp}}=20$). In all cases the posterior starts from its initial prior and converges to $\mu_{150}(\theta^\ast)\approx 1{,}000$, with $\bar\alpha^\ast$ and $\bar\gamma^\ast$ above 0{,}56 in all scenarios. These results are summarized in Table~\ref{tab:calibracion-resumen}.
 
 \begin{table}[htbp]
 \centering
@@ -1162,8 +1258,10 @@ The hypothetical terminal outcomes differ across scenarios: \emph{Release} in EL
 \toprule
 $\theta_K^\ast$ & $\mu_0(\theta^\ast)$ & $\mu_{\tau_{\max}}(\theta^\ast)$ & $\bar{\alpha}^\ast$ & $\bar{\gamma}^\ast$ & $\tau^{\mathrm{hyp}}$ & $m_{\tau^{\mathrm{hyp}}}$ \\
 \midrule
-ELN & 0.050 & 1.000 & 0.908 & 0.908 & 16 & Release \\
-PAR & 0.050 & 1.000 & 0.901 & 0.868 & 5 & Death \\
+DC & 0.350 & 1.000 & 0.896 & 0.564 & 35 & Ransom Paid \\
+PAR & 0.150 & 1.000 & 0.730 & 0.662 & 105 & Rescue \\
+ELN & 0.250 & 1.000 & 0.737 & 0.663 & 75 & Release \\
+FARC & 0.150 & 1.000 & 0.755 & 0.715 & 20 & Rescue \\
 \bottomrule
 \end{tabular}
 \end{table}

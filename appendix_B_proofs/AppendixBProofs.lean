@@ -57,7 +57,7 @@ Kakutani layer~(1) is proved (`kakutaniAlgebraicPrerequisite`); layer~(2) is
 | 8 | Abstract structural identification (Kakutani criterion) | `sec:id-abstracta` |
 -/
 
-namespace Appendix3Proofs
+namespace AppendixBProofs
 
 open scoped MeasureTheory ENNReal BigOperators
 open MeasureTheory Filter Topology Set
@@ -1678,4 +1678,4 @@ theorem asymptoticIdentification_from_coxBetaSeparation {ΘK : Type*}
 
 end IdentificationBridge
 
-end Appendix3Proofs
+end AppendixBProofs
