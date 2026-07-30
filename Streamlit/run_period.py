@@ -432,10 +432,15 @@ def run_one_period(
 
     # Per-type benchmarks (eq:kappa-c's tilde-lambda ingredients + rescue/negotiation argmins)
     # and kappa_h(theta,tau), generalized to THIS tau -- see compute_benchmarks_tau/
-    # compute_kappa_h_tau docstrings. Same formulas as app_DL.py's tau=1 block, evaluated at
-    # this period's own (alpha_star,gamma_star,mt_generic,mu_tau,act_s/f/k).
-    benchmarks_by_type = {th: compute_benchmarks_tau(th, p, mt_generic, v_next_grid=v_next_grid, tau=tau) for th in cvn.TIPOS}
-    belief_weighted = compute_belief_weighted(benchmarks_by_type, mu_tau)
+    # compute_kappa_h_tau docstrings. Reuses the benchmarks already calculated in solve_state_problem
+    # to avoid redundant grid searches.
+    benchmarks_by_type = extra["benchmarks_by_type"]
+    belief_weighted = {
+        "alpha_R_mu": extra["alpha_R_mu"],
+        "gamma_R_mu": extra["gamma_R_mu"],
+        "alpha_N_mu": extra["alpha_N_mu"],
+        "gamma_N_mu": extra["gamma_N_mu"],
+    }
     neg_sign_kappa_h = {}
     for th in cvn.TIPOS:
         kh_th = compute_kappa_h_tau(th, a_star, g_star, mt_generic, act_f, act_k, act_s, p)

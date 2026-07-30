@@ -2422,6 +2422,11 @@ with tab3:
                     "d_tau1": _d_tau1_result["d"], "d_u_tau1": _d_tau1_result["u"],
                     "p_det_tau1": _d_tau1_result["p_det"], "mu2_seed": dict(_mu2_seed_tab3),
                     "mu_tau": dict(_mu1_tab3),
+                    "benchmarks_tau1": _extra["benchmarks_by_type"],
+                    "alpha_R_mu": _extra["alpha_R_mu"],
+                    "gamma_R_mu": _extra["gamma_R_mu"],
+                    "alpha_N_mu": _extra["alpha_N_mu"],
+                    "gamma_N_mu": _extra["gamma_N_mu"],
                 }
 
                 # ── ciclo tau=2...T_max (extension APPROVED por el usuario): reusa
@@ -2595,77 +2600,11 @@ with tab3:
     _gamma_N_mu_tab3 = sum(_mu0_tab3[th] * _benchmarks_tab3[th]["gamma_N"] for th in _mu0_tab3)
 
     # tau=1 per-type perfect-info benchmarks (gamma_R^theta,*, alpha_R^theta,*, gamma_N^theta,*,
-    # alpha_N^theta,*): genuinely recomputed argmins of V_1^R and V_1^N at tau=1 (not copy-pasted
-    # from _benchmarks_tab3), using the tau-specific maturation filter M_tau (literal eq:m-t,
-    # real H(mu_1)/H(mu_0), computed above) for the negotiation-branch kill hazard h2, and
-    # cvn.p_surv_raw for the rescue-branch survival
-    # constant. Computed once the "Run State Optimization" button has been pressed and mu_1 is
-    # available; merged into the same session_state result used for alpha*/gamma*/H/etc.
-    if _run_state_opt_clicked and _mu1_ready_tab3 and "tau1_state_opt_result" in st.session_state:
-        # _mt_1_tab3 already computed above (literal eq:m-t, real H(mu_1)/H(mu_0)) in this
-        # same run -- reused here, not recomputed via cvn.m_t.
-        _benchmarks_tau1_tab3: dict[str, dict[str, float]] = {}
-        for _th_bm1 in ["DC", "PAR", "ELN", "FARC"]:
-            _p_surv_1 = cvn.p_surv_raw(_th_bm1, _th_bm1, _p_opt_tab3)
-            _V_R_grid_1 = _omega_k_tab3 * (1.0 - _p_surv_1) + _c_ops_tab3(_G_gamma, _G_alpha, _th_bm1)
-
-            _probs_1, _pdet_1 = cvn.outcome_probs_grid(_G_alpha, _G_gamma, _th_bm1, _p_opt_tab3, _mt_1_tab3)
-            _h2_1 = _probs_1["2"]
-            _V_N_grid_1 = (
-                _omega_p_tab3 * float(ransom_R_millions) * (1.0 - _G_alpha)
-                + _omega_k_tab3 * _h2_1
-                + _c_maint_tab3(_G_gamma, _G_alpha, _th_bm1)
-            )
-
-            # Evaluate Feasibility under degenerate belief mu_theta = 1.0 (for this type)
-            # Restricción del Secuestrador (IR^K)
-            _U_rel_1 = -cvn.KAPPA_REL[_th_bm1]
-            _p_cap_1 = cvn.p_cap_eff_grid(_G_alpha, _G_gamma, _th_bm1, _p_opt_tab3, 0.5, 0.5)
-            _U_kill_1 = (1 - _p_cap_1) * cvn.ETA_REP[_th_bm1] - _p_cap_1 * cvn.F_CAP[_th_bm1]
-            _C_tau_1 = cvn.PHI_COST[_th_bm1] * np.exp(cvn.KAPPA_C[_th_bm1] * _G_gamma) + cvn.NU_COST[_th_bm1]
-            _p_pay_1 = cvn.p_pay_eff_grid(_G_alpha, _G_gamma, _th_bm1, _p_opt_tab3, _pdet_1, _mt_1_tab3, 0.5, 0.5)
-            
-            _mu_degenerate_1 = {th: np.ones_like(_G_alpha) if th == _th_bm1 else np.zeros_like(_G_alpha) for th in cvn.TIPOS}
-            _v_next_acc_1 = _v_next_fn_tab3(_mu_degenerate_1, 2, _p_opt_tab3)
-            _V_cont_next_1 = _v_next_acc_1[_th_bm1]
-
-            _V_cont_1 = (
-                _p_pay_1 * float(ransom_R_millions) * (1.0 - _G_alpha) - _C_tau_1 - _p_cap_1 * cvn.F_CAP[_th_bm1]
-                + _p_opt_tab3.beta_tilde[_th_bm1] * (1.0 - _p_cap_1) * _V_cont_next_1
-            )
-            _ir_k_feasible_1 = (_U_rel_1 - np.maximum(_V_cont_1, _U_kill_1)) >= -1e-9
-
-            # Restricción de la Familia (IR^F)
-            _wealth_key_1 = "High wealth" if cov_wealth == "High" else "Low wealth"
-            _e_tau_f_1 = cvn.PHI_F[_wealth_key_1] * np.exp(cvn.KAPPA_F[_wealth_key_1] * _G_gamma) + cvn.NU_F[_wealth_key_1]
-            _U_coop_f_1 = _p_surv_1 * cvn.V_L_FAMILY - _e_tau_f_1
-            _U_col_f_1 = _probs_1["4"] * cvn.V_L_FAMILY - float(ransom_R_millions) - _pdet_1 * cvn.F_COL
-            _ir_f_feasible_1 = _U_coop_f_1 >= _U_col_f_1
-
-            _feasible_mask_1 = _ir_k_feasible_1 & _ir_f_feasible_1
-
-            if np.any(_feasible_mask_1):
-                _V_R_masked_1 = np.where(_feasible_mask_1, _V_R_grid_1, np.inf)
-                _V_N_masked_1 = np.where(_feasible_mask_1, _V_N_grid_1, np.inf)
-                _idx_R1 = np.unravel_index(np.argmin(_V_R_masked_1), _V_R_masked_1.shape)
-                _idx_N1 = np.unravel_index(np.argmin(_V_N_masked_1), _V_N_masked_1.shape)
-            else:
-                _idx_R1 = np.unravel_index(np.argmin(_V_R_grid_1), _V_R_grid_1.shape)
-                _idx_N1 = np.unravel_index(np.argmin(_V_N_grid_1), _V_N_grid_1.shape)
-
-            _benchmarks_tau1_tab3[_th_bm1] = {
-                "alpha_R": float(_G_alpha[_idx_R1]), "gamma_R": float(_G_gamma[_idx_R1]),
-                "alpha_N": float(_G_alpha[_idx_N1]), "gamma_N": float(_G_gamma[_idx_N1]),
-                "V_R": float(_V_R_grid_1[_idx_R1]), "V_N": float(_V_N_grid_1[_idx_N1]),
-            }
-
-        st.session_state["tau1_state_opt_result"].update({
-            "benchmarks_tau1": _benchmarks_tau1_tab3,
-            "alpha_R_mu": sum(_mu1_tab3[th] * _benchmarks_tau1_tab3[th]["alpha_R"] for th in _mu1_tab3),
-            "gamma_R_mu": sum(_mu1_tab3[th] * _benchmarks_tau1_tab3[th]["gamma_R"] for th in _mu1_tab3),
-            "alpha_N_mu": sum(_mu1_tab3[th] * _benchmarks_tau1_tab3[th]["alpha_N"] for th in _mu1_tab3),
-            "gamma_N_mu": sum(_mu1_tab3[th] * _benchmarks_tau1_tab3[th]["gamma_N"] for th in _mu1_tab3),
-        })
+    # alpha_N^theta,*): genuinely recomputed argmins of V_1^R and V_1^N at tau=1.
+    # Replaced redundant recalculation here, as these are now computed dynamically inside
+    # cvn.solve_state_problem and populated directly in st.session_state["tau1_state_opt_result"]
+    # upon execution of Tab 3.
+    pass
 
     st.markdown("---")
 

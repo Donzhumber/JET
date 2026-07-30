@@ -399,13 +399,79 @@ def solve_state_problem(
 
     feasible = ic_k_grid & ir_k_grid & ir_f_grid
 
+    # 1. Calculate per-type benchmarks for the deviation premium (anchor)
+    benchmarks = {}
+    for th in TIPOS:
+        # V_R benchmark for type th under information certainty
+        p_surv_th = p_surv_raw(th, th, p)
+        V_R_th = OMEGA_K * (1.0 - p_surv_th) + c_ops_grid(GG, GA, th)
+        
+        # V_N benchmark for type th under information certainty
+        probs_th, pdet_th = outcome_probs_grid(GA, GG, th, p, mt)
+        V_N_th = OMEGA_P * p.R_millions * (1.0 - GA) + OMEGA_K * probs_th["2"] + c_maint_grid(GG, GA, th)
+        
+        # Secuestrador IR^K under degenerate belief mu_th = 1.0
+        U_rel_th = -KAPPA_REL[th]
+        p_cap_th = p_cap_eff_grid(GA, GG, th, p, 0.5, 0.5)
+        U_kill_th = (1 - p_cap_th) * ETA_REP[th] - p_cap_th * F_CAP[th]
+        C_tau_th = PHI_COST[th] * np.exp(KAPPA_C[th] * GG) + NU_COST[th]
+        p_pay_th = p_pay_eff_grid(GA, GG, th, p, pdet_th, mt, 0.5, 0.5)
+        
+        if v_next_fn is not None:
+            mu_deg = {th_temp: np.ones_like(GA) if th_temp == th else np.zeros_like(GA) for th_temp in TIPOS}
+            v_next_deg = v_next_fn(mu_deg, tau + 1, p)
+            V_cont_next_th = v_next_deg[th]
+        else:
+            V_cont_next_th = np.zeros_like(GA)
+            
+        V_cont_th = (
+            p_pay_th * p.R_millions * (1.0 - GA) - C_tau_th - p_cap_th * F_CAP[th]
+            + p.beta_tilde[th] * (1.0 - p_cap_th) * V_cont_next_th
+        )
+        ir_k_feasible_th = (U_rel_th - np.maximum(V_cont_th, U_kill_th)) >= -1e-9
+        
+        # Familia IR^F under degenerate belief mu_th = 1.0
+        _wealth_key = "High wealth" if p.cov_wealth == "High" else "Low wealth"
+        e_tau_f_th = PHI_F[_wealth_key] * np.exp(KAPPA_F[_wealth_key] * GG) + NU_F[_wealth_key]
+        U_coop_f_th = p_surv_th * V_L_FAMILY - e_tau_f_th
+        U_col_f_th = probs_th["4"] * V_L_FAMILY - p.R_millions - pdet_th * F_COL
+        ir_f_feasible_th = U_coop_f_th >= U_col_f_th
+        
+        feasible_th = ir_k_feasible_th & ir_f_feasible_th
+        
+        if np.any(feasible_th):
+            V_R_masked_th = np.where(feasible_th, V_R_th, np.inf)
+            V_N_masked_th = np.where(feasible_th, V_N_th, np.inf)
+            idx_R_th = np.unravel_index(np.argmin(V_R_masked_th), V_R_masked_th.shape)
+            idx_N_th = np.unravel_index(np.argmin(V_N_masked_th), V_N_masked_th.shape)
+        else:
+            idx_R_th = np.unravel_index(np.argmin(V_R_th), V_R_th.shape)
+            idx_N_th = np.unravel_index(np.argmin(V_N_th), V_N_th.shape)
+            
+        benchmarks[th] = {
+            "alpha_R": float(GA[idx_R_th]),
+            "gamma_R": float(GG[idx_R_th]),
+            "alpha_N": float(GA[idx_N_th]),
+            "gamma_N": float(GG[idx_N_th]),
+        }
+
+    # 2. Calculate belief-weighted averages of benchmarks (anchors)
+    alpha_R_mu = sum(mu_arr[th] * benchmarks[th]["alpha_R"] for th in TIPOS)
+    gamma_R_mu = sum(mu_arr[th] * benchmarks[th]["gamma_R"] for th in TIPOS)
+    alpha_N_mu = sum(mu_arr[th] * benchmarks[th]["alpha_N"] for th in TIPOS)
+    gamma_N_mu = sum(mu_arr[th] * benchmarks[th]["gamma_N"] for th in TIPOS)
+
+    # 3. Solve objective functions with the correct deviation premium
     p_surv_const = sum(mu_arr[th] * (1.0 - p_surv_raw(th, _theta_hat_arr, p, _iota_arr)) for th in TIPOS)
     C_ops_mix = sum(mu_arr[th] * c_ops_grid(GG, GA, th) for th in TIPOS)
-    bench_aR = 0.3  # placeholder bayesian-center (cheap proxy: mid-grid), refined by feasible-masked search itself
-    V_R = OMEGA_K * p_surv_const + C_ops_mix + CHI_ALPHA * (GA - bench_aR) ** 2 + CHI_GAMMA * (GG - bench_aR) ** 2 - PSI_H * delta_H
+    
+    # Rescue with dynamic belief-weighted penalty
+    V_R = OMEGA_K * p_surv_const + C_ops_mix + CHI_ALPHA * (GA - alpha_R_mu) ** 2 + CHI_GAMMA * (GG - gamma_R_mu) ** 2 - PSI_H * delta_H
+    
+    # Negotiation with dynamic belief-weighted penalty
     C_maint_mix = sum(mu_arr[th] * c_maint_grid(GG, GA, th) for th in TIPOS)
     h2_mix = sum(mu_arr[th] * probs_by_type[th]["2"] for th in TIPOS)
-    V_N = OMEGA_P * p.R_millions * (1.0 - GA) + OMEGA_K * h2_mix + C_maint_mix - PSI_H * delta_H
+    V_N = OMEGA_P * p.R_millions * (1.0 - GA) + OMEGA_K * h2_mix + C_maint_mix + CHI_ALPHA * (GA - alpha_N_mu) ** 2 + CHI_GAMMA * (GG - gamma_N_mu) ** 2 - PSI_H * delta_H
 
     V_R_masked = np.where(feasible, V_R, np.inf)
     V_N_masked = np.where(feasible, V_N, np.inf)
@@ -415,9 +481,35 @@ def solve_state_problem(
     any_feasible = bool(np.any(feasible))
 
     if not any_feasible:
-        a_star, g_star, a_S = float(GA[50, 50]), float(GG[50, 50]), "Negotiate"
-        v_tau_by_type = {th: float(U_rel[th]) for th in TIPOS}
-        extra = {"H_mu": H0, "delta_H": float("nan"), "ir_k_true_gap": float("nan"), "floor_selected": float("nan")}
+        # Fallback to the unconstrained minimums of V_R and V_N instead of arbitrary (0.5, 0.5)
+        idx_r_unconstrained = np.unravel_index(np.argmin(V_R), V_R.shape)
+        idx_n_unconstrained = np.unravel_index(np.argmin(V_N), V_N.shape)
+        floor_r_unconstrained = V_R[idx_r_unconstrained]
+        floor_n_unconstrained = V_N[idx_n_unconstrained]
+        
+        if floor_r_unconstrained <= floor_n_unconstrained:
+            a_star = float(GA[idx_r_unconstrained])
+            g_star = float(GG[idx_r_unconstrained])
+            a_S = "Rescue"
+            idx_sel = idx_r_unconstrained
+        else:
+            a_star = float(GA[idx_n_unconstrained])
+            g_star = float(GG[idx_n_unconstrained])
+            a_S = "Negotiate"
+            idx_sel = idx_n_unconstrained
+            
+        v_tau_by_type = {th: float(best_k[th][idx_sel]) for th in TIPOS}
+        extra = {
+            "H_mu": H0,
+            "delta_H": float(delta_H[idx_sel]),
+            "ir_k_true_gap": float(ir_k_true_gap_grid[idx_sel]),
+            "floor_selected": float(floor_r_unconstrained if a_S == "Rescue" else floor_n_unconstrained),
+            "benchmarks_by_type": benchmarks,
+            "alpha_R_mu": alpha_R_mu,
+            "gamma_R_mu": gamma_R_mu,
+            "alpha_N_mu": alpha_N_mu,
+            "gamma_N_mu": gamma_N_mu,
+        }
         return a_star, g_star, a_S, v_tau_by_type, False, extra
 
     if floor_r <= floor_n:
@@ -433,6 +525,11 @@ def solve_state_problem(
         "delta_H": float(delta_H[idx_sel]),
         "ir_k_true_gap": float(ir_k_true_gap_grid[idx_sel]),
         "floor_selected": float(floor_r if a_S == "Rescue" else floor_n),
+        "benchmarks_by_type": benchmarks,
+        "alpha_R_mu": alpha_R_mu,
+        "gamma_R_mu": gamma_R_mu,
+        "alpha_N_mu": alpha_N_mu,
+        "gamma_N_mu": gamma_N_mu,
     }
     return a_star, g_star, a_S, v_tau_by_type, True, extra
 
