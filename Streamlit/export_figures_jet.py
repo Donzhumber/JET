@@ -357,6 +357,12 @@ def main():
     generate_case_figures("2", "ELN", "c")
     generate_case_figures("5", "FARC", "d")
     
+    # No voice case: DC (a_no_voice), PAR (b_no_voice), ELN (c_no_voice), FARC (d_no_voice)
+    generate_case_figures("8", "DC", "a_no_voice")
+    generate_case_figures("4", "PAR", "b_no_voice")
+    generate_case_figures("7", "ELN", "c_no_voice")
+    generate_case_figures("3", "FARC", "d_no_voice")
+    
     # Sync generated figures to main/Figures and main_esp/Figures
     import shutil
     dest_dirs = [
