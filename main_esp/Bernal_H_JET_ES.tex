@@ -1270,6 +1270,267 @@ FARC & 0.150 & 1.000 & 0.755 & 0.715 & 20 & Rescate \\
 \end{tabular}
 \end{table}En conjunto, el contraste ELN--PAR muestra que el mismo mecanismo bayesiano genera trayectorias de aprendizaje, intensidades de instrumentos, y tasas de viabilidad de restricciones distintas cuando, conjuntamente, cambian el tipo verdadero del captor y los márgenes institucional, familiar, de víctima, y geográfico descritos en el protocolo. Las simulaciones no sustituyen al Teorema~\ref{thm:posterior-consistency}, que requiere separación recurrente en el evento $\mathcal{T}$; ilustran que, con priors y hazards calibrados a la evidencia colombiana, el subsidio entrópico desplaza la política lejos de regímenes puramente miopes y acelera o disciplina la concentración posterior en horizontes finitos, en la dirección predicha por el resultado de identificación.
 
+\section{Simulaciones bajo Exclusión de la Comunicación de Voz}\label{sec:no-voice}
+
+Para evaluar la robustez del mecanismo de identificación, esta sección analiza las simulaciones dinámicas bajo la exclusión contrafactual del canal de comunicación de voz. En la calibración de referencia de la Sección~\ref{sec:calibracion}, la actualización bayesiana del Estado incorpora tanto las señales físicas de riesgos competitivos (desenlaces de maduración y riesgos) como las características acústicas de las llamadas de voz. Aquí, aislamos los canales físico-institucionales estableciendo el indicador de llamada de voz $V_t = 0$ para todos los períodos (o equivalentemente, desactivando la retroalimentación de verosimilitud de la comunicación). Bajo esta configuración, la única fuente de aprendizaje para el Estado consiste en las señales físico-institucionales endógenas generadas por los riesgos competitivos del MDG ($\lambda_j$). El objetivo es verificar si la creencia posterior $\mu_t$ converge al tipo de captor verdadero $\theta_K^\ast$ basándose únicamente en estos desenlaces físico-institucionales, validando que el mecanismo subyacente es autosuficiente para la identificación.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calbeliefheight}{Fig_11a_no_voice.pdf}
+  \caption{Escenario I: DC (sin voz)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calbeliefheight}{Fig_11b_no_voice.pdf}
+  \caption{Escenario II: PAR (sin voz)}
+\end{subfigure}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calbeliefheight}{Fig_11c_no_voice.pdf}
+  \caption{Escenario III: ELN (sin voz)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calbeliefheight}{Fig_11d_no_voice.pdf}
+  \caption{Escenario IV: FARC (sin voz)}
+\end{subfigure}
+\caption{Creencias bayesianas de cada tipo $\mu_\tau(\theta)$ en los diferentes escenarios bajo exclusión de comunicación de voz.}
+\label{fig:cal-eln-par-mu-novoice}
+\figurenote{\textit{Nota:} Los paneles (a)-(d) replican los escenarios de referencia pero con el canal de comunicación de voz desactivado. La banda gris marca el límite contrafactual de parada $\tau^{\mathrm{hyp}}$.}
+\end{figure}
+
+Como se muestra en la Figura~\ref{fig:cal-eln-par-mu-novoice}, la creencia posterior del tipo verdadero $\mu_t(\theta_K^\ast)$ converge a la certeza casi absoluta en los cuatro escenarios:
+\begin{itemize}
+    \item En el \emph{Escenario~I} (DC), la creencia posterior $\mu_t(\mathrm{DC})$ converge desde una actualización posterior al primer período de $0{,}130$ a $0{,}999$ en el período $\tau = 200$.
+    \item En el \emph{Escenario~II} (PAR), $\mu_t(\mathrm{PAR})$ asciende de $0{,}344$ a $0{,}997$ en el período $\tau = 200$.
+    \item En el \emph{Escenario~III} (ELN), $\mu_t(\mathrm{ELN})$ alcanza $0{,}981$ en el período $\tau = 250$.
+    \item En el \emph{Escenario~IV} (FARC), $\mu_t(\mathrm{FARC})$ alcanza $1{,}000$ en el período $\tau = 400$.
+\end{itemize}
+Estos resultados confirman la predicción teórica del Teorema~\ref{thm:posterior-consistency}: los riesgos competitivos físico-institucionales ($\lambda_j$), que dependen de los coeficientes contingentes al tipo ($\beta_{K,j,\theta}, \zeta_{i,\theta}$) y de los controles del Estado $(\alpha_t, \gamma_t)$, exhiben suficiente variación para separar asintóticamente los tipos. Desactivar el canal de voz no bloquea la identificación, pero ralentiza significativamente la velocidad de convergencia. En el caso de referencia, las características acústicas permitían que el posterior se concentrara dentro de $20$ a $105$ períodos; sin ellas, el Estado requiere una historia más larga de señales físico-institucionales (hasta $400$ períodos en el escenario FARC) para lograr una precisión equivalente. Esto destaca el papel dual de las características de la voz como un acelerador informacional y no como una condición necesaria para la identificación.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_12a_no_voice.pdf}
+  \caption{Escenario I: DC (sin voz)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_12b_no_voice.pdf}
+  \caption{Escenario II: PAR (sin voz)}
+\end{subfigure}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_12c_no_voice.pdf}
+  \caption{Escenario III: ELN (sin voz)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_12d_no_voice.pdf}
+  \caption{Escenario IV: FARC (sin voz)}
+\end{subfigure}
+\caption{Presión operativa $\gamma_t^\ast$ y punto de referencia $\gamma^R$ frente a $\tau$ bajo exclusión de comunicación de voz.}
+\label{fig:cal-eln-par-gamma-novoice}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_13a_no_voice.pdf}
+  \caption{Escenario I: DC (sin voz)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_13b_no_voice.pdf}
+  \caption{Escenario II: PAR (sin voz)}
+\end{subfigure}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_13c_no_voice.pdf}
+  \caption{Escenario III: ELN (sin voz)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_13d_no_voice.pdf}
+  \caption{Escenario IV: FARC (sin voz)}
+\end{subfigure}
+\caption{Interdicción financiera $\alpha_t^\ast$ y punto de referencia $\alpha^R$ frente a $\tau$ bajo exclusión de comunicación de voz.}
+\label{fig:cal-eln-par-alpha-novoice}
+\end{figure}
+
+Las Figuras~\ref{fig:cal-eln-par-gamma-novoice} y~\ref{fig:cal-eln-par-alpha-novoice} presentan las trayectorias de los instrumentos óptimos del Estado bajo exclusión de comunicación de voz. Debido a que el aprendizaje es más lento, el Estado mantiene niveles elevados de presión operativa $\gamma_t^\ast$ e interdicción $\alpha_t^\ast$ durante un mayor número de períodos. Por ejemplo, en el caso DC, la presión promedio es $\bar\gamma^\ast \approx 0{,}573$ y la interdicción promedio es $\bar\alpha^\ast \approx 0{,}825$ a lo largo de la simulación de 200 períodos, en comparación con $\bar\gamma^\ast \approx 0{,}564$ y $\bar\alpha^\ast \approx 0{,}896$ en el caso de referencia. La actualización más lenta significa que el Estado no puede flexibilizar rápidamente los instrumentos hacia sus puntos de referencia de información completa, permaneciendo en una fase prolongada de aprendizaje activo.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_14a_no_voice.pdf}
+  \caption{Escenario I: DC (sin voz)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_14b_no_voice.pdf}
+  \caption{Escenario II: PAR (sin voz)}
+\end{subfigure}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_14c_no_voice.pdf}
+  \caption{Escenario III: ELN (sin voz)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_14d_no_voice.pdf}
+  \caption{Escenario IV: FARC (sin voz)}
+\end{subfigure}
+\caption{Trayectoria de precisión posterior y presión operativa $(\iota_t,\gamma_t^\ast)$ bajo exclusión de comunicación de voz.}
+\label{fig:cal-eln-par-iota-gamma-novoice}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_15a_no_voice.pdf}
+  \caption{Escenario I: DC (sin voz)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_15b_no_voice.pdf}
+  \caption{Escenario II: PAR (sin voz)}
+\end{subfigure}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_15c_no_voice.pdf}
+  \caption{Escenario III: ELN (sin voz)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_15d_no_voice.pdf}
+  \caption{Escenario IV: FARC (sin voz)}
+\end{subfigure}
+\caption{Trayectoria de precisión posterior e interdicción financiera $(\iota_t,\alpha_t^\ast)$ bajo exclusión de comunicación de voz.}
+\label{fig:cal-eln-par-iota-alpha-novoice}
+\end{figure}
+
+Las trayectorias conjuntas en el espacio de precisión y política, $(\iota_t,\gamma_t^\ast)$ y $(\iota_t,\alpha_t^\ast)$ (Figuras~\ref{fig:cal-eln-par-iota-gamma-novoice} y~\ref{fig:cal-eln-par-iota-alpha-novoice}), revelan un ascenso mucho más gradual y suave en comparación con el caso de referencia, lo cual es consistente con la ausencia de saltos informacionales repentinos provenientes de las llamadas de voz.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_16a_no_voice.pdf}
+  \caption{Escenario I: DC (sin voz)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_16b_no_voice.pdf}
+  \caption{Escenario II: PAR (sin voz)}
+\end{subfigure}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_16c_no_voice.pdf}
+  \caption{Escenario III: ELN (sin voz)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_16d_no_voice.pdf}
+  \caption{Escenario IV: FARC (sin voz)}
+\end{subfigure}
+\caption{Frecuencia de cumplimiento de $\mathrm{IC}^K$, $\mathrm{IR}^K$ e $\mathrm{IR}^F$ bajo exclusión de comunicación de voz.}
+\label{fig:cal-eln-par-constraints-novoice}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_17a_no_voice.pdf}
+  \caption{Escenario I: DC (sin voz)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_17b_no_voice.pdf}
+  \caption{Escenario II: PAR (sin voz)}
+\end{subfigure}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_17c_no_voice.pdf}
+  \caption{Escenario III: ELN (sin voz)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_17d_no_voice.pdf}
+  \caption{Escenario IV: FARC (sin voz)}
+\end{subfigure}
+\caption{Sensibilidad neta $\kappa_h(\theta_K^\ast,t)$ de la duración esperada del cautiverio respecto a $\gamma_t^\ast$ bajo exclusión de comunicación de voz.}
+\label{fig:cal-eln-par-kh-novoice}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_18a_no_voice.pdf}
+  \caption{Escenario I: DC (sin voz)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_18b_no_voice.pdf}
+  \caption{Escenario II: PAR (sin voz)}
+\end{subfigure}
+
+\medskip
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_18c_no_voice.pdf}
+  \caption{Escenario III: ELN (sin voz)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+  \centering
+  \panelgraphic{\calseriesheight}{Fig_18d_no_voice.pdf}
+  \caption{Escenario IV: FARC (sin voz)}
+\end{subfigure}
+\caption{Escalamiento de maduración e indicadores de riesgo bajo exclusión de comunicación de voz.}
+\label{fig:cal-eln-par-outcomes-novoice}
+\end{figure}
+
+Además, los diagnósticos de cumplimiento en la Figura~\ref{fig:cal-eln-par-constraints-novoice} muestran que la viabilidad estratégica del mecanismo se preserva bajo este aprendizaje más lento, con las restricciones $IC^K, IR^K$ e $IR^F$ satisfechas en el 100\% de los períodos simulados. La sensibilidad $\kappa_h(\theta_K^\ast,t)$ se mantiene positiva en todos los escenarios (Figura~\ref{fig:cal-eln-par-kh-novoice}), garantizando que la presión del Estado continúa reduciendo la duración esperada del cautiverio. Los detalles de las simulaciones se resumen en la Tabla~\ref{tab:calibracion-resumen-novoice}.
+
+\begin{table}[htbp]
+\centering
+\caption{Resumen de la calibración dinámica bajo exclusión de comunicación de voz}
+\label{tab:calibracion-resumen-novoice}
+\small
+\begin{tabular}{lrrrrrl}
+\toprule
+$\theta_K^\ast$ & $\mu_1(\theta^\ast)$ & $\mu_{\tau_{\max}}(\theta^\ast)$ & $\bar{\alpha}^\ast$ & $\bar{\gamma}^\ast$ & $\tau_{\max}$ & Desenlace \\
+\midrule
+DC & 0{,}130 & 0{,}999 & 0{,}825 & 0{,}573 & 200 & Continuar \\
+PAR & 0{,}344 & 0{,}997 & 0{,}789 & 0{,}592 & 200 & Continuar \\
+ELN & 0{,}361 & 0{,}981 & 0{,}706 & 0{,}653 & 250 & Continuar \\
+FARC & 0{,}160 & 1{,}000 & 0{,}757 & 0{,}716 & 400 & Continuar \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{Discusión y conclusiones}\label{sec:conclusiones}
 
 Este artículo desarrolla un mecanismo indirecto dinámico para entornos en los que las acciones de equilibrio se agrupan y los tipos no se elicitan mediante reportes libres. Respecto a la reducción clásica vía el Principio de Revelación, la contribución es construir el objeto indirecto operativo: instrumentos públicos, ruido de implementación endógeno y aprendizaje bayesiano sobre señales generadas por acciones.
