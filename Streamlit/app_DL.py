@@ -2120,7 +2120,7 @@ with tab3:
                 # m/lambda_j scaling depends only on T_mad, not on T0/eta_cal/c_bar/H_ratio. Both
                 # trained nets (captor_value_net_T10.pt, captor_true_type_value_net_T10.pt) were
                 # retrained under this corrected cvn.m_t so their learned V(.) stays consistent.
-                _H_mu1_tab3 = float(_extra["H_mu"])
+                _H_mu1_tab3 = float(_extra.get("H_mu", 0.0))
                 _H_ratio_real_tau1 = (_H_mu1_tab3 / _H_mu0_tab3) if _H_mu0_tab3 > 1e-12 else 0.0
                 _mt_1_tab3 = cvn.m_t(1, _p_opt_tab3)
                 # ── Per-player MDG temperatures (extension APPROVED by the user -- NOT literal
@@ -2389,9 +2389,9 @@ with tab3:
                 st.session_state["tau1_state_opt_result"] = {
                     "alpha": _a_star, "gamma": _g_star, "a_S": _aS_star,
                     "V_by_type": _v_by_type, "feasible": _feasible,
-                    "H_mu": _extra["H_mu"], "delta_H": _extra["delta_H"],
-                    "ir_k_true_gap": _extra["ir_k_true_gap"], "T_trained": _T_trained_tab3,
-                    "T_tau1": _mt_1_tab3, "floor_selected": _extra["floor_selected"],
+                    "H_mu": _extra.get("H_mu", 0.0), "delta_H": _extra.get("delta_H", 0.0),
+                    "ir_k_true_gap": _extra.get("ir_k_true_gap", 0.0), "T_trained": _T_trained_tab3,
+                    "T_tau1": _mt_1_tab3, "floor_selected": _extra.get("floor_selected", 0.0),
                     "T_tau1_S": _mt_1_S_tab3, "T_tau1_F": _mt_1_F_tab3, "T_tau1_K": _mt_1_K_tab3,
                     "act_s_tau1": _act_s_tau1, "u_s_tau1": _u_s_1,
                     "p_rescue_tau1": _p_rescue_1, "p_nego_tau1": _p_nego_1,
@@ -2422,11 +2422,11 @@ with tab3:
                     "d_tau1": _d_tau1_result["d"], "d_u_tau1": _d_tau1_result["u"],
                     "p_det_tau1": _d_tau1_result["p_det"], "mu2_seed": dict(_mu2_seed_tab3),
                     "mu_tau": dict(_mu1_tab3),
-                    "benchmarks_tau1": _extra["benchmarks_by_type"],
-                    "alpha_R_mu": _extra["alpha_R_mu"],
-                    "gamma_R_mu": _extra["gamma_R_mu"],
-                    "alpha_N_mu": _extra["alpha_N_mu"],
-                    "gamma_N_mu": _extra["gamma_N_mu"],
+                    "benchmarks_tau1": _extra.get("benchmarks_by_type", {}),
+                    "alpha_R_mu": _extra.get("alpha_R_mu", 0.5),
+                    "gamma_R_mu": _extra.get("gamma_R_mu", 0.5),
+                    "alpha_N_mu": _extra.get("alpha_N_mu", 0.5),
+                    "gamma_N_mu": _extra.get("gamma_N_mu", 0.5),
                 }
 
                 # ── ciclo tau=2...T_max (extension APPROVED por el usuario): reusa
@@ -2644,10 +2644,10 @@ with tab3:
                 if _r["voice"] else None
             ),
             "using_fallback_net": False, "mu_tau": dict(_r["mu_tau"]),
-            "benchmarks_tau1": _r["benchmarks_by_type"],
-            "neg_sign_kappa_h_tau1": _r["neg_sign_kappa_h"],
-            "alpha_R_mu": _r["alpha_R_mu"], "gamma_R_mu": _r["gamma_R_mu"],
-            "alpha_N_mu": _r["alpha_N_mu"], "gamma_N_mu": _r["gamma_N_mu"],
+            "benchmarks_tau1": _r.get("benchmarks_by_type", {}),
+            "neg_sign_kappa_h_tau1": _r.get("neg_sign_kappa_h"),
+            "alpha_R_mu": _r.get("alpha_R_mu", 0.5), "gamma_R_mu": _r.get("gamma_R_mu", 0.5),
+            "alpha_N_mu": _r.get("alpha_N_mu", 0.5), "gamma_N_mu": _r.get("gamma_N_mu", 0.5),
         }
 
     _tau_display_max_tab3 = int(st.session_state.get("tau_display_max", 1))
