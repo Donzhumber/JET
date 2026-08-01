@@ -1304,7 +1304,7 @@ As shown in Figure~\ref{fig:cal-eln-par-mu-novoice}, the posterior belief of the
 \begin{itemize}
     \item In \emph{Scenario~I} (DC), the posterior belief $\mu_t(\mathrm{DC})$ converges from a post-first-period update of $0.130$ to $0.999$ by period $\tau = 200$.
     \item In \emph{Scenario~II} (PAR), $\mu_t(\mathrm{PAR})$ climbs from $0.344$ to $0.997$ by period $\tau = 200$.
-    \item In \emph{Scenario~III} (ELN), $\mu_t(\mathrm{ELN})$ reaches $0.981$ by period $\tau = 250$.
+    \item In \emph{Scenario~III} (ELN), $\mu_t(\mathrm{ELN})$ reaches $1.000$ by period $\tau = 300$.
     \item In \emph{Scenario~IV} (FARC), $\mu_t(\mathrm{FARC})$ reaches $1.000$ by period $\tau = 400$.
 \end{itemize}
 These results confirm the theoretical prediction of Theorem~\ref{thm:posterior-consistency}: the physical-institutional competing hazards ($\lambda_j$), which depend on type-contingent coefficients ($\beta_{K,j,\theta}, \zeta_{i,\theta}$) and the State's controls $(\alpha_t, \gamma_t)$, exhibit sufficient variation to asymptotically separate the types. Shutting down the voice channel does not block identification, but it significantly slows down the speed of convergence. In the baseline case, the acoustic features allowed the posterior to concentrate within $20$ to $105$ periods; without them, the State requires a longer history of physical-institutional signals (up to $400$ periods in the FARC scenario) to achieve equivalent precision. This highlights the dual role of voice features as an informational accelerator rather than a necessary condition for identification.
@@ -1522,7 +1522,7 @@ $\theta_K^\ast$ & $\mu_1(\theta^\ast)$ & $\mu_{\tau_{\max}}(\theta^\ast)$ & $\ba
 \midrule
 DC & 0.130 & 0.999 & 0.825 & 0.573 & 200 & Continue \\
 PAR & 0.344 & 0.997 & 0.789 & 0.592 & 200 & Continue \\
-ELN & 0.361 & 0.981 & 0.706 & 0.653 & 250 & Continue \\
+ELN & 0.070 & 1.000 & 0.784 & 0.673 & 300 & Continue \\
 FARC & 0.160 & 1.000 & 0.757 & 0.716 & 400 & Continue \\
 \bottomrule
 \end{tabular}
