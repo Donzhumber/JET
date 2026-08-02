@@ -537,21 +537,58 @@ pestaña 3. Toda la lógica de optimización vive en el script independiente
 \pyfile{app\_DL.py} importa directamente; la red de valor se entrena \emph{offline} (no dentro
 de la sesión de Streamlit) y se carga ya entrenada desde \pyfile{captor\_value\_net\_T10.pt}.
 
-\subsection{El problema formal}
+\subsection{El problema formal y la penalización de anclaje}
 
-Para $\tau=1$, dado $\mu_1$ (ya calculado vía la regla de Bayes de la Sección~\S\ref{sec:bayes-mu1}
-más abajo), el Estado resuelve, por rama $b\in\{\text{Rescate},\text{Negociar}\}$:
+Para $\tau=1$ (y de manera general para cualquier período $\tau$ dentro del bucle de simulación de la pestaña 3), dado el posterior $\mu_\tau$ (calculado secuencialmente a través de la regla de Bayes), el Estado resuelve la política óptima para cada rama de negociación o rescate $b\in\{\text{Rescate},\text{Negociar}\}$ resolviendo:
 \begin{equation}
 \label{eq:tau1-objective}
-V_1^b(\mu_1) = \min_{(\alpha,\gamma)\,\in\,[0,1]^2 \,:\, \Gamma_1(\mu_1)}
-\left\{\sum_\theta \mu_1(\theta)\,L_1^b(\theta,\alpha,\gamma) + \Pi^S_b(\alpha,\gamma;\mu_1) -
-\psi_H\,\Delta H_1(\alpha,\gamma)\right\},
+V_\tau^b(\mu_\tau) = \min_{(\alpha,\gamma)\,\in\,[0,1]^2 \,:\, \Gamma_\tau(\mu_\tau)}
+\left\{\sum_\theta \mu_\tau(\theta)\,L_\tau^b(\theta,\alpha,\gamma) + \Pi^S_b(\alpha,\gamma;\mu_\tau) -
+\psi_H\,\Delta H_\tau(\alpha,\gamma)\right\},
 \end{equation}
-resuelto por \textbf{búsqueda exhaustiva en malla} $101\times101$ sobre $(\alpha,\gamma)$
-(\pyvar{GA, GG = np.meshgrid(np.linspace(0,1,101), ...)}), \textbf{no} por descenso de
-gradiente ni por una red que produzca $(\alpha^\ast,\gamma^\ast)$ directamente --- la red
-entrenada solo aproxima el valor de continuación $\mathbb{E}[V_2]$ (ec.~\ref{eq:v-cont-net}
-más abajo), no la política. Después de resolver ambas ramas, $a_1^{S\ast}=\arg\min\{V_1^R,V_1^N\}$.
+donde el problema se resuelve por \textbf{búsqueda exhaustiva en malla} $101\times101$ sobre la grilla $(\alpha,\gamma) \in [0,1]^2$ (\pyvar{GA, GG = np.meshgrid(np.linspace(0,1,101), np.linspace(0,1,101))}). Nótese que la política no se obtiene por descenso de gradiente directo ni por evaluación forward de una red de política; la red entrenada únicamente aproxima el valor de continuación futuro $V_{\mathrm{cont}}(\theta,\alpha,\gamma)$ (ec.~\ref{eq:v-cont-net}), el cual alimenta el término de costo de mantenimiento en $L_\tau^N$. Tras resolver ambas ramas, el Estado elige la acción que minimice el valor esperado global: $a_\tau^{S\ast}=\arg\min_{b} \{V_\tau^R, V_\tau^N\}$.
+
+\subsubsection*{Penalización de anclaje (Prima de desviación) $\Pi^S_b(\alpha,\gamma;\mu_\tau)$}
+
+Para asegurar la convergencia y regularidad de los controles óptimos $(\alpha_t^\ast, \gamma_t^\ast)$, el término $\Pi^S_b(\alpha,\gamma;\mu_\tau)$ impone una penalización cuadrática por desviaciones respecto a los benchmarks de información perfecta ponderados por creencia:
+\begin{equation}
+\label{eq:anchoring-penalty}
+\Pi^S_b(\alpha,\gamma;\mu_\tau) = \chi_\alpha \bigl(\alpha - \alpha_b^\mu(\mu_\tau)\bigr)^2 + \chi_\gamma \bigl(\gamma - \gamma_b^\mu(\mu_\tau)\bigr)^2,
+\end{equation}
+donde los coeficientes de penalización están calibrados en $\chi_\alpha = 0.05$ y $\chi_\gamma = 0.05$. Los centros de anclaje $\alpha_b^\mu(\mu_\tau)$ y $\gamma_b^\mu(\mu_\tau)$ se determinan dinámicamente en cada período a partir de los benchmarks individuales de tipo puro $\alpha_b^{\theta,\ast}$ y $\gamma_b^{\theta,\ast}$ ponderados por la creencia actual del Estado:
+\begin{align}
+\alpha_b^\mu(\mu_\tau) &= \sum_{\theta \in \Theta} \mu_\tau(\theta) \, \alpha_b^{\theta,\ast}, \\
+\gamma_b^\mu(\mu_\tau) &= \sum_{\theta \in \Theta} \mu_\tau(\theta) \, \gamma_b^{\theta,\ast},
+\end{align}
+para cada rama $b \in \{\text{Rescate}, \text{Negociar}\}$.
+
+\subsubsection*{Benchmarks individuales bajo información perfecta}
+
+Para cada tipo puro de captor $\theta \in \Theta$, el Estado precalcula los benchmarks óptimos bajo certeza informacional. Estos benchmarks corresponden a los minimizadores de la función de pérdida sin subsidio entrópico ($\psi_H = 0$) y bajo la creencia degenerada $\mu_\theta = 1$:
+\begin{itemize}
+    \item \textbf{Rama Rescate ($b = \text{Rescate}$):}
+    \begin{equation}
+    (\alpha_R^{\theta,\ast}, \gamma_R^{\theta,\ast}) = \operatorname*{arg\,min}_{(\alpha,\gamma) \,:\, \Gamma_\tau(\mathbf{1}_\theta)} \left\{ \omega_k\bigl(1 - p_{\mathrm{surv}}(\theta,\theta)\bigr) + C_{\mathrm{ops}}(\gamma,\alpha;\theta) \right\}
+    \end{equation}
+    \item \textbf{Rama Negociación ($b = \text{Negociar}$):}
+    \begin{equation}
+    (\alpha_N^{\theta,\ast}, \gamma_N^{\theta,\ast}) = \operatorname*{arg\,min}_{(\alpha,\gamma) \,:\, \Gamma_\tau(\mathbf{1}_\theta)} \left\{ \omega_p R(1-\alpha) + \omega_k\,\bar h_2(\theta,\alpha,\gamma) + C_{\mathrm{maint}}(\gamma,\alpha;\theta) \right\}
+    \end{equation}
+\end{itemize}
+Si para algún tipo el conjunto factible degenerado $\Gamma_\tau(\mathbf{1}_\theta)$ es vacío, el benchmark respectivo se calcula sobre el mínimo no restringido en la malla.
+
+\subsubsection*{Mecanismo de escape ante infactibilidad (Fallback)}
+
+Si el conjunto factible en un período $\tau$ dado es completamente vacío, es decir, $\Gamma_\tau(\mu_\tau) = \emptyset$ (ningún punto de la grilla $101\times101$ satisface simultáneamente las tres restricciones $IC^K, IR^K$ y $IR^F$):
+\begin{enumerate}
+    \item El solver desactiva temporalmente las restricciones y evalúa las funciones objetivo completas $V_R$ y $V_N$ sobre toda la grilla para hallar sus mínimos no restringidos:
+    \begin{align}
+    idx_R^{unc} &= \operatorname*{arg\,min}_{(\alpha,\gamma)} V_R(\alpha,\gamma), \qquad V_R^{unc} = V_R(idx_R^{unc}) \\
+    idx_N^{unc} &= \operatorname*{arg\,min}_{(\alpha,\gamma)} V_N(\alpha,\gamma), \qquad V_N^{unc} = V_N(idx_N^{unc})
+    \end{align}
+    \item Compara los valores mínimos no restringidos de ambas ramas. Si $V_R^{unc} \le V_N^{unc}$, se selecciona la rama de Rescate, fijando los controles óptimos en la grilla correspondientes a $idx_R^{unc}$. En caso contrario, se selecciona la rama de Negociación, fijando los controles en $idx_N^{unc}$.
+    \item Retorna el indicador de viabilidad \pyvar{feasible = False} para propósitos de reporte y visualización en el DataFrame, permitiendo que la simulación progrese continuamente sin colapsar por indeterminación matemática.
+\end{enumerate}
 
 \subsubsection*{Términos de $L_1^b$}
 \begin{align}
