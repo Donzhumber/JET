@@ -49,14 +49,23 @@ def add_closure_band(ax, tau_closed):
 
 def plot_beliefs(ts, tau_hist, tau_closed, true_type, filename):
     fig, ax = plt.subplots(figsize=(3.4, 2.7))
-    colors = {"DC": "#4F46E5", "PAR": "#F59E0B", "ELN": "#10B981", "FARC": "#E11D48"}
+    linestyles = {"DC": "--", "PAR": ":", "ELN": "-.", "FARC": "--"}
     
     for th in ["DC", "PAR", "ELN", "FARC"]:
         y = [tau_hist[str(t)]["mu_tau"].get(th, 0.0) for t in ts]
         is_true = (th == true_type)
         label = f"{th}*" if is_true else th
-        linewidth = 2.0 if is_true else 1.0
-        ax.plot(ts, y, color=colors[th], linewidth=linewidth, label=label)
+        
+        if is_true:
+            color = "black"
+            linewidth = 2.0
+            linestyle = "-"
+        else:
+            color = "#71717a"
+            linewidth = 1.0
+            linestyle = linestyles[th]
+            
+        ax.plot(ts, y, color=color, linestyle=linestyle, linewidth=linewidth, label=label)
         
     add_closure_band(ax, tau_closed)
     
