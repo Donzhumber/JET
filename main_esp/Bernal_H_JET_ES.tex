@@ -1063,7 +1063,7 @@ El posterior del tipo verdadero permite evaluar la capacidad del mecanismo para 
   \panelgraphic{\calbeliefheight}{Fig_11d.pdf}
   \caption{Escenario IV: FARC}
 \end{subfigure}
-\caption{Creencias bayesianas de cada tipo $\mu_\tau(\theta)$ en los diferentes escenarios.}
+\caption{Creencias bayesianas de cada tipo $\mu_\tau(\theta)$ en los diferentes escenarios (en color en la versión digital).}
 \label{fig:cal-eln-par-mu}
 \figurenote{\textit{Nota:} El panel (a) corresponde al Escenario~I: $\theta_K^\ast=\mathrm{DC}$, $\theta_S$ laxo, $\theta_F$ de alta riqueza, $\theta_V$ privado, y $z$ Metrópoli. El panel (b) corresponde al Escenario~II: $\theta_K^\ast=\mathrm{PAR}$, $\theta_S$ estricto, $\theta_F$ de riqueza estándar, $\theta_V$ público, y $z$ Caribe. El panel (c) corresponde al Escenario~III: $\theta_K^\ast=\mathrm{ELN}$, $\theta_S$ estricto, $\theta_F$ de alta riqueza, $\theta_V$ privado, y $z$ Oriente-Selva. El panel (d) corresponde al Escenario~IV: $\theta_K^\ast=\mathrm{FARC}$, $\theta_S$ laxo, $\theta_F$ de alta riqueza, $\theta_V$ público, y $z$ Pacífico / Zona Roja. La banda gris marca $\tau^{\mathrm{hyp}}$, el primer período en el que el resultado del mecanismo difiere de la continuación.}
 \end{figure}
@@ -1308,11 +1308,11 @@ FARC & 0.150 & 1.000 & 0.755 & 0.715 & 20 & Rescate \\
 
 \section{Simulaciones bajo Exclusión de la Comunicación de Voz}\label{sec:no-voice}
 
-Para evaluar la robustez y suficiencia del mecanismo de identificación, esta sección analiza las simulaciones dinámicas bajo la exclusión contrafactual del canal de comunicación de voz, diferenciándose de la Sección~\ref{sec:calibracion} al eliminar por completo la información acústica mediante la condición $V_t = 0$ para todo $t$. Mientras que en la calibración de referencia de la Sección~\ref{sec:calibracion} la actualización bayesiana del Estado incorpora tanto las señales físico-institucionales de riesgos competitivos, que comprenden desenlaces de maduración y riesgos, así como las llamadas de voz, aquí aislamos los canales físico-institucionales endógenos desactivando la retroalimentación de verosimilitud de la comunicación. Bajo esta configuración, la única fuente de aprendizaje para el Estado consiste en las señales generadas por los riesgos competitivos del MDG, $\lambda_j$, con el objetivo de verificar si la creencia posterior $\mu_t$ converge al tipo de captor verdadero $\theta_K^\ast$ basándose únicamente en estos desenlaces, validando que el mecanismo es autosuficiente para la identificación.
+Para evaluar la robustez y suficiencia del mecanismo de identificación, esta sección analiza las simulaciones dinámicas bajo la exclusión contrafactual del canal de comunicación de voz, diferenciándose de la Sección~\ref{sec:calibracion} al eliminar por completo la información acústica mediante la condición $V_t = 0$ para todo $t$. Mientras que en la calibración de referencia de la Sección~\ref{sec:calibracion} la actualización bayesiana del Estado incorpora tanto las señales físico-institucionales como las llamadas de voz, aquí aislamos los canales físico-institucionales endógenos desactivando la retroalimentación de verosimilitud de la comunicación. Bajo esta configuración, la única fuente de aprendizaje para el Estado consiste en el bloque físico-institucional $\mathcal{L}_{F,t}$, el cual integra las señales de los riesgos competitivos del mecanismo $\lambda_j$ y la detección de colusión $d_t$ condicionales a las acciones ejecutadas tras el filtro MDG. El objetivo es verificar si la creencia posterior $\mu_t$ converge al tipo de captor verdadero $\theta_K^\ast$ basándose únicamente en estos desenlaces, validando que el mecanismo es autosuficiente para la identificación.
 
-Como se muestra en la Figura~\ref{fig:cal-eln-par-mu-novoice}, la creencia posterior del tipo verdadero $\mu_t(\theta_K^\ast)$ converge a la certeza casi absoluta en los cuatro escenarios bajo exclusión de comunicación de voz. En el \emph{Escenario~I}, correspondiente a DC, la creencia posterior $\mu_t(\mathrm{DC})$ converge desde una actualización posterior al primer período de $0{,}130$ a $0{,}999$ en el período $\tau = 200$. En el \emph{Escenario~II}, correspondiente a PAR, $\mu_t(\mathrm{PAR})$ asciende de $0{,}344$ a $0{,}997$ en el período $\tau = 200$. En el \emph{Escenario~III}, correspondiente a ELN, $\mu_t(\mathrm{ELN})$ alcanza aproximadamente $1{,}000$ en el período $\tau = 300$, mientras que en el \emph{Escenario~IV}, correspondiente a FARC, $\mu_t(\mathrm{FARC})$ alcanza aproximadamente $1{,}000$ en el período $\tau = 400$. Estos resultados confirman la predicción teórica del Teorema~\ref{thm:posterior-consistency}: los riesgos competitivos físico-institucionales ($\lambda_j$), que dependen de los coeficientes contingentes al tipo y de los controles del Estado $(\alpha_t, \gamma_t)$, exhiben suficiente variación para separar asintóticamente los tipos. Desactivar el canal de voz no bloquea la identificación, pero ralentiza significativamente la velocidad de convergencia en comparación con la Sección~\ref{sec:calibracion}. En el caso de referencia, las características acústicas permitían que el posterior se concentrara dentro de $20$ a $105$ períodos; sin ellas, el Estado requiere una historia de señales físico-institucionales sustancialmente más larga, llegando a requerir hasta $400$ períodos en el escenario FARC, para lograr una precisión equivalente. Esto destaca el papel de la voz como un acelerador informacional y no como una condición necesaria para la identificación.
+Como se muestra en la Figura~\ref{fig:cal-eln-par-mu-novoice}, la creencia posterior del tipo verdadero $\mu_t(\theta_K^\ast)$ se aproxima progresivamente a la certeza en los cuatro escenarios, aunque a un ritmo más lento que en el caso base. Dentro del horizonte de $\tau = 150$ períodos ilustrado en las figuras, la creencia sobre el tipo verdadero en el Escenario I (DC) se consolida en la certeza casi total desde los primeros periodos, mientras que en el Escenario II (PAR) y el Escenario III (ELN) la convergencia es evidente antes de finalizar el periodo ilustrado. Por su parte, en el Escenario IV (FARC) el aprendizaje avanza de manera gradual, lo que indica que la convergencia completa requiere horizontes de simulación más largos, del orden de 400 períodos, los cuales se extienden más allá del límite visual de las figuras. Estos resultados ilustran el comportamiento a horizonte finito en la dirección predicha por el Teorema~\ref{thm:posterior-consistency}, sin constituir una validación asintótica directa: los riesgos competitivos físico-institucionales ($\lambda_j$), que dependen de los coeficientes contingentes al tipo y de los controles del Estado $(\alpha_t, \gamma_t)$, exhiben suficiente variación para separar asintóticamente los tipos. Desactivar el canal de voz no bloquea la identificación, pero ralentiza significativamente la velocidad de convergencia en comparación con la Sección~\ref{sec:calibracion}. En el caso de referencia, las características acústicas permitían que el posterior se concentrara dentro de $20$ a $105$ períodos; sin ellas, el Estado requiere una historia de señales físico-institucionales sustancialmente más larga para lograr una precisión equivalente. Esto destaca el papel de la voz como un acelerador informacional y no como una condición necesaria para la identificación.
 
-\begin{figure}[!htbp]
+\begin{figure}[!ht]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1336,14 +1336,14 @@ Como se muestra en la Figura~\ref{fig:cal-eln-par-mu-novoice}, la creencia poste
   \panelgraphic{\calbeliefheight}{Fig_11d_no_voice.pdf}
   \caption{Escenario IV: FARC , sin voz}
 \end{subfigure}
-\caption{Creencias bayesianas de cada tipo $\mu_\tau(\theta)$ en los diferentes escenarios bajo exclusión de comunicación de voz.}
+\caption{Creencias bayesianas de cada tipo $\mu_\tau(\theta)$ en los diferentes escenarios bajo exclusión de comunicación de voz (en color en la versión digital).}
 \label{fig:cal-eln-par-mu-novoice}
 \figurenote{\textit{Nota:} Los paneles (a)-(d) replican los escenarios de referencia pero con el canal de comunicación de voz desactivado. La banda gris marca el límite contrafactual de parada $\tau^{\mathrm{hyp}}$.}
 \end{figure}
 
-La Figura~\ref{fig:cal-eln-par-gamma-novoice} presenta la trayectoria de la presión operativa óptima $\gamma_t^\ast$ y su comparación con el benchmark de información completa $\gamma^R$. Debido a que el aprendizaje es más lento sin la retroalimentación de la voz, el Estado se ve obligado a mantener niveles elevados de presión operativa durante un mayor número de períodos para inducir separación y forzar la revelación a través del hazard de rescate. Por ejemplo, en el caso DC, la presión promedio es $\bar\gamma^\ast \approx 0{,}573$ a lo largo de la simulación de 200 períodos, en comparación con $\bar\gamma^\ast \approx 0{,}564$ en la Sección~\ref{sec:calibracion}, permaneciendo en una fase prolongada de aprendizaje activo antes de flexibilizarse hacia el punto de referencia de información completa correspondiente al tipo verdadero.
+Al excluir la retroalimentación de la voz, la trayectoria de la presión operativa óptima $\gamma_t^\ast$ y su comparación con los referentes $\gamma_R^\mu$ y $\gamma_N^\mu$, detallados en la Figura~\ref{fig:cal-eln-par-gamma-novoice}, evidencian el impacto de un aprendizaje más lento sobre la persistencia del instrumento. Debido a que la adquisición de información es menos veloz sin la retroalimentación acústica, el Estado se ve obligado a prolongar niveles elevados de presión operativa durante un mayor número de períodos para inducir separación y forzar la revelación a través del hazard de rescate. Por ejemplo, en el caso DC, la presión promedio se sitúa en $\bar\gamma^\ast \approx 0{,}577$ a lo largo de los 150 períodos simulados, frente a los $\bar\gamma^\ast \approx 0{,}564$ registrados en la Sección~\ref{sec:calibracion}. Al igual que en la especificación de referencia, el control dual hace que la trayectoria de presión fluctúe entre ambos referentes antes de converger hacia el benchmark de la rama ejecutada (Negociación) una vez disipada la incertidumbre, aunque la ausencia de señales de voz prolonga significativamente la fase de aprendizaje activo.
 
-\begin{figure}[!htbp]
+\begin{figure}[!ht]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1367,13 +1367,14 @@ La Figura~\ref{fig:cal-eln-par-gamma-novoice} presenta la trayectoria de la pres
   \panelgraphic{\calseriesheight}{Fig_12d_no_voice.pdf}
   \caption{Escenario IV: FARC , sin voz}
 \end{subfigure}
-\caption{Presión operativa $\gamma_t^\ast$ y punto de referencia $\gamma^R$ frente a $\tau$ bajo exclusión de comunicación de voz.}
+\caption{Presión operativa $\gamma_t^\ast$ y puntos de referencia $\gamma_R^\mu$ y $\gamma_N^\mu$ frente a $\tau$ bajo exclusión de comunicación de voz.}
 \label{fig:cal-eln-par-gamma-novoice}
+\figurenote{\textit{Nota:} Los paneles (a)-(d) replican los escenarios con voz pero bajo la exclusión del canal de comunicación. Las líneas punteadas corresponden a los puntos de referencia de Rescate ($\gamma_R^\mu$) y Negociación ($\gamma_N^\mu$) ponderados por creencias. La banda gris marca el límite contrafactual de parada $\tau^{\mathrm{hyp}}$.}
 \end{figure}
 
-De manera similar, la Figura~\ref{fig:cal-eln-par-alpha-novoice} ilustra la trayectoria de la interdicción financiera óptima $\alpha_t^\ast$ y su comparación con el punto de referencia de información completa $\alpha^R$. Al igual que con la presión operativa, la interdicción óptima se mantiene elevada durante más períodos en todos los escenarios bajo exclusión de voz. Por ejemplo, en el Escenario I, correspondiente a DC, el promedio de interdicción a lo largo de la simulación de 200 períodos es $\bar\alpha^\ast \approx 0{,}825$, cifra inferior a la tasa de $0{,}896$ registrada durante los 35 períodos del caso de referencia con voz. Aunque el promedio sobre todo el horizonte es menor debido al retiro gradual del instrumento tras la convergencia tardía, en la fase inicial de la interacción el Estado sostiene la interdicción en niveles elevados por más tiempo para compensar la falta de señales acústicas y evitar la negociación prematura.
+En una dirección similar, la trayectoria de la interdicción financiera óptima $\alpha_t^\ast$ en relación con los referentes $\alpha_R^\mu$ y $\alpha_N^\mu$, ilustrados en la Figura~\ref{fig:cal-eln-par-alpha-novoice}, refleja una persistencia equivalente bajo la ausencia de comunicación. Al igual que con la presión operativa, el Estado se ve obligado a sostener la interdicción en niveles elevados durante un número absoluto de períodos mayor en todos los escenarios sin voz, compensando así la falta de señales acústicas y evitando la negociación prematura. Por ejemplo, en el Escenario I de DC esta mayor persistencia absoluta no se traduce en un promedio más alto: el retiro paulatino del instrumento tras la convergencia tardía extiende el horizonte relevante hasta los 150 períodos simulados, sobre los cuales el promedio es $\bar\alpha^\ast \approx 0{,}827$; el caso de referencia con voz, en cambio, converge en solo 35 períodos y registra un promedio mayor, de $0{,}896$, precisamente porque esa ventana más corta no alcanza a incluir la fase de descenso posterior a la convergencia.
 
-\begin{figure}[!htbp]
+\begin{figure}[!ht]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1397,13 +1398,14 @@ De manera similar, la Figura~\ref{fig:cal-eln-par-alpha-novoice} ilustra la tray
   \panelgraphic{\calseriesheight}{Fig_13d_no_voice.pdf}
   \caption{Escenario IV: FARC , sin voz}
 \end{subfigure}
-\caption{Interdicción financiera $\alpha_t^\ast$ y punto de referencia $\alpha^R$ frente a $\tau$ bajo exclusión de comunicación de voz.}
+\caption{Interdicción financiera $\alpha_t^\ast$ y puntos de referencia $\alpha_R^\mu$ y $\alpha_N^\mu$ frente a $\tau$ bajo exclusión de comunicación de voz.}
 \label{fig:cal-eln-par-alpha-novoice}
+\figurenote{\textit{Nota:} Los paneles (a)-(d) replican los escenarios con voz pero bajo la exclusión del canal de comunicación. Las líneas punteadas corresponden a los puntos de referencia de Rescate ($\alpha_R^\mu$) y Negociación ($\alpha_N^\mu$) ponderados por creencias. La banda gris marca el límite contrafactual de parada $\tau^{\mathrm{hyp}}$.}
 \end{figure}
 
-La Figura~\ref{fig:cal-eln-par-iota-gamma-novoice} analiza las trayectorias de precisión posterior y presión operativa en el espacio conjunto $(\iota_t,\gamma_t^\ast)$. A diferencia de la Sección~\ref{sec:calibracion}, donde la retroalimentación de voz generaba saltos informacionales marcados en los primeros períodos, la precisión posterior asciende aquí de manera continua y gradual en todos los escenarios. Esta suavidad en el incremento de la precisión refleja que el aprendizaje descansa exclusivamente en el goteo constante de las tasas de hazard del MDG. En consecuencia, la presión operativa se reduce gradualmente solo a medida que la precisión converge a su límite superior, ilustrando un acoplamiento estrecho y sin saltos discretos entre la acumulación de información física y el retiro del instrumento.
+Las trayectorias de precisión posterior y presión operativa en el espacio conjunto $(\iota_t,\gamma_t^\ast)$, que se muestran en la Figura~\ref{fig:cal-eln-par-iota-gamma-novoice}, revelan un patrón distinto al de la Sección~\ref{sec:calibracion}: mientras que allí la retroalimentación de voz generaba saltos informacionales marcados en los primeros períodos, aquí la precisión posterior asciende de manera continua y gradual en todos los escenarios. Esta suavidad en el incremento de la precisión refleja que el aprendizaje descansa exclusivamente en el goteo constante de las tasas de hazard del MDG. En consecuencia, la presión operativa se reduce gradualmente solo a medida que la precisión converge a su límite superior, ilustrando un acoplamiento estrecho y sin saltos discretos entre la acumulación de información física y el retiro del instrumento.
 
-\begin{figure}[!htbp]
+\begin{figure}[!ht]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1431,9 +1433,9 @@ La Figura~\ref{fig:cal-eln-par-iota-gamma-novoice} analiza las trayectorias de p
 \label{fig:cal-eln-par-iota-gamma-novoice}
 \end{figure}
 
-La Figura~\ref{fig:cal-eln-par-iota-alpha-novoice} muestra las trayectorias conjuntas de precisión posterior e interdicción financiera $(\iota_t,\alpha_t^\ast)$. En correspondencia con la trayectoria de la presión, el retiro de la interdicción financiera hacia la rama de información completa óptima es mucho más lento y suave. La ausencia del subsidio informacional acústico elimina las transiciones rápidas de política, forzando al Estado a sostener la interdicción financiera en niveles altos para mantener la compatibilidad de incentivos, de modo que se evite la capitulación, mientras la creencia se actualiza lentamente período a período a partir de los desenlaces físicos.
+Las trayectorias conjuntas de precisión posterior e interdicción financiera $(\iota_t,\alpha_t^\ast)$, mostradas en la Figura~\ref{fig:cal-eln-par-iota-alpha-novoice}, muestran un patrón análogo al de la presión operativa: el retiro de la interdicción financiera hacia la rama de información completa óptima es mucho más lento y suave. La ausencia del subsidio informacional acústico elimina las transiciones rápidas de política, forzando al Estado a sostener la interdicción financiera en niveles altos para mantener la compatibilidad de incentivos, de modo que se evite la capitulación, mientras la creencia se actualiza lentamente período a período a partir de los desenlaces físicos.
 
-\begin{figure}[!htbp]
+\begin{figure}[!ht]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1463,7 +1465,7 @@ La Figura~\ref{fig:cal-eln-par-iota-alpha-novoice} muestra las trayectorias conj
 
 El diagnóstico de restricciones en la Figura~\ref{fig:cal-eln-par-constraints-novoice} confirma que la viabilidad estratégica del mecanismo se preserva al 100\,\% en todos los ciclos simulados, incluso bajo las condiciones de actualización lenta por exclusión de voz. Las restricciones de racionalidad individual de la familia y el captor, denotadas por $IR^F$ e $IR^K$, así como la restricción de compatibilidad de incentivos del captor, $IC^K$, se satisfacen sin excepción. Esto demuestra que la formulación de control dual del Estado es robusta a cambios en la velocidad del aprendizaje, ajustando las trayectorias de política para asegurar que las restricciones de participación y de incentivos de equilibrio sigan siendo viables en cada período.
 
-\begin{figure}[!htbp]
+\begin{figure}[!ht]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1491,9 +1493,9 @@ El diagnóstico de restricciones en la Figura~\ref{fig:cal-eln-par-constraints-n
 \label{fig:cal-eln-par-constraints-novoice}
 \end{figure}
 
-La Figura~\ref{fig:cal-eln-par-kh-novoice} traza la sensibilidad neta de la duración esperada del cautiverio $\kappa_h(\theta_K^\ast,t)$ respecto a la presión operativa. A diferencia de las fluctuaciones observadas bajo información con voz, al desactivar la comunicación acústica la sensibilidad neta se mantiene positiva ($\kappa_h > 0$) en todos los escenarios simulados, lo que implica $\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast < 0$. Este resultado sugiere que, ante la ausencia del canal de voz que aceleraba la convergencia, el Estado debe depender críticamente del hazard de rescate físico para influir en las decisiones del captor, haciendo que la presión operativa reduzca la duración esperada del cautiverio en el 100\,\% de los ciclos simulados sin que el efecto desincentivo de la disuasión llegue a prolongar el secuestro.
+La ganancia informacional esperada $\Delta H_t$ bajo exclusión de comunicación de voz, ilustrada en la Figura~\ref{fig:cal-eln-par-dh-novoice}, se extiende sobre un horizonte considerablemente más largo que en la Sección~\ref{sec:calibracion}: sin las señales acústicas que aceleraban la convergencia, el Estado depende exclusivamente de las señales físico-institucionales de riesgos competitivos y detección, y el subsidio informacional permanece positivo durante un mayor número de períodos antes de converger a cero. Este patrón es consistente con la mayor duración observada en la concentración posterior de las creencias bajo exclusión de voz, y confirma que el motivo de exploración activa sigue operando incluso cuando el único canal disponible es el físico-institucional.
 
-\begin{figure}[!htbp]
+\begin{figure}[!ht]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1517,13 +1519,13 @@ La Figura~\ref{fig:cal-eln-par-kh-novoice} traza la sensibilidad neta de la dura
   \panelgraphic{\calseriesheight}{Fig_17d_no_voice.pdf}
   \caption{Escenario IV: FARC , sin voz}
 \end{subfigure}
-\caption{Sensibilidad neta $\kappa_h(\theta_K^\ast,t)$ de la duración esperada del cautiverio respecto a $\gamma_t^\ast$ bajo exclusión de comunicación de voz.}
-\label{fig:cal-eln-par-kh-novoice}
+\caption{Ganancia informacional esperada $\Delta H_t$ frente a $\tau$ bajo exclusión de comunicación de voz.}
+\label{fig:cal-eln-par-dh-novoice}
 \end{figure}
 
-La Figura~\ref{fig:cal-eln-par-outcomes-novoice} ilustra la evolución de las tasas de hazard de maduración y riesgos del secuestrador a lo largo de las trayectorias simuladas. El escalamiento de las tasas de maduración $\lambda_M$ y de los riesgos de cierre no regulado refleja cómo las decisiones estratégicas de los captores responden dinámicamente a la presión prolongada del Estado. A medida que la creencia bayesiana converge al tipo verdadero, la estabilización de los hazards alrededor de sus benchmarks óptimos demuestra que el comportamiento del secuestrador se disciplina hacia los desenlaces esperados de información completa, a pesar del retraso temporal inducido por la falta de señales de voz.
+La sensibilidad neta de la duración esperada del cautiverio $\kappa_h(\theta_K^\ast,t)$ respecto a la presión operativa, trazada en la Figura~\ref{fig:cal-eln-par-kh-novoice}, reproduce el mismo patrón heterogéneo entre escenarios identificado en la Sección~\ref{sec:calibracion}. En el Escenario~II (PAR) y el Escenario~IV (FARC), $\kappa_h > 0$ en el $87{,}3\,\%$ y el $91{,}3\,\%$ de los ciclos, respectivamente, lo que implica $\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast < 0$. En contraste, en el Escenario~I (DC) la sensibilidad vuelve a ser predominantemente negativa, con $\kappa_h < 0$ en el $74{,}7\,\%$ de los períodos, de modo que una mayor presión operativa tiende a prolongar el cautiverio. En el Escenario~III (ELN), la trayectoria se reparte de manera casi uniforme entre ambos regímenes, con $\kappa_h>0$ en el $50{,}0\,\%$ de los períodos. Este resultado confirma que, incluso ante la ausencia del canal de voz, el trade-off estratégico entre presión operativa y duración esperada del cautiverio identificado en la calibración de referencia se mantiene sin alteraciones cualitativas.
 
-\begin{figure}[!htbp]
+\begin{figure}[!ht]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1547,13 +1549,13 @@ La Figura~\ref{fig:cal-eln-par-outcomes-novoice} ilustra la evolución de las ta
   \panelgraphic{\calseriesheight}{Fig_18d_no_voice.pdf}
   \caption{Escenario IV: FARC , sin voz}
 \end{subfigure}
-\caption{Escalamiento de maduración e indicadores de riesgo bajo exclusión de comunicación de voz.}
-\label{fig:cal-eln-par-outcomes-novoice}
+\caption{Sensibilidad neta $\kappa_h(\theta_K^\ast,t)$ de la duración esperada del cautiverio respecto a $\gamma_t^\ast$ bajo exclusión de comunicación de voz.}
+\label{fig:cal-eln-par-kh-novoice}
 \end{figure}
 
-Los resultados cuantitativos de estas simulaciones contrafactuales, evaluados en el mismo período límite de parada de referencia $\tau^{\mathrm{hyp}}$, se resumen en la Tabla~\ref{tab:calibracion-resumen-novoice}. Al momento de la parada de referencia, la creencia posterior del tipo verdadero alcanza niveles muy elevados en DC ($\mu_{35} \approx 0{,}997$), PAR ($\mu_{105} \approx 1{,}000$) y ELN ($\mu_{75} \approx 0{,}985$), mientras que en FARC el aprendizaje más lento resulta en una creencia de tan solo $\mu_{20} \approx 0{,}463$. Esto ilustra el retardo en la velocidad de concentración del posterior inducido por la pérdida de la información acústica, forzando un horizonte de interacción mucho más largo antes de lograr el cierre.
+Los resultados cuantitativos de estas simulaciones contrafactuales, evaluados en el mismo período límite de parada de referencia $\tau^{\mathrm{hyp}}$, se resumen en la Tabla~\ref{tab:calibracion-resumen-novoice}. Al momento de la parada de referencia, la creencia posterior del tipo verdadero alcanza niveles muy elevados en DC, con $\mu_{35} \approx 0{,}997$; en PAR, con $\mu_{105} \approx 1{,}000$; y en ELN, con $\mu_{75} \approx 0{,}985$; mientras que en FARC el aprendizaje más lento resulta en una creencia de tan solo $\mu_{20} \approx 0{,}463$. Esto ilustra el retardo en la velocidad de concentración del posterior inducido por la pérdida de la información acústica, forzando un horizonte de interacción mucho más largo antes de lograr el cierre.
 
-\begin{table}[htbp]
+\begin{table}[!ht]
 \centering
 \caption{Resumen de la calibración dinámica bajo exclusión de comunicación de voz}
 \label{tab:calibracion-resumen-novoice}
@@ -1576,7 +1578,7 @@ Este artículo desarrolla un mecanismo indirecto dinámico para entornos en los 
 
 A nivel teórico, el núcleo MDG provee la materialización con soporte completo de las intenciones latentes sin un temblor exógeno, manteniendo la regla de Bayes bien definida fuera de la senda. El Teorema de Identificación de Tipos muestra que la separación recurrente en variación total de las leyes de observación condicionales al tipo implica la singularidad mutua de las medidas de trayectoria y la concentración posterior casi segura en el tipo verdadero en el evento de interacción prolongada $\mathcal{T}$. El Teorema de Implementabilidad Condicional complementa la identificación al garantizar un EBP que satisface la compatibilidad de incentivos y la racionalidad individual siempre que el conjunto factible permanezca no vacío. El resultado asintótico es deliberadamente preciso: clarifica el límite informacional de la arquitectura; el comportamiento en horizonte finito es un objeto distinto y aplicado.
 
-A nivel aplicado, el secuestro extorsivo en Colombia mapea el espacio de tipos abstracto a tecnologías criminales estimadas, donde la evidencia de riesgos competitivos y de elección multinomial disciplina los hazards y los priors. Las simulaciones dinámicas de los escenarios de referencia muestran que la regla calibrada de control dual acelera la concentración posterior en el tipo verdadero, sostiene intensidades de instrumentos elevadas pero disciplinadas y preserva la factibilidad de las restricciones IR e IC, en la dirección predicha por la teoría. Asimismo, el análisis contrafactual bajo exclusión del canal de comunicación de voz valida la robustez del mecanismo: la identificación bayesiana es autosuficiente basándose únicamente en las señales de los hazards físico-institucionales del MDG, aunque la velocidad de convergencia posterior se ralentiza significativamente y demanda una historia de interacción más prolongada para alcanzar un nivel equivalente de precisión.
+A nivel aplicado, el secuestro extorsivo en Colombia mapea el espacio de tipos abstracto a tecnologías criminales estimadas, donde la evidencia de riesgos competitivos y de elección multinomial disciplina los hazards y los priors. Las simulaciones dinámicas de los escenarios de referencia muestran que la regla calibrada de control dual acelera la concentración posterior en el tipo verdadero, sostiene intensidades de instrumentos elevadas pero disciplinadas y preserva la factibilidad de las restricciones IR e IC, en la dirección predicha por la teoría. Asimismo, el análisis contrafactual bajo exclusión del canal de comunicación de voz valida la robustez del mecanismo: la identificación bayesiana es autosuficiente basándose únicamente en las señales físico-institucionales de riesgos competitivos y detección, aunque la velocidad de convergencia posterior se ralentiza significativamente y demanda una historia de interacción más prolongada para alcanzar un nivel equivalente de precisión.
 
 Dos extensiones son naturales. La primera es una cota de identificación en horizonte finito que traduzca la separación en variación total en tasas explícitas de concentración posterior bajo parada endógena. La segunda es la identificación concurrente con múltiples agentes cuando varias partes con información privada interactúan bajo una historia pública compartida. Ambas trasladarían el marco más allá del cribado adversarial a otros mercados con implementación ruidosa y agrupamiento observacional.
 

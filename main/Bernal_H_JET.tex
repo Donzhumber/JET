@@ -1056,13 +1056,13 @@ The posterior of the true type allows evaluating the capability of the mechanism
   \panelgraphic{\calseriesheight}{Fig_12d.pdf}
   \caption{Scenario IV: FARC}
 \end{subfigure}
-\caption{Operational pressure $\gamma_t^\ast$ and benchmark $\gamma^R$ against $\tau$.}
+\caption{Operational pressure $\gamma_t^\ast$ and benchmarks $\gamma_R^\mu$ and $\gamma_N^\mu$ against $\tau$.}
 \label{fig:cal-eln-par-gamma}
-\figurenote{\textit{Note:} Panel (a) shows the operational pressure trajectory in Scenario~I (DC). Panel (b) shows the equivalent trajectory in Scenario~II (PAR). Panel (c) shows Scenario~III (ELN). Panel (d) shows Scenario~IV (FARC). The dashed line corresponds to the Rescue benchmark $\gamma^R$. The gray band marks $\tau^{\mathrm{hyp}}$.}
+\figurenote{\textit{Note:} Panel (a) shows the operational pressure trajectory in Scenario~I (DC). Panel (b) shows the equivalent trajectory in Scenario~II (PAR). Panel (c) shows Scenario~III (ELN). Panel (d) shows Scenario~IV (FARC). The dashed lines correspond to the Rescue ($\gamma_R^\mu$) and Negotiation ($\gamma_N^\mu$) belief-weighted benchmarks. The gray band marks $\tau^{\mathrm{hyp}}$.}
 \end{figure}
-The optimal operational pressure allows evaluating how the state adjusts the intensity of intervention as it learns about the captor's type. Figure~\ref{fig:cal-eln-par-gamma} compares the trajectory of $\gamma_t^\ast$ with the Rescue benchmark $\gamma^R$, which takes the value $\gamma^R=0{,}23$ in DC, $\gamma^R=0{,}37$ in PAR, $\gamma^R=0{,}50$ in ELN, and $\gamma^R=0{,}64$ in FARC. In Scenario~I (DC), $\gamma_t^\ast$ is located on average around $\bar\gamma^\ast\approx 0{,}564$. In Scenario~II (PAR), pressure reaches $\bar\gamma^\ast\approx 0{,}662$. In Scenario~III (ELN), average pressure is $\bar\gamma^\ast\approx 0{,}663$, and in Scenario~IV (FARC), it is $\bar\gamma^\ast\approx 0{,}715$. In all cases, $\gamma_t^\ast$ does not mechanically replicate either the Rescue or the Negotiate branch: dual control combines exploitation of the instrument and expected information, so the series fluctuates between benchmarks according to the material risk of the episode and the value of separating types.
+The optimal operational pressure allows evaluating how the State adjusts the intensity of intervention as it learns about the captor's type. Figure~\ref{fig:cal-eln-par-gamma} compares the trajectory of $\gamma_t^\ast$ with the belief-weighted benchmarks of the Rescue ($\gamma_R^\mu$) and Negotiation ($\gamma_N^\mu$) branches. In the baseline, the rescue benchmark values by type are $\gamma_R^{\mathrm{DC}}=0.23$, $\gamma_R^{\mathrm{PAR}}=0.37$, $\gamma_R^{\mathrm{ELN}}=0.50$, and $\gamma_R^{\mathrm{FARC}}=0.64$, while those for negotiation are $\gamma_N^{\mathrm{DC}}=0.59$, $\gamma_N^{\mathrm{PAR}}=0.64$, $\gamma_N^{\mathrm{ELN}}=0.69$, and $\gamma_N^{\mathrm{FARC}}=0.74$. In Scenario~I (DC), $\gamma_t^\ast$ is located on average around $\bar\gamma^\ast\approx 0.564$. In Scenario~II (PAR), pressure reaches $\bar\gamma^\ast\approx 0.662$. In Scenario~III (ELN), average pressure is $\bar\gamma^\ast\approx 0.663$, and in Scenario~IV (FARC), it is $\bar\gamma^\ast\approx 0.715$. In all cases, $\gamma_t^\ast$ does not mechanically replicate either of the pure branches from the beginning; the policy fluctuates between both benchmarks under dual control according to the material risk of the episode and the value of separating types. Nonetheless, as the posterior belief $\mu_t$ converges toward the captor's true type, the optimal instrument naturally converges to the full-information benchmark corresponding to the true perpetrator in the executed branch, here systematically approaching the Negotiation benchmark.
 
-The optimal financial interdiction summarizes the intensity with which the state restricts payment capacity and economic coordination during the episode. Figure~\ref{fig:cal-eln-par-alpha} compares the trajectory of $\alpha_t^\ast$ with the Rescue benchmark $\alpha^R$, which takes the value $\alpha^R=0{,}18$ in DC, $\alpha^R=0{,}31$ in PAR, $\alpha^R=0{,}45$ in ELN, and $\alpha^R=0{,}59$ in FARC. In Scenario~I (DC), $\bar\alpha^\ast\approx 0{,}896$. In Scenario~II (PAR), $\bar\alpha^\ast\approx 0{,}730$. In Scenario~III (ELN), $\bar\alpha^\ast\approx 0{,}737$, and in Scenario~IV (FARC), $\bar\alpha^\ast\approx 0{,}755$. Thus, $\alpha_t^\ast$ does not mechanically replicate a pure branch: it moves between Rescue and Negotiate benchmarks according to accumulated information, family payment capacity, and the value of inducing separation among types.
+The optimal financial interdiction summarizes the intensity with which the State restricts payment capacity and economic coordination during the episode. Figure~\ref{fig:cal-eln-par-alpha} compares the trajectory of $\alpha_t^\ast$ with the belief-weighted benchmarks of the Rescue ($\alpha_R^\mu$) and Negotiation ($\alpha_N^\mu$) branches. In the baseline, the rescue benchmark values by type are $\alpha_R^{\mathrm{DC}}=0.18$, $\alpha_R^{\mathrm{PAR}}=0.31$, $\alpha_R^{\mathrm{ELN}}=0.45$, and $\alpha_R^{\mathrm{FARC}}=0.59$, while those for negotiation are $\alpha_N^{\mathrm{DC}}=0.62$, $\alpha_N^{\mathrm{PAR}}=0.67$, $\alpha_N^{\mathrm{ELN}}=0.72$, and $\alpha_N^{\mathrm{FARC}}=0.77$. In Scenario~I (DC), $\bar\alpha^\ast\approx 0.896$. In Scenario~II (PAR), $\bar\alpha^\ast\approx 0.730$. In Scenario~III (ELN), $\bar\alpha^\ast\approx 0.737$, and in Scenario~IV (FARC), $\bar\alpha^\ast\approx 0.755$. In all cases, $\alpha_t^\ast$ does not mechanically replicate either of the pure branches from the beginning; the policy fluctuates between both benchmarks under dual control according to accumulated information, family payment capacity, and the value of inducing separation among types. In scenarios of strict state capacity, the need to separate types and prevent family collusion can temporarily place the interdiction above both benchmarks. Nonetheless, as the posterior belief $\mu_t$ converges toward the captor's true type, the optimal instrument naturally converges to the full-information benchmark corresponding to the true perpetrator in the executed branch, here systematically approaching the Negotiation benchmark.
 
 The posterior precision, defined as $\iota_t=\max_{\theta\in\ThetaK}\mu_t(\theta)$, allows observing how operational pressure changes when the state gains confidence about the identity of the true type. Figure~\ref{fig:cal-eln-par-iota-gamma} reorders the simulation on the plane $(\iota_t,\gamma_t^\ast)$; the arrows indicate the advance of $\tau$ and avoid interpreting the observations as a linear interpolation. The trajectory concentrates in zones of high pressure and rising precision, reflecting learning without immediate collapse toward a single dominant signal, and showcasing the distinct dynamics across cases.
 \vspace{-4pt}
@@ -1090,9 +1090,9 @@ The posterior precision, defined as $\iota_t=\max_{\theta\in\ThetaK}\mu_t(\theta
   \panelgraphic{\calseriesheight}{Fig_13d.pdf}
   \caption{Scenario IV: FARC}
 \end{subfigure}
-\caption{Financial interdiction $\alpha_t^\ast$ and benchmark $\alpha^R$ against $\tau$.}
+\caption{Financial interdiction $\alpha_t^\ast$ and benchmarks $\alpha_R^\mu$ and $\alpha_N^\mu$ against $\tau$.}
 \label{fig:cal-eln-par-alpha}
-\figurenote{\textit{Note:} Panel (a) presents the optimal financial interdiction in Scenario~I (DC). Panel (b) presents Scenario~II (PAR). Panel (c) presents Scenario~III (ELN). Panel (d) presents Scenario~IV (FARC). The dashed line corresponds to the Rescue benchmark $\alpha^R$. The gray band marks $\tau^{\mathrm{hyp}}$.}
+\figurenote{\textit{Note:} Panel (a) presents the optimal financial interdiction in Scenario~I (DC). Panel (b) presents Scenario~II (PAR). Panel (c) presents Scenario~III (ELN). Panel (d) presents Scenario~IV (FARC). The dashed lines correspond to the Rescue ($\alpha_R^\mu$) and Negotiation ($\alpha_N^\mu$) belief-weighted benchmarks. The gray band marks $\tau^{\mathrm{hyp}}$.}
 \end{figure}
 \vspace{-6pt}
 Financial interdiction against posterior precision allows evaluating whether learning reduces or reinforces the need to restrict payment capacity. As reported in Figure~\ref{fig:cal-eln-par-iota-alpha}, $\alpha_t^\ast$ remains high while $\iota_t$ increases across all scenarios, indicating that identifying the true type does not eliminate the value of maintaining preventive interdiction. This pattern is consistent with environments where financial interdiction retains relevance as an instrument of control, payment containment, and induction of separation among types.
@@ -1271,7 +1271,7 @@ Taken together, the four-scenario contrast shows that the same Bayesian mechanis
 
 \section{Simulations under Excluded Voice Communication}\label{sec:no-voice}
 
-To evaluate the robustness of the identification mechanism, this section analyzes the dynamic simulations under the counterfactual exclusion of the voice communication channel. In the baseline calibration of Section~\ref{sec:calibracion}, the State's Bayesian update incorporates both the physical competing-risks signals (maturation and hazard outcomes) and the acoustic features of voice calls. Here, we isolate the physical-institutional channels by setting the voice call indicator $V_t = 0$ for all periods (or equivalently, disabling the communication likelihood feedback). Under this setup, the only source of learning for the State consists of the endogenous physical-institutional signals generated by the MDG competing hazards ($\lambda_j$). The objective is to verify whether the posterior belief $\mu_t$ converges to the true captor type $\theta_K^\ast$ solely based on these physical-institutional outcomes, validating that the underlying mechanism is self-sufficient for identification.
+To evaluate the robustness of the identification mechanism, this section analyzes the dynamic simulations under the counterfactual exclusion of the voice communication channel. In the baseline calibration of Section~\ref{sec:calibracion}, the State's Bayesian update incorporates both the physical competing-risks signals (maturation and hazard outcomes) and the acoustic features of voice calls. Here, we isolate the physical-institutional channels by setting the voice call indicator $V_t = 0$ for all periods (or equivalently, disabling the communication likelihood feedback). Under this setup, the only source of learning for the State consists of the endogenous physical-institutional signals, competing hazards ($\lambda_j$) and collusion detection ($d_t$), generated after the MDG filter. The objective is to verify whether the posterior belief $\mu_t$ converges to the true captor type $\theta_K^\ast$ solely based on these physical-institutional outcomes, validating that the underlying mechanism is self-sufficient for identification.
 
 \begin{figure}[H]
 \centering
@@ -1304,8 +1304,8 @@ To evaluate the robustness of the identification mechanism, this section analyze
 
 As shown in Figure~\ref{fig:cal-eln-par-mu-novoice}, the posterior belief of the true type $\mu_t(\theta_K^\ast)$ converges to near-certainty in all four scenarios:
 \begin{itemize}
-    \item In \emph{Scenario~I} (DC), the posterior belief $\mu_t(\mathrm{DC})$ converges from a post-first-period update of $0.130$ to $0.999$ by period $\tau = 200$.
-    \item In \emph{Scenario~II} (PAR), $\mu_t(\mathrm{PAR})$ climbs from $0.344$ to $0.997$ by period $\tau = 200$.
+    \item In \emph{Scenario~I} (DC), the posterior belief $\mu_t(\mathrm{DC})$ converges from a post-first-period update of $0.130$ to $0.999$ by period $\tau = 150$.
+    \item In \emph{Scenario~II} (PAR), $\mu_t(\mathrm{PAR})$ climbs from $0.344$ to $0.989$ by period $\tau = 150$.
     \item In \emph{Scenario~III} (ELN), $\mu_t(\mathrm{ELN})$ reaches $1.000$ by period $\tau = 300$.
     \item In \emph{Scenario~IV} (FARC), $\mu_t(\mathrm{FARC})$ reaches $1.000$ by period $\tau = 400$.
 \end{itemize}
@@ -1335,8 +1335,9 @@ These results confirm the theoretical prediction of Theorem~\ref{thm:posterior-c
   \panelgraphic{\calseriesheight}{Fig_12d_no_voice.pdf}
   \caption{Scenario IV: FARC (no voice)}
 \end{subfigure}
-\caption{Operative pressure $\gamma_t^\ast$ and reference point $\gamma^R$ against $\tau$ under excluded voice communication.}
+\caption{Operative pressure $\gamma_t^\ast$ and benchmarks $\gamma_R^\mu$ and $\gamma_N^\mu$ against $\tau$ under excluded voice communication.}
 \label{fig:cal-eln-par-gamma-novoice}
+\figurenote{\textit{Note:} Panels (a)-(d) replicate the baseline scenarios but with the voice communication channel deactivated. The dashed lines correspond to the Rescue ($\gamma_R^\mu$) and Negotiation ($\gamma_N^\mu$) belief-weighted benchmarks. The gray band marks the counterfactual stopping boundary $\tau^{\mathrm{hyp}}$.}
 \end{figure}
 
 \begin{figure}[H]
@@ -1363,11 +1364,14 @@ These results confirm the theoretical prediction of Theorem~\ref{thm:posterior-c
   \panelgraphic{\calseriesheight}{Fig_13d_no_voice.pdf}
   \caption{Scenario IV: FARC (no voice)}
 \end{subfigure}
-\caption{Financial interdiction $\alpha_t^\ast$ and reference point $\alpha^R$ against $\tau$ under excluded voice communication.}
+\caption{Financial interdiction $\alpha_t^\ast$ and benchmarks $\alpha_R^\mu$ and $\alpha_N^\mu$ against $\tau$ under excluded voice communication.}
 \label{fig:cal-eln-par-alpha-novoice}
+\figurenote{\textit{Note:} Panels (a)-(d) replicate the baseline scenarios but with the voice communication channel deactivated. The dashed lines correspond to the Rescue ($\alpha_R^\mu$) and Negotiation ($\alpha_N^\mu$) belief-weighted benchmarks. The gray band marks the counterfactual stopping boundary $\tau^{\mathrm{hyp}}$.}
 \end{figure}
 
-Figures~\ref{fig:cal-eln-par-gamma-novoice} and~\ref{fig:cal-eln-par-alpha-novoice} present the trajectories of the State's optimal instruments under excluded voice communication. Because learning is slower, the State maintains high levels of operative pressure $\gamma_t^\ast$ and interdiction $\alpha_t^\ast$ for a larger number of periods. For instance, in the DC case, the average pressure is $\bar\gamma^\ast \approx 0.573$ and interdiction is $\bar\alpha^\ast \approx 0.825$ across the 200-period simulation, compared to $\bar\gamma^\ast \approx 0.564$ and $\bar\alpha^\ast \approx 0.896$ in the baseline. The slower update means the State cannot quickly ease the instruments toward their full-information benchmarks, remaining in a prolonged active-learning phase.
+Under the counterfactual exclusion of voice communication, the trajectory of the optimal operational pressure $\gamma_t^\ast$ and its comparison with the $\gamma_R^\mu$ and $\gamma_N^\mu$ benchmarks, detailed in Figure~\ref{fig:cal-eln-par-gamma-novoice}, reflect the impact of slower learning on instrument persistence. Because the acquisition of information is slower without acoustic feedback, the State is forced to prolong high levels of operational pressure for a larger number of periods to induce separation and force revelation through the rescue hazard. For instance, in the DC scenario, the average pressure is $\bar\gamma^\ast \approx 0.577$ across the 150 simulated periods, compared to the average of $\bar\gamma^\ast \approx 0.564$ in the baseline calibration with voice (Section~\ref{sec:calibracion}). Just as in the baseline, the optimal policy fluctuates between both references under dual control before converging toward the full-information benchmark of the executed branch (Negotiation) once uncertainty is resolved, although the absence of voice signals significantly extends the active-learning phase.
+
+In a similar direction, the trajectory of the optimal financial interdiction $\alpha_t^\ast$ relative to the $\alpha_R^\mu$ and $\alpha_N^\mu$ benchmarks, shown in Figure~\ref{fig:cal-eln-par-alpha-novoice}, demonstrates an equivalent persistence when communication is absent. As with operational pressure, the State is forced to sustain interdiction at elevated levels for a larger absolute number of periods across all scenarios under voice exclusion, compensating for the lack of acoustic signals and preventing premature negotiation. For instance, in Scenario I of DC this greater absolute persistence does not translate into a higher average: the gradual withdrawal of the instrument after late convergence extends the relevant horizon out to the full 150 simulated periods, yielding an average of $\bar\alpha^\ast \approx 0.827$; the baseline case with voice, by contrast, converges within just 35 periods and records a higher average of $0.896$, precisely because that shorter window never reaches the decline phase that follows convergence.
 
 \begin{figure}[H]
 \centering
@@ -1479,8 +1483,8 @@ The joint trajectories in the space of accuracy and policy, $(\iota_t,\gamma_t^\
   \panelgraphic{\calseriesheight}{Fig_17d_no_voice.pdf}
   \caption{Scenario IV: FARC (no voice)}
 \end{subfigure}
-\caption{Net sensitivity $\kappa_h(\theta_K^\ast,t)$ of expected captivity duration under excluded voice communication.}
-\label{fig:cal-eln-par-kh-novoice}
+\caption{Expected informational gain $\Delta H_t$ against $\tau$ under excluded voice communication.}
+\label{fig:cal-eln-par-dh-novoice}
 \end{figure}
 
 \begin{figure}[H]
@@ -1507,13 +1511,13 @@ The joint trajectories in the space of accuracy and policy, $(\iota_t,\gamma_t^\
   \panelgraphic{\calseriesheight}{Fig_18d_no_voice.pdf}
   \caption{Scenario IV: FARC (no voice)}
 \end{subfigure}
-\caption{Maturation scaling and hazard indicators under excluded voice communication.}
-\label{fig:cal-eln-par-outcomes-novoice}
+\caption{Net sensitivity $\kappa_h(\theta_K^\ast,t)$ of expected captivity duration under excluded voice communication.}
+\label{fig:cal-eln-par-kh-novoice}
 \end{figure}
 
-Furthermore, the compliance diagnostics in Figure~\ref{fig:cal-eln-par-constraints-novoice} show that the strategic feasibility of the mechanism is preserved under this slower learning path, with $IC^K, IR^K$, and $IR^F$ satisfied in 100\% of the simulated periods. The sensitivity $\kappa_h(\theta_K^\ast,t)$ remains positive across all scenarios (Figure~\ref{fig:cal-eln-par-kh-novoice}), ensuring that the State's pressure continues to reduce the expected duration of captivity. The simulation details are summarized in Table~\ref{tab:calibracion-resumen-novoice}.
+Furthermore, the compliance diagnostics in Figure~\ref{fig:cal-eln-par-constraints-novoice} show that the strategic feasibility of the mechanism is preserved under this slower learning path, with $IC^K, IR^K$, and $IR^F$ satisfied in 100\% of the simulated periods. Without acoustic signals to accelerate convergence, the expected informational gain $\Delta H_t$ (Figure~\ref{fig:cal-eln-par-dh-novoice}) remains positive over a substantially longer horizon than in Section~\ref{sec:calibracion}, reflecting the State's continued reliance on the physical-institutional channel alone. The net sensitivity $\kappa_h(\theta_K^\ast,t)$ (Figure~\ref{fig:cal-eln-par-kh-novoice}) reproduces the same heterogeneous pattern found in Section~\ref{sec:calibracion}: in Scenario~II (PAR) and Scenario~IV (FARC), $\kappa_h>0$ in $87.3\,\%$ and $91.3\,\%$ of cycles, respectively, so that higher operational pressure shortens expected captivity; in Scenario~I (DC), the sensitivity is again predominantly negative, with $\kappa_h<0$ in $74.7\,\%$ of periods, so that pressure instead tends to prolong captivity; and in Scenario~III (ELN) the sign splits almost evenly between both regimes, with $\kappa_h>0$ in $50.0\,\%$ of periods. This confirms that the strategic trade-off between operational pressure and expected captivity duration identified in the baseline calibration persists essentially unchanged even without the voice channel. The simulation details are summarized in Table~\ref{tab:calibracion-resumen-novoice}.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Summary of dynamic calibration under excluded voice communication}
 \label{tab:calibracion-resumen-novoice}
@@ -1522,8 +1526,8 @@ Furthermore, the compliance diagnostics in Figure~\ref{fig:cal-eln-par-constrain
 \toprule
 $\theta_K^\ast$ & $\mu_1(\theta^\ast)$ & $\mu_{\tau_{\max}}(\theta^\ast)$ & $\bar{\alpha}^\ast$ & $\bar{\gamma}^\ast$ & $\tau_{\max}$ & Outcome \\
 \midrule
-DC & 0.130 & 0.999 & 0.825 & 0.573 & 200 & Continue \\
-PAR & 0.344 & 0.997 & 0.789 & 0.592 & 200 & Continue \\
+DC & 0.130 & 0.999 & 0.827 & 0.577 & 150 & Continue \\
+PAR & 0.344 & 0.989 & 0.852 & 0.616 & 150 & Continue \\
 ELN & 0.070 & 1.000 & 0.784 & 0.673 & 300 & Continue \\
 FARC & 0.160 & 1.000 & 0.757 & 0.716 & 400 & Continue \\
 \bottomrule

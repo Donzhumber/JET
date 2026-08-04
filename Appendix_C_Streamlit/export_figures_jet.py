@@ -34,6 +34,8 @@ plt.rcParams.update({
     "legend.fontsize": 7.5,
 })
 
+COLOR_MU = {"DC": "#4F46E5", "PAR": "#F59E0B", "ELN": "#10B981", "FARC": "#E11D48"}
+
 def get_run_data(slot_key):
     run_data = runs[slot_key]["data"]
     tau_hist = run_data["tau_history_normalized"]
@@ -56,12 +58,11 @@ def plot_beliefs(ts, tau_hist, tau_closed, true_type, filename):
         is_true = (th == true_type)
         label = f"{th}*" if is_true else th
         
+        color = COLOR_MU[th]
         if is_true:
-            color = "black"
             linewidth = 2.0
             linestyle = "-"
         else:
-            color = "#71717a"
             linewidth = 1.0
             linestyle = linestyles[th]
             
@@ -294,7 +295,7 @@ def plot_delta_h(ts, tau_hist, tau_closed, filename):
     y = [tau_hist[str(t)].get("delta_H", 0.0) for t in ts_bar]
     y = [v if (v is not None and v == v) else 0.0 for v in y]
     
-    ax.bar(ts_bar, y, color="#0284C7", width=0.85, edgecolor="none")
+    ax.bar(ts_bar, y, color="black", width=0.85, edgecolor="none")
     
     add_closure_band(ax, tau_closed)
     
