@@ -1551,7 +1551,7 @@ La Figura~\ref{fig:cal-eln-par-outcomes-novoice} ilustra la evolución de las ta
 \label{fig:cal-eln-par-outcomes-novoice}
 \end{figure}
 
-Los resultados cuantitativos de estas simulaciones contrafactuales se resumen en la Tabla~\ref{tab:calibracion-resumen-novoice}. En todos los escenarios, la creencia posterior converge a la certeza casi absoluta ($\mu_{\tau_{\max}}(\theta^\ast) \ge 0{,}997$), requiriendo horizontes máximos $\tau_{\max}$ que van desde 200 períodos en DC y PAR hasta 400 períodos en FARC. En conjunto, la comparación con la Sección~\ref{sec:calibracion} resalta que el mecanismo bayesiano es robusto y autosuficiente para la identificación, operando eficazmente incluso cuando la pérdida del canal de comunicación acústica disminuye la velocidad de aprendizaje del Estado.
+Los resultados cuantitativos de estas simulaciones contrafactuales, evaluados en el mismo período límite de parada de referencia $\tau^{\mathrm{hyp}}$, se resumen en la Tabla~\ref{tab:calibracion-resumen-novoice}. Al momento de la parada de referencia, la creencia posterior del tipo verdadero alcanza niveles muy elevados en DC ($\mu_{35} \approx 0{,}997$), PAR ($\mu_{105} \approx 1{,}000$) y ELN ($\mu_{75} \approx 0{,}985$), mientras que en FARC el aprendizaje más lento resulta en una creencia de tan solo $\mu_{20} \approx 0{,}463$. Esto ilustra el retardo en la velocidad de concentración del posterior inducido por la pérdida de la información acústica, forzando un horizonte de interacción mucho más largo antes de lograr el cierre.
 
 \begin{table}[htbp]
 \centering
@@ -1560,12 +1560,12 @@ Los resultados cuantitativos de estas simulaciones contrafactuales se resumen en
 \small
 \begin{tabular}{lrrrrrl}
 \toprule
-$\theta_K^\ast$ & $\mu_0(\theta^\ast)$ & $\mu_{\tau_{\max}}(\theta^\ast)$ & $\bar{\alpha}^\ast$ & $\bar{\gamma}^\ast$ & $\tau^{\mathrm{hyp}}$ & $m_{\tau^{\mathrm{hyp}}}$ \\
+$\theta_K^\ast$ & $\mu_0(\theta^\ast)$ & $\mu_{\tau^{\mathrm{hyp}}}(\theta^\ast)$ & $\bar{\alpha}^\ast$ & $\bar{\gamma}^\ast$ & $\tau^{\mathrm{hyp}}$ & $m_{\tau^{\mathrm{hyp}}}$ \\
 \midrule
-DC & 0.350 & 0.999 & 0.825 & 0.573 & 200 & Continuar \\
-PAR & 0.150 & 0.997 & 0.789 & 0.592 & 200 & Continuar \\
-ELN & 0.250 & 1.000 & 0.784 & 0.673 & 300 & Continuar \\
-FARC & 0.150 & 1.000 & 0.757 & 0.716 & 400 & Continuar \\
+DC & 0.350 & 0.997 & 0.802 & 0.600 & 35 & Pago \\
+PAR & 0.150 & 1.000 & 0.730 & 0.658 & 105 & Rescate \\
+ELN & 0.250 & 0.985 & 0.734 & 0.666 & 75 & Liberación \\
+FARC & 0.150 & 0.463 & 0.751 & 0.706 & 20 & Rescate \\
 \bottomrule
 \end{tabular}
 \end{table}
