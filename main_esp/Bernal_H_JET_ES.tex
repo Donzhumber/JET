@@ -1308,33 +1308,33 @@ FARC & 0.150 & 1.000 & 0.755 & 0.715 & 20 & Rescate \\
 
 \section{Simulaciones bajo Exclusión de la Comunicación de Voz}\label{sec:no-voice}
 
-Para evaluar la robustez y suficiencia del mecanismo de identificación, esta sección analiza las simulaciones dinámicas bajo la exclusión contrafactual del canal de comunicación de voz, diferenciándose de la Sección~\ref{sec:calibracion} al eliminar por completo la información acústica mediante la condición $V_t = 0$ para todo $t$. Mientras que en la calibración de referencia de la Sección~\ref{sec:calibracion} la actualización bayesiana del Estado incorpora tanto las señales físico-institucionales de riesgos competitivos (desenlaces de maduración y riesgos) como las llamadas de voz, aquí aislamos los canales físico-institucionales endógenos desactivando la retroalimentación de verosimilitud de la comunicación. Bajo esta configuración, la única fuente de aprendizaje para el Estado consiste en las señales generadas por los riesgos competitivos del MDG ($\lambda_j$), con el objetivo de verificar si la creencia posterior $\mu_t$ converge al tipo de captor verdadero $\theta_K^\ast$ basándose únicamente en estos desenlaces, validando que el mecanismo es autosuficiente para la identificación.
+Para evaluar la robustez y suficiencia del mecanismo de identificación, esta sección analiza las simulaciones dinámicas bajo la exclusión contrafactual del canal de comunicación de voz, diferenciándose de la Sección~\ref{sec:calibracion} al eliminar por completo la información acústica mediante la condición $V_t = 0$ para todo $t$. Mientras que en la calibración de referencia de la Sección~\ref{sec:calibracion} la actualización bayesiana del Estado incorpora tanto las señales físico-institucionales de riesgos competitivos, que comprenden desenlaces de maduración y riesgos, así como las llamadas de voz, aquí aislamos los canales físico-institucionales endógenos desactivando la retroalimentación de verosimilitud de la comunicación. Bajo esta configuración, la única fuente de aprendizaje para el Estado consiste en las señales generadas por los riesgos competitivos del MDG, $\lambda_j$, con el objetivo de verificar si la creencia posterior $\mu_t$ converge al tipo de captor verdadero $\theta_K^\ast$ basándose únicamente en estos desenlaces, validando que el mecanismo es autosuficiente para la identificación.
 
-Como se muestra en la Figura~\ref{fig:cal-eln-par-mu-novoice}, la creencia posterior del tipo verdadero $\mu_t(\theta_K^\ast)$ converge a la certeza casi absoluta en los cuatro escenarios bajo exclusión de comunicación de voz. En el \emph{Escenario~I} (DC), la creencia posterior $\mu_t(\mathrm{DC})$ converge desde una actualización posterior al primer período de $0{,}130$ a $0{,}999$ en el período $\tau = 200$. En el \emph{Escenario~II} (PAR), $\mu_t(\mathrm{PAR})$ asciende de $0{,}344$ a $0{,}997$ en el período $\tau = 200$. En el \emph{Escenario~III} (ELN), $\mu_t(\mathrm{ELN})$ alcanza aproximadamente $1{,}000$ en el período $\tau = 300$, mientras que en el \emph{Escenario~IV} (FARC), $\mu_t(\mathrm{FARC})$ alcanza aproximadamente $1{,}000$ en el período $\tau = 400$. Estos resultados confirman la predicción teórica del Teorema~\ref{thm:posterior-consistency}: los riesgos competitivos físico-institucionales ($\lambda_j$), que dependen de los coeficientes contingentes al tipo y de los controles del Estado $(\alpha_t, \gamma_t)$, exhiben suficiente variación para separar asintóticamente los tipos. Desactivar el canal de voz no bloquea la identificación, pero ralentiza significativamente la velocidad de convergencia en comparación con la Sección~\ref{sec:calibracion}. En el caso de referencia, las características acústicas permitían que el posterior se concentrara dentro de $20$ a $105$ períodos; sin ellas, el Estado requiere una historia de señales físico-institucionales sustancialmente más larga, llegando a requerir hasta $400$ períodos en el escenario FARC, para lograr una precisión equivalente. Esto destaca el papel de la voz como un acelerador informacional y no como una condición necesaria para la identificación.
+Como se muestra en la Figura~\ref{fig:cal-eln-par-mu-novoice}, la creencia posterior del tipo verdadero $\mu_t(\theta_K^\ast)$ converge a la certeza casi absoluta en los cuatro escenarios bajo exclusión de comunicación de voz. En el \emph{Escenario~I}, correspondiente a DC, la creencia posterior $\mu_t(\mathrm{DC})$ converge desde una actualización posterior al primer período de $0{,}130$ a $0{,}999$ en el período $\tau = 200$. En el \emph{Escenario~II}, correspondiente a PAR, $\mu_t(\mathrm{PAR})$ asciende de $0{,}344$ a $0{,}997$ en el período $\tau = 200$. En el \emph{Escenario~III}, correspondiente a ELN, $\mu_t(\mathrm{ELN})$ alcanza aproximadamente $1{,}000$ en el período $\tau = 300$, mientras que en el \emph{Escenario~IV}, correspondiente a FARC, $\mu_t(\mathrm{FARC})$ alcanza aproximadamente $1{,}000$ en el período $\tau = 400$. Estos resultados confirman la predicción teórica del Teorema~\ref{thm:posterior-consistency}: los riesgos competitivos físico-institucionales ($\lambda_j$), que dependen de los coeficientes contingentes al tipo y de los controles del Estado $(\alpha_t, \gamma_t)$, exhiben suficiente variación para separar asintóticamente los tipos. Desactivar el canal de voz no bloquea la identificación, pero ralentiza significativamente la velocidad de convergencia en comparación con la Sección~\ref{sec:calibracion}. En el caso de referencia, las características acústicas permitían que el posterior se concentrara dentro de $20$ a $105$ períodos; sin ellas, el Estado requiere una historia de señales físico-institucionales sustancialmente más larga, llegando a requerir hasta $400$ períodos en el escenario FARC, para lograr una precisión equivalente. Esto destaca el papel de la voz como un acelerador informacional y no como una condición necesaria para la identificación.
 
 \begin{figure}[!htbp]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calbeliefheight}{Fig_11a_no_voice.pdf}
-  \caption{Escenario I: DC (sin voz)}
+  \caption{Escenario I: DC , sin voz}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calbeliefheight}{Fig_11b_no_voice.pdf}
-  \caption{Escenario II: PAR (sin voz)}
+  \caption{Escenario II: PAR , sin voz}
 \end{subfigure}
 
 \medskip
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calbeliefheight}{Fig_11c_no_voice.pdf}
-  \caption{Escenario III: ELN (sin voz)}
+  \caption{Escenario III: ELN , sin voz}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calbeliefheight}{Fig_11d_no_voice.pdf}
-  \caption{Escenario IV: FARC (sin voz)}
+  \caption{Escenario IV: FARC , sin voz}
 \end{subfigure}
 \caption{Creencias bayesianas de cada tipo $\mu_\tau(\theta)$ en los diferentes escenarios bajo exclusión de comunicación de voz.}
 \label{fig:cal-eln-par-mu-novoice}
@@ -1348,54 +1348,54 @@ La Figura~\ref{fig:cal-eln-par-gamma-novoice} presenta la trayectoria de la pres
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_12a_no_voice.pdf}
-  \caption{Escenario I: DC (sin voz)}
+  \caption{Escenario I: DC , sin voz}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_12b_no_voice.pdf}
-  \caption{Escenario II: PAR (sin voz)}
+  \caption{Escenario II: PAR , sin voz}
 \end{subfigure}
 
 \medskip
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_12c_no_voice.pdf}
-  \caption{Escenario III: ELN (sin voz)}
+  \caption{Escenario III: ELN , sin voz}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_12d_no_voice.pdf}
-  \caption{Escenario IV: FARC (sin voz)}
+  \caption{Escenario IV: FARC , sin voz}
 \end{subfigure}
 \caption{Presión operativa $\gamma_t^\ast$ y punto de referencia $\gamma^R$ frente a $\tau$ bajo exclusión de comunicación de voz.}
 \label{fig:cal-eln-par-gamma-novoice}
 \end{figure}
 
-De manera similar, la Figura~\ref{fig:cal-eln-par-alpha-novoice} ilustra la trayectoria de la interdicción financiera óptima $\alpha_t^\ast$ y su comparación con el punto de referencia de información completa $\alpha^R$. Al igual que con la presión operativa, la interdicción óptima se mantiene elevada durante más períodos en todos los escenarios bajo exclusión de voz. Por ejemplo, en el Escenario I (DC), el promedio de interdicción a lo largo de la simulación de 200 períodos es $\bar\alpha^\ast \approx 0{,}825$ (comparado con $0{,}896$ en los 35 períodos del caso con voz). Aunque el promedio sobre todo el horizonte es menor debido al retiro gradual del instrumento tras la convergencia tardía, en la fase inicial de la interacción el Estado sostiene la interdicción en niveles elevados por más tiempo para compensar la falta de señales acústicas y evitar la negociación prematura.
+De manera similar, la Figura~\ref{fig:cal-eln-par-alpha-novoice} ilustra la trayectoria de la interdicción financiera óptima $\alpha_t^\ast$ y su comparación con el punto de referencia de información completa $\alpha^R$. Al igual que con la presión operativa, la interdicción óptima se mantiene elevada durante más períodos en todos los escenarios bajo exclusión de voz. Por ejemplo, en el Escenario I, correspondiente a DC, el promedio de interdicción a lo largo de la simulación de 200 períodos es $\bar\alpha^\ast \approx 0{,}825$, cifra inferior a la tasa de $0{,}896$ registrada durante los 35 períodos del caso de referencia con voz. Aunque el promedio sobre todo el horizonte es menor debido al retiro gradual del instrumento tras la convergencia tardía, en la fase inicial de la interacción el Estado sostiene la interdicción en niveles elevados por más tiempo para compensar la falta de señales acústicas y evitar la negociación prematura.
 
 \begin{figure}[!htbp]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_13a_no_voice.pdf}
-  \caption{Escenario I: DC (sin voz)}
+  \caption{Escenario I: DC , sin voz}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_13b_no_voice.pdf}
-  \caption{Escenario II: PAR (sin voz)}
+  \caption{Escenario II: PAR , sin voz}
 \end{subfigure}
 
 \medskip
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_13c_no_voice.pdf}
-  \caption{Escenario III: ELN (sin voz)}
+  \caption{Escenario III: ELN , sin voz}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_13d_no_voice.pdf}
-  \caption{Escenario IV: FARC (sin voz)}
+  \caption{Escenario IV: FARC , sin voz}
 \end{subfigure}
 \caption{Interdicción financiera $\alpha_t^\ast$ y punto de referencia $\alpha^R$ frente a $\tau$ bajo exclusión de comunicación de voz.}
 \label{fig:cal-eln-par-alpha-novoice}
@@ -1408,84 +1408,84 @@ La Figura~\ref{fig:cal-eln-par-iota-gamma-novoice} analiza las trayectorias de p
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_14a_no_voice.pdf}
-  \caption{Escenario I: DC (sin voz)}
+  \caption{Escenario I: DC , sin voz}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_14b_no_voice.pdf}
-  \caption{Escenario II: PAR (sin voz)}
+  \caption{Escenario II: PAR , sin voz}
 \end{subfigure}
 
 \medskip
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_14c_no_voice.pdf}
-  \caption{Escenario III: ELN (sin voz)}
+  \caption{Escenario III: ELN , sin voz}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_14d_no_voice.pdf}
-  \caption{Escenario IV: FARC (sin voz)}
+  \caption{Escenario IV: FARC , sin voz}
 \end{subfigure}
 \caption{Trayectoria de precisión posterior y presión operativa $(\iota_t,\gamma_t^\ast)$ bajo exclusión de comunicación de voz.}
 \label{fig:cal-eln-par-iota-gamma-novoice}
 \end{figure}
 
-La Figura~\ref{fig:cal-eln-par-iota-alpha-novoice} muestra las trayectorias conjuntas de precisión posterior e interdicción financiera $(\iota_t,\alpha_t^\ast)$. En correspondencia con la trayectoria de la presión, el retiro de la interdicción financiera hacia la rama de información completa óptima es mucho más lento y suave. La ausencia del subsidio informacional acústico elimina las transiciones rápidas de política, forzando al Estado a sostener la interdicción financiera en niveles altos para mantener la compatibilidad de incentivos (evitando la capitulación) mientras la creencia se actualiza lentamente período a período a partir de los desenlaces físicos.
+La Figura~\ref{fig:cal-eln-par-iota-alpha-novoice} muestra las trayectorias conjuntas de precisión posterior e interdicción financiera $(\iota_t,\alpha_t^\ast)$. En correspondencia con la trayectoria de la presión, el retiro de la interdicción financiera hacia la rama de información completa óptima es mucho más lento y suave. La ausencia del subsidio informacional acústico elimina las transiciones rápidas de política, forzando al Estado a sostener la interdicción financiera en niveles altos para mantener la compatibilidad de incentivos, de modo que se evite la capitulación, mientras la creencia se actualiza lentamente período a período a partir de los desenlaces físicos.
 
 \begin{figure}[!htbp]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_15a_no_voice.pdf}
-  \caption{Escenario I: DC (sin voz)}
+  \caption{Escenario I: DC , sin voz}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_15b_no_voice.pdf}
-  \caption{Escenario II: PAR (sin voz)}
+  \caption{Escenario II: PAR , sin voz}
 \end{subfigure}
 
 \medskip
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_15c_no_voice.pdf}
-  \caption{Escenario III: ELN (sin voz)}
+  \caption{Escenario III: ELN , sin voz}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_15d_no_voice.pdf}
-  \caption{Escenario IV: FARC (sin voz)}
+  \caption{Escenario IV: FARC , sin voz}
 \end{subfigure}
 \caption{Trayectoria de precisión posterior e interdicción financiera $(\iota_t,\alpha_t^\ast)$ bajo exclusión de comunicación de voz.}
 \label{fig:cal-eln-par-iota-alpha-novoice}
 \end{figure}
 
-El diagnóstico de restricciones en la Figura~\ref{fig:cal-eln-par-constraints-novoice} confirma que la viabilidad estratégica del mecanismo se preserva al 100\,\% en todos los ciclos simulados, incluso bajo las condiciones de actualización lenta por exclusión de voz. Las restricciones de racionalidad individual de la familia y el captor ($IR^F, IR^K$), así como la restricción de compatibilidad de incentivos del captor ($IC^K$), se satisfacen sin excepción. Esto demuestra que la formulación de control dual del Estado es robusta a cambios en la velocidad del aprendizaje, ajustando las trayectorias de política para asegurar que las restricciones de participación y de incentivos de equilibrio sigan siendo viables en cada período.
+El diagnóstico de restricciones en la Figura~\ref{fig:cal-eln-par-constraints-novoice} confirma que la viabilidad estratégica del mecanismo se preserva al 100\,\% en todos los ciclos simulados, incluso bajo las condiciones de actualización lenta por exclusión de voz. Las restricciones de racionalidad individual de la familia y el captor, denotadas por $IR^F$ e $IR^K$, así como la restricción de compatibilidad de incentivos del captor, $IC^K$, se satisfacen sin excepción. Esto demuestra que la formulación de control dual del Estado es robusta a cambios en la velocidad del aprendizaje, ajustando las trayectorias de política para asegurar que las restricciones de participación y de incentivos de equilibrio sigan siendo viables en cada período.
 
 \begin{figure}[!htbp]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_16a_no_voice.pdf}
-  \caption{Escenario I: DC (sin voz)}
+  \caption{Escenario I: DC , sin voz}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_16b_no_voice.pdf}
-  \caption{Escenario II: PAR (sin voz)}
+  \caption{Escenario II: PAR , sin voz}
 \end{subfigure}
 
 \medskip
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_16c_no_voice.pdf}
-  \caption{Escenario III: ELN (sin voz)}
+  \caption{Escenario III: ELN , sin voz}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_16d_no_voice.pdf}
-  \caption{Escenario IV: FARC (sin voz)}
+  \caption{Escenario IV: FARC , sin voz}
 \end{subfigure}
 \caption{Frecuencia de cumplimiento de $\mathrm{IC}^K$, $\mathrm{IR}^K$ e $\mathrm{IR}^F$ bajo exclusión de comunicación de voz.}
 \label{fig:cal-eln-par-constraints-novoice}
@@ -1498,24 +1498,24 @@ La Figura~\ref{fig:cal-eln-par-kh-novoice} traza la sensibilidad neta de la dura
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_17a_no_voice.pdf}
-  \caption{Escenario I: DC (sin voz)}
+  \caption{Escenario I: DC , sin voz}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_17b_no_voice.pdf}
-  \caption{Escenario II: PAR (sin voz)}
+  \caption{Escenario II: PAR , sin voz}
 \end{subfigure}
 
 \medskip
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_17c_no_voice.pdf}
-  \caption{Escenario III: ELN (sin voz)}
+  \caption{Escenario III: ELN , sin voz}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_17d_no_voice.pdf}
-  \caption{Escenario IV: FARC (sin voz)}
+  \caption{Escenario IV: FARC , sin voz}
 \end{subfigure}
 \caption{Sensibilidad neta $\kappa_h(\theta_K^\ast,t)$ de la duración esperada del cautiverio respecto a $\gamma_t^\ast$ bajo exclusión de comunicación de voz.}
 \label{fig:cal-eln-par-kh-novoice}
@@ -1528,24 +1528,24 @@ La Figura~\ref{fig:cal-eln-par-outcomes-novoice} ilustra la evolución de las ta
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_18a_no_voice.pdf}
-  \caption{Escenario I: DC (sin voz)}
+  \caption{Escenario I: DC , sin voz}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_18b_no_voice.pdf}
-  \caption{Escenario II: PAR (sin voz)}
+  \caption{Escenario II: PAR , sin voz}
 \end{subfigure}
 
 \medskip
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_18c_no_voice.pdf}
-  \caption{Escenario III: ELN (sin voz)}
+  \caption{Escenario III: ELN , sin voz}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
   \panelgraphic{\calseriesheight}{Fig_18d_no_voice.pdf}
-  \caption{Escenario IV: FARC (sin voz)}
+  \caption{Escenario IV: FARC , sin voz}
 \end{subfigure}
 \caption{Escalamiento de maduración e indicadores de riesgo bajo exclusión de comunicación de voz.}
 \label{fig:cal-eln-par-outcomes-novoice}
