@@ -153,7 +153,7 @@
 \address{Programa de Economía, Universidad Colegio Mayor de Cundinamarca; Ph.D. en Economía, Universidad de los Andes, Colombia.}
 
 \begin{abstract}
-Este artículo estudia el diseño dinámico de mecanismos indirectos cuando un principal debe cribar a un agente cuyas acciones de equilibrio se agrupan, de modo que la observación pasiva no puede separar los tipos. La contribución es teórica. El artículo introduce el proceso Mano de Dios--Guadalupe (MDG), un núcleo de implementación de ruido endógeno que transforma intenciones estratégicas latentes en acciones ejecutadas preservando el soporte completo fuera de la senda de equilibrio sin una perturbación exógena de mano temblorosa. Combinando el MDG con riesgos competitivos y un motivo activo de adquisición de información, el artículo establece un Teorema de Identificación de Tipos: la separación uniforme en variación total entre las leyes de observación condicionales al tipo implica la singularidad mutua de las leyes de trayectoria mediante el criterio de \citet{Kakutani1948}, de modo que las creencias bayesianas convergen casi seguramente al tipo verdadero en el evento de interacción prolongada. Un Teorema de Implementabilidad Condicional del Mecanismo garantiza luego un equilibrio bayesiano perfecto que satisface la compatibilidad de incentivos y la racionalidad individual siempre que el conjunto factible de políticas sea no vacío. Ambos resultados están verificados computacionalmente en Lean~4. El secuestro extorsivo en Colombia se usa como validación aplicada: las huellas microeconométricas calibran los hazards específicos por tipo, y las simulaciones ELN--PAR ilustran el aprendizaje en horizonte finito, las trayectorias de los instrumentos y el cumplimiento de restricciones bajo el mecanismo calibrado.
+Este artículo estudia el diseño dinámico de mecanismos indirectos cuando un principal debe cribar a un agente cuyas acciones de equilibrio se agrupan, de modo que la observación pasiva no puede separar los tipos. La contribución es teórica. El artículo introduce el proceso Mano de Dios--Guadalupe (MDG), un núcleo de implementación de ruido endógeno que transforma intenciones estratégicas latentes en acciones ejecutadas preservando el soporte completo fuera de la senda de equilibrio sin una perturbación exógena de mano temblorosa. Combinando el MDG con riesgos competitivos y un motivo activo de adquisición de información, el artículo establece un Teorema de Identificación de Tipos: la separación uniforme en variación total entre las leyes de observación condicionales al tipo implica la singularidad mutua de las leyes de trayectoria mediante el criterio de \citet{Kakutani1948}, de modo que las creencias bayesianas convergen casi seguramente al tipo verdadero en el evento de interacción prolongada. Un Teorema de Implementabilidad Condicional del Mecanismo garantiza luego un equilibrio bayesiano perfecto que satisface la compatibilidad de incentivos y la racionalidad individual siempre que el conjunto factible de políticas sea no vacío. Ambos resultados están verificados computacionalmente en Lean~4. El secuestro extorsivo en Colombia se usa como validación aplicada: las huellas microeconométricas calibran los hazards específicos por tipo, y las simulaciones de cuatro escenarios (DC, PAR, ELN y FARC) ilustran el aprendizaje en horizonte finito, las trayectorias de los instrumentos y el cumplimiento de restricciones bajo el mecanismo calibrado.
 \end{abstract}
 
 \begin{keyword}
@@ -184,9 +184,9 @@ La tercera contribución es el Teorema de Identificación de Tipos Racionales. C
 La cuarta contribución es el Teorema de Implementabilidad Condicional del Mecanismo. La identificación por sí sola no hace ejecutable un mecanismo: el teorema muestra que, siempre que el conjunto factible definido por la compatibilidad de incentivos y la racionalidad individual permanezca no vacío, existe un EBP en el que la regla óptima del principal implementa la elección social sujeta a esas restricciones. Así, el MDG, el aprendizaje y la factibilidad de incentivos forman una sola arquitectura: el ruido habilita la actualización fuera de la senda; la separación habilita la identificación; y un $\Gamma_t(\mu_t)$ no vacío habilita la implementación en equilibrio.
 
 \paragraph{Validación aplicada}
-Las Secciones~\ref{sec:application}--\ref{sec:calibracion} mapean el entorno abstracto al secuestro extorsivo en Colombia. Las estimaciones de logit multinomial y de riesgos competitivos, obtenidas a partir de los microdatos del Centro Nacional de Memoria Histórica documentados por \citet{cnmh_datos}, proveen los hazards específicos por tipo. Con esa huella empírica, las calibraciones ELN y PAR reportan las trayectorias posteriores, las sendas de instrumentos, la ganancia informacional y el cumplimiento de las restricciones IR e IC. La aplicación es una capa de validación, no la primitiva teórica.
+Las Secciones~\ref{sec:application}--\ref{sec:calibracion} mapean el entorno abstracto al secuestro extorsivo en Colombia. Las estimaciones de logit multinomial y de riesgos competitivos, obtenidas a partir de los microdatos del Centro Nacional de Memoria Histórica documentados por \citet{cnmh_datos}, proveen los hazards específicos por tipo. Con esa huella empírica, las calibraciones de DC, PAR, ELN y FARC reportan las trayectorias posteriores, las sendas de instrumentos, la ganancia informacional y el cumplimiento de las restricciones IR e IC. La aplicación es una capa de validación, no la primitiva teórica.
 
-El resto del artículo se organiza como sigue. La Sección~\ref{sec:model} presenta el entorno general, el mecanismo indirecto, el núcleo MDG, los riesgos competitivos y las mejores respuestas para tipos desconocidos arbitrarios, e incluye el Teorema de Identificación de Tipos Racionales. La Sección~\ref{sec:implementabilidad} establece la implementabilidad condicional en EBP y discute las implicaciones de política. La Sección~\ref{sec:application} especializa el modelo al secuestro en Colombia y ancla empíricamente el espacio de parámetros. La Sección~\ref{sec:calibracion} calibra el mecanismo y reporta las simulaciones ELN--PAR. La Sección~\ref{sec:conclusiones} discute los resultados y concluye. Los Apéndices Suplementarios contienen la macroeconometría, el detalle microeconométrico y las demostraciones formales.
+El resto del artículo se organiza como sigue. La Sección~\ref{sec:model} presenta el entorno general, el mecanismo indirecto, el núcleo MDG, los riesgos competitivos y las mejores respuestas para tipos desconocidos arbitrarios, e incluye el Teorema de Identificación de Tipos Racionales. La Sección~\ref{sec:implementabilidad} establece la implementabilidad condicional en EBP y discute las implicaciones de política. La Sección~\ref{sec:application} especializa el modelo al secuestro en Colombia y ancla empíricamente el espacio de parámetros. La Sección~\ref{sec:calibracion} calibra el mecanismo y reporta las simulaciones. La Sección~\ref{sec:conclusiones} discute los resultados y concluye. Los Apéndices Suplementarios contienen la macroeconometría, el detalle microeconométrico y las demostraciones formales.
 
 
 \section{Entorno General y Mecanismo Indirecto}\label{sec:model}
@@ -999,12 +999,47 @@ El MNL y el modelo de Cox conectan la evidencia microeconómica con la distribuc
 
 \section{Calibración del mecanismo y simulaciones}\label{sec:calibracion}
 \normalfont\normalsize
-Esta sección calibra el mecanismo especializado de la Sección~\ref{sec:application} en cuatro episodios simulados de horizonte finito, manteniendo fija la arquitectura general de la Sección~\ref{sec:model}. El ejercicio combina priors y diagnósticos microeconométricos para estudiar cuatro objetos: la evolución de las creencias $\mu_t(\theta)$, las señales observadas por el Estado, la respuesta de los instrumentos $(\alpha_t,\gamma_t)$, y el cumplimiento de las restricciones IR e IC. El \emph{Escenario~I} corresponde a DC, con $\theta_K^\ast=\mathrm{DC}$, Estado laxo, familia de alta riqueza, víctima privada, y localización Metrópoli; el \emph{Escenario~II} corresponde a PAR, con $\theta_K^\ast=\mathrm{PAR}$, Estado estricto, familia de riqueza estándar, víctima pública, y localización Caribe; el \emph{Escenario~III} corresponde a ELN, con $\theta_K^\ast=\mathrm{ELN}$, Estado estricto, familia de alta riqueza, víctima privada, y localización Oriente-Selva; y el \emph{Escenario~IV} corresponde a FARC, con $\theta_K^\ast=\mathrm{FARC}$, Estado laxo, familia de alta riqueza, víctima pública, y localización Pacífico / Zona Roja. Ambos se simulan sobre un horizonte fijo $\bar{T}=150$ períodos, y la política óptima se calcula a partir de la minimización del costo social del Estado. En el orden $(\mathrm{DC},\mathrm{PAR},\mathrm{ELN},\mathrm{FARC})$, los priors iniciales son $\mu_0^{\mathrm{DC}}=(0.35,0.35,0.15,0.15)$, $\mu_0^{\mathrm{PAR}}=(0.15,0.15,0.25,0.45)$, $\mu_0^{\mathrm{ELN}}=(0.05,0.35,0.25,0.35)$, y $\mu_0^{\mathrm{FARC}}=(0.35,0.35,0.15,0.15)$. En las figuras, la barra gris marca el tiempo de parada realizado $\tau$; la trayectoria posterior a esa barra es una extensión contrafactual bajo un estado absorbente, siguiendo la ley del mecanismo condicionada a la no absorción, que ilustra la dinámica de aprendizaje e identificación independientemente del momento de cierre, sin constituir una trayectoria real de episodio.
+Esta sección calibra el mecanismo especializado de la Sección~\ref{sec:application} en cuatro episodios simulados de horizonte finito, manteniendo fija la arquitectura general de la Sección~\ref{sec:model}. El ejercicio combina priors y diagnósticos microeconométricos para estudiar cuatro objetos: la evolución de las creencias $\mu_t(\theta)$, las señales observadas por el Estado, la respuesta de los instrumentos $(\alpha_t,\gamma_t)$, y el cumplimiento de las restricciones IR e IC. Establecer estos cuatro objetos requiere resolver el mecanismo completo mediante inducción hacia atrás, y por ello se recurre a inteligencia artificial: la resolución de la ecuación de Bellman para la rama de continuación del secuestrador mediante optimización tradicional resulta computacionalmente costosa, pues exige recalcular recursivamente el valor esperado de mantener el cautiverio en cada período; este mismo costo recursivo se propaga a la solución de todo el mecanismo, ya que el problema de control dual del Estado necesita ese valor de continuación en cada período para determinar los instrumentos óptimos que garanticen $\Gamma_t^{a^S}(\mu_t)$. Para reducir drásticamente este costo computacional y anticipar las decisiones futuras, el modelo emplea un aproximador de valor basado en un perceptrón multicapa (MLP), entrenado en dos instancias independientes: una aproxima el valor de continuación que alimenta la optimización del Estado, y la otra aproxima la respuesta óptima del secuestrador bajo su tipo verdadero. Esta aproximación mediante redes neuronales funciona como un simulador avanzado que analiza 34 variables del entorno para predecir qué valor le asigna cada actor a continuar la interacción. La red se entrenó mediante algoritmos de aprendizaje profundo que evaluaron 2.000 escenarios posibles generados por computadora. En la práctica, el sistema realiza este cálculo en tiempo real para determinar de forma óptima tanto la respuesta del captor como la política del Estado ante distintos niveles de presión e instrumentos de control. Todos los detalles matemáticos de la arquitectura, la configuración de la red, y el proceso de calibración computacional se desarrollan completamente en el Apéndice C.
 
-A diferencia de una política puramente miope que omite el término $-\psi_H\Delta H_t$, la regla calibrada en este modelo internaliza el subsidio informacional del Estado, lo que le permite reasignar estratégicamente los instrumentos $(\alpha_t,\gamma_t)$ hacia zonas de la grilla que maximizan la separación de las verosimilitudes de los tipos rivales. De este modo, los ejercicios numéricos para los casos DC, PAR, ELN y FARC permiten ilustrar tres implicaciones operativas fundamentales de la teoría: en primer lugar, la concentración de la creencia posterior en un horizonte finito en la dirección que predice el Teorema~\ref{thm:posterior-consistency}; en segundo lugar, la actualización bayesiana con soporte completo a lo largo de las trayectorias que habilita el MDG; y, en tercer lugar, el cumplimiento ex-post de las restricciones $IC^K$, $IR^K$ e $IR^F$ conforme a la lógica de implementabilidad descrita en el Teorema~\ref{thm:ebp-implementabilidad}. Conviene subrayar que estas simulaciones ilustran el aprendizaje a horizonte finito y no pretenden demostrar la identificación asintótica sobre $\mathcal{T}$, la cual se mantiene estrictamente como un resultado teórico límite.
+Para evaluar el desempeño dinámico del modelo, la calibración se inicializa mediante la selección de un conjunto de parámetros iniciales y covariables que definen el entorno del secuestro. En este diseño, el modelador determina de forma exógena el tipo privado del captor, lo cual constituye el benchmark de verdad para medir el aprendizaje. No obstante, en consistencia con el supuesto de información incompleta, el mecanismo dinámico opera de tal forma que tanto el Estado como la familia desconocen dicho tipo privado, interactuando y decidiendo sus estrategias óptimas únicamente a partir de sus creencias o priors bayesianos.
 
+El \emph{Escenario~I} corresponde a DC, con $\theta_K^\ast=\mathrm{DC}$, Estado laxo, familia de alta riqueza, víctima privada, y localización Metrópoli; el \emph{Escenario~II} corresponde a PAR, con $\theta_K^\ast=\mathrm{PAR}$, Estado estricto, familia de riqueza estándar, víctima pública, y localización Caribe; el \emph{Escenario~III} corresponde a ELN, con $\theta_K^\ast=\mathrm{ELN}$, Estado estricto, familia de alta riqueza, víctima privada, y localización Oriente-Selva; y el \emph{Escenario~IV} corresponde a FARC, con $\theta_K^\ast=\mathrm{FARC}$, Estado laxo, familia de alta riqueza, víctima pública, y localización Pacífico / Zona Roja. Los cuatro se simulan sobre un horizonte fijo $\bar{T}=150$ períodos, y la política óptima se calcula a partir de la minimización del costo social del Estado. En el orden $(\mathrm{DC},\mathrm{PAR},\mathrm{ELN},\mathrm{FARC})$, los priors iniciales son $\mu_0^{\mathrm{DC}}=(0.35,0.35,0.15,0.15)$, $\mu_0^{\mathrm{PAR}}=(0.15,0.15,0.25,0.45)$, $\mu_0^{\mathrm{ELN}}=(0.05,0.35,0.25,0.35)$, y $\mu_0^{\mathrm{FARC}}=(0.35,0.35,0.15,0.15)$. Las Tablas~\ref{tab:covariables-escenarios} y \ref{tab:priors-escenarios} presentan el resumen estructurado de los cuatro escenarios evaluados, detallando respectivamente la configuración de las covariables contextuales de Estado, familia, víctima y localización, así como las creencias iniciales (\emph{priors}) asignadas a cada tipo de captor.
 
-\begin{figure}[H]
+\begin{table}[htbp]
+\centering
+\small
+\caption{Parámetros y covariables por escenario de calibración}
+\label{tab:covariables-escenarios}
+\begin{tabular}{lcccc}
+\toprule
+Escenario & Estado & Familia & Víctima & Localización \\ \midrule
+I: DC & Laxo & Alta riqueza & Privada & Metrópoli \\
+II: PAR & Estricto & Estándar & Pública & Caribe \\
+III: ELN & Estricto & Alta riqueza & Privada & Oriente-Selva \\
+IV: FARC & Laxo & Alta riqueza & Pública & Pacífico / Zona Roja \\ \bottomrule
+\end{tabular}
+\par\smallskip\footnotesize \textit{Fuente:} Elaboración propia.
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Creencias iniciales (\emph{priors}) por escenario de calibración}
+\label{tab:priors-escenarios}
+\begin{tabular}{lcccc}
+\toprule
+Escenario & $\mu_0(\mathrm{DC})$ & $\mu_0(\mathrm{PAR})$ & $\mu_0(\mathrm{ELN})$ & $\mu_0(\mathrm{FARC})$ \\ \midrule
+I: DC & 0.35 & 0.35 & 0.15 & 0.15 \\
+II: PAR & 0.15 & 0.15 & 0.25 & 0.45 \\
+III: ELN & 0.05 & 0.35 & 0.25 & 0.35 \\
+IV: FARC & 0.35 & 0.35 & 0.15 & 0.15 \\ \bottomrule
+\end{tabular}
+\par\smallskip\footnotesize \textit{Fuente:} Elaboración propia.
+\end{table}
+
+El posterior del tipo verdadero permite evaluar la capacidad del mecanismo para separar tipos a partir de la secuencia de señales. Como se reporta en la Figura~\ref{fig:cal-eln-par-mu}, la masa posterior converge gradualmente hacia el tipo verdadero en los cuatro escenarios, alcanzando $\mu_{150}(\theta_K^\ast)\approx 1{,}000$; esto implica que el mecanismo acumula identificación bajo diferentes niveles de riqueza, regiones y visibilidad. Las trayectorias reflejan el aprendizaje bayesiano dinámico a partir de las señales observadas en cada ciclo, hasta que la masa de creencia se concentra definitivamente en el verdadero perpetrador. Las barras grises marcan el tiempo de parada realizado; la extensión contrafactual subsiguiente muestra que la velocidad de aprendizaje y el momento de absorción son objetos distintos del modelo. En conjunto, la figura ilustra el comportamiento a horizonte finito: la masa posterior se desplaza hacia el tipo verdadero a medida que las señales acumulan separación, en la dirección predicha por el Teorema~\ref{thm:posterior-consistency} bajo $\mathcal{T}$, sin constituir evidencia directa del resultado asintótico; el aprendizaje se consolida bajo el entorno institucional, territorial, y de visibilidad de cada caso.
+
+\begin{figure}[!ht]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1032,10 +1067,10 @@ A diferencia de una política puramente miope que omite el término $-\psi_H\Del
 \label{fig:cal-eln-par-mu}
 \figurenote{\textit{Nota:} El panel (a) corresponde al Escenario~I: $\theta_K^\ast=\mathrm{DC}$, $\theta_S$ laxo, $\theta_F$ de alta riqueza, $\theta_V$ privado, y $z$ Metrópoli. El panel (b) corresponde al Escenario~II: $\theta_K^\ast=\mathrm{PAR}$, $\theta_S$ estricto, $\theta_F$ de riqueza estándar, $\theta_V$ público, y $z$ Caribe. El panel (c) corresponde al Escenario~III: $\theta_K^\ast=\mathrm{ELN}$, $\theta_S$ estricto, $\theta_F$ de alta riqueza, $\theta_V$ privado, y $z$ Oriente-Selva. El panel (d) corresponde al Escenario~IV: $\theta_K^\ast=\mathrm{FARC}$, $\theta_S$ laxo, $\theta_F$ de alta riqueza, $\theta_V$ público, y $z$ Pacífico / Zona Roja. La banda gris marca $\tau^{\mathrm{hyp}}$, el primer período en el que el resultado del mecanismo difiere de la continuación.}
 \end{figure}
-\vspace{-8pt}
-El posterior del tipo verdadero permite evaluar la capacidad del mecanismo para separar tipos a partir de la secuencia de señales. Como se reporta en la Figura~\ref{fig:cal-eln-par-mu}, la masa posterior se desplaza gradualmente hacia el tipo verdadero en los cuatro escenarios, alcanzando $\mu_{150}(\theta_K^\ast)\approx 1{,}000$; esto implica que el mecanismo acumula identificación bajo diferentes niveles de riqueza, regiones y visibilidad. En el Escenario~I y el Escenario~IV, la concentración posterior es rápida. En el Escenario~II y el Escenario~III, las trayectorias son menos monótonas en la fase inicial, lo que refleja señales tempranas compatibles con tipos alternativos antes de que la masa se desplace definitivamente hacia el verdadero captor. Las barras grises marcan el tiempo de parada realizado; la extensión contrafactual subsiguiente muestra que la velocidad de aprendizaje y el momento de absorción son objetos distintos del modelo. En conjunto, la figura ilustra el comportamiento a horizonte finito: la masa posterior se desplaza hacia el tipo verdadero a medida que las señales acumulan separación, en la dirección predicha por el Teorema~\ref{thm:posterior-consistency} bajo $\mathcal{T}$, sin constituir evidencia directa del resultado asintótico; la velocidad de convergencia depende del entorno institucional, territorial, y de visibilidad del caso.
 
-\begin{figure}[H]
+La presión operativa óptima permite evaluar cómo ajusta el Estado la intensidad de la intervención a medida que aprende sobre el tipo del captor. La Figura~\ref{fig:cal-eln-par-gamma} compara la trayectoria de $\gamma_t^\ast$ con los puntos de referencia ponderados por creencias de las ramas de Rescate ($\gamma_R^\mu$) y Negociación ($\gamma_N^\mu$). En la línea base, los valores límite de rescate por tipo son $\gamma_R^{\mathrm{DC}}=0{,}23$, $\gamma_R^{\mathrm{PAR}}=0{,}37$, $\gamma_R^{\mathrm{ELN}}=0{,}50$ y $\gamma_R^{\mathrm{FARC}}=0{,}64$, mientras que los de negociación son $\gamma_N^{\mathrm{DC}}=0{,}59$, $\gamma_N^{\mathrm{PAR}}=0{,}64$, $\gamma_N^{\mathrm{ELN}}=0{,}69$ y $\gamma_N^{\mathrm{FARC}}=0{,}74$. En el Escenario~I (DC), $\gamma_t^\ast$ se ubica en promedio alrededor de $\bar\gamma^\ast\approx 0{,}564$. En el Escenario~II (PAR), la presión alcanza $\bar\gamma^\ast\approx 0{,}662$. En el Escenario~III (ELN), la presión promedio es $\bar\gamma^\ast\approx 0{,}663$, y en el Escenario~IV (FARC) alcanza $\bar\gamma^\ast\approx 0{,}715$. En todos los casos, $\gamma_t^\ast$ no replica de forma idéntica ninguna de las ramas puras desde el inicio; la política fluctúa entre ambos referentes bajo control dual según el riesgo material y el valor de separar tipos. No obstante, a medida que la creencia posterior $\mu_t$ converge hacia el tipo verdadero del captor, el instrumento óptimo converge de manera natural al benchmark de información completa correspondiente al verdadero perpetrador en la rama ejecutada, aproximándose aquí sistemáticamente a la referencia de Negociación.
+
+\begin{figure}[!ht]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1059,17 +1094,14 @@ El posterior del tipo verdadero permite evaluar la capacidad del mecanismo para 
   \panelgraphic{\calseriesheight}{Fig_12d.pdf}
   \caption{Escenario IV: FARC}
 \end{subfigure}
-\caption{Presión operativa $\gamma_t^\ast$ y punto de referencia $\gamma^R$ frente a $\tau$.}
+\caption{Presión operativa $\gamma_t^\ast$ y puntos de referencia $\gamma_R^\mu$ y $\gamma_N^\mu$ frente a $\tau$.}
 \label{fig:cal-eln-par-gamma}
-\figurenote{\textit{Nota:} El panel (a) muestra la trayectoria de presión operativa en el Escenario~I (DC). El panel (b) muestra la trayectoria equivalente en el Escenario~II (PAR). El panel (c) muestra el Escenario~III (ELN). El panel (d) muestra el Escenario~IV (FARC). La línea punteada corresponde al punto de referencia de Rescate $\gamma^R$. La banda gris marca $\tau^{\mathrm{hyp}}$.}
+\figurenote{\textit{Nota:} El panel (a) muestra la trayectoria de presión operativa en el Escenario~I (DC). El panel (b) muestra la trayectoria equivalente en el Escenario~II (PAR). El panel (c) muestra el Escenario~III (ELN). El panel (d) muestra el Escenario~IV (FARC). Las líneas punteadas corresponden a los puntos de referencia de Rescate ($\gamma_R^\mu$) y Negociación ($\gamma_N^\mu$) ponderados por creencias. La banda gris marca $\tau^{\mathrm{hyp}}$.}
 \end{figure}
-La presión operativa óptima permite evaluar cómo ajusta el Estado la intensidad de la intervención a medida que aprende sobre el tipo del captor. La Figura~\ref{fig:cal-eln-par-gamma} compara la trayectoria de $\gamma_t^\ast$ con el punto de referencia de Rescate $\gamma^R$, que toma el valor $\gamma^R=0{,}23$ en DC, $\gamma^R=0{,}37$ en PAR, $\gamma^R=0{,}50$ en ELN y $\gamma^R=0{,}64$ en FARC. En el Escenario~I (DC), $\gamma_t^\ast$ se ubica en promedio alrededor de $\bar\gamma^\ast\approx 0{,}564$. En el Escenario~II (PAR), la presión alcanza $\bar\gamma^\ast\approx 0{,}662$. En el Escenario~III (ELN), la presión promedio es $\bar\gamma^\ast\approx 0{,}663$, y en el Escenario~IV (FARC) alcanza $\bar\gamma^\ast\approx 0{,}715$. En todos los casos, $\gamma_t^\ast$ no replica mecánicamente ni la rama de Rescate ni la de Negociación: el control dual combina la explotación del instrumento y la información esperada, de modo que la serie fluctúa entre puntos de referencia según el riesgo material del episodio y el valor de separar tipos.
 
-La interdicción financiera óptima resume la intensidad con la que el Estado restringe la capacidad de pago y la coordinación económica durante el episodio. La Figura~\ref{fig:cal-eln-par-alpha} compara la trayectoria de $\alpha_t^\ast$ con el punto de referencia de Rescate $\alpha^R$, que toma el valor $\alpha^R=0{,}18$ en DC, $\alpha^R=0{,}31$ en PAR, $\alpha^R=0{,}45$ en ELN y $\alpha^R=0{,}59$ en FARC. En el Escenario~I (DC), $\bar\alpha^\ast\approx 0{,}896$. En el Escenario~II (PAR), $\bar\alpha^\ast\approx 0{,}730$. En el Escenario~III (ELN), $\bar\alpha^\ast\approx 0{,}737$, y en el Escenario~IV (FARC), $\bar\alpha^\ast\approx 0{,}755$. Así, $\alpha_t^\ast$ no replica mecánicamente una rama pura: se mueve entre los puntos de referencia de Rescate y Negociación según la información acumulada, la capacidad de pago de la familia, y el valor de inducir separación entre tipos.
+Al igual que en el caso de la presión operativa, la interdicción financiera óptima resume la intensidad con la que el Estado restringe la capacidad de pago y la coordinación económica durante el episodio. La Figura~\ref{fig:cal-eln-par-alpha} compara la trayectoria de $\alpha_t^\ast$ con los puntos de referencia ponderados por creencias de las ramas de Rescate ($\alpha_R^\mu$) y Negociación ($\alpha_N^\mu$). En la línea base, los valores límite de rescate por tipo son $\alpha_R^{\mathrm{DC}}=0{,}18$, $\alpha_R^{\mathrm{PAR}}=0{,}31$, $\alpha_R^{\mathrm{ELN}}=0{,}45$ y $\alpha_R^{\mathrm{FARC}}=0{,}59$, mientras que los de negociación son $\alpha_N^{\mathrm{DC}}=0{,}62$, $\alpha_N^{\mathrm{PAR}}=0{,}67$, $\alpha_N^{\mathrm{ELN}}=0{,}72$ y $\alpha_N^{\mathrm{FARC}}=0{,}77$. En el Escenario~I (DC), $\bar\alpha^\ast\approx 0{,}896$. En el Escenario~II (PAR), $\bar\alpha^\ast\approx 0{,}730$. En el Escenario~III (ELN), $\bar\alpha^\ast\approx 0{,}737$, y en el Escenario~IV (FARC), $\bar\alpha^\ast\approx 0{,}755$. En todos los casos, $\alpha_t^\ast$ no replica de forma idéntica ninguna de las ramas puras desde el inicio; la política fluctúa entre ambos referentes bajo control dual según la información acumulada, la capacidad de pago de la familia y el valor de inducir separación entre tipos. En escenarios de capacidad estatal estricta, la necesidad de separar tipos y evitar la colusión familiar puede situar temporalmente la interdicción por encima de ambos referentes. No obstante, a medida que la creencia posterior $\mu_t$ converge hacia el tipo verdadero del captor, el instrumento óptimo converge de manera natural al benchmark de información completa correspondiente al verdadero perpetrador en la rama ejecutada, aproximándose aquí sistemáticamente a la referencia de Negociación.
 
-La precisión posterior, definida como $\iota_t=\max_{\theta\in\ThetaK}\mu_t(\theta)$, permite observar cómo cambia la presión operativa cuando el Estado gana confianza sobre la identidad del tipo verdadero. La Figura~\ref{fig:cal-eln-par-iota-gamma} reordena la simulación sobre el plano $(\iota_t,\gamma_t^\ast)$; las flechas indican el avance de $\tau$ y evitan interpretar las observaciones como una interpolación lineal. La trayectoria se concentra en zonas de alta presión y precisión creciente, reflejando aprendizaje sin colapso inmediato hacia una única señal dominante, y mostrando las diferentes dinámicas entre casos.
-\vspace{-4pt}
-\begin{figure}[H]
+\begin{figure}[!ht]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1093,14 +1125,14 @@ La precisión posterior, definida como $\iota_t=\max_{\theta\in\ThetaK}\mu_t(\th
   \panelgraphic{\calseriesheight}{Fig_13d.pdf}
   \caption{Escenario IV: FARC}
 \end{subfigure}
-\caption{Interdicción financiera $\alpha_t^\ast$ y punto de referencia $\alpha^R$ frente a $\tau$.}
+\caption{Interdicción financiera $\alpha_t^\ast$ y puntos de referencia $\alpha_R^\mu$ y $\alpha_N^\mu$ frente a $\tau$.}
 \label{fig:cal-eln-par-alpha}
-\figurenote{\textit{Note:} El panel (a) presenta la interdicción financiera óptima en el Escenario~I (DC). El panel (b) presenta el Escenario~II (PAR). El panel (c) presenta el Escenario~III (ELN). El panel (d) presenta el Escenario~IV (FARC). La línea punteada corresponde al punto de referencia de Rescate $\alpha^R$. La banda gris marca $\tau^{\mathrm{hyp}}$.}
+\figurenote{\textit{Note:} El panel (a) presenta la interdicción financiera óptima en el Escenario~I (DC). El panel (b) presenta el Escenario~II (PAR). El panel (c) presenta el Escenario~III (ELN). El panel (d) presenta el Escenario~IV (FARC). Las líneas punteadas corresponden a los puntos de referencia de Rescate ($\alpha_R^\mu$) y Negociación ($\alpha_N^\mu$) ponderados por creencias. La banda gris marca $\tau^{\mathrm{hyp}}$.}
 \end{figure}
-\vspace{-6pt}
-La interdicción financiera frente a la precisión posterior permite evaluar si el aprendizaje reduce o refuerza la necesidad de restringir la capacidad de pago. Como se reporta en la Figura~\ref{fig:cal-eln-par-iota-alpha}, $\alpha_t^\ast$ permanece alto mientras $\iota_t$ aumenta en todos los escenarios, lo que indica que identificar el tipo verdadero no elimina el valor de mantener la interdicción preventiva. Este patrón es consistente con entornos donde la interdicción financiera conserva relevancia como instrumento de control, contención de pagos, e inducción de separación entre tipos.
-\vspace{-4pt}
-\begin{figure}[H]
+
+La precisión posterior, definida como $\iota_t=\max_{\theta\in\ThetaK}\mu_t(\theta)$, permite observar cómo cambia la presión operativa cuando el Estado gana confianza sobre la identidad del tipo verdadero. La Figura~\ref{fig:cal-eln-par-iota-gamma} reordena la simulación sobre el plano $(\iota_t,\gamma_t^\ast)$; las flechas indican el avance de $\tau$ y evitan interpretar las observaciones como una interpolación lineal. La trayectoria se concentra en zonas de alta presión y precisión creciente, reflejando aprendizaje sin colapso inmediato hacia una única señal dominante, y mostrando las diferentes dinámicas entre casos.
+
+\begin{figure}[!ht]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1128,10 +1160,10 @@ La interdicción financiera frente a la precisión posterior permite evaluar si 
 \label{fig:cal-eln-par-iota-gamma}
 \figurenote{\textit{Nota:} El panel (a) corresponde al Escenario~I (DC), el panel (b) al Escenario~II (PAR), el panel (c) al Escenario~III (ELN), y el panel (d) al Escenario~IV (FARC). Cada trayectoria muestra 20 flechas indicadoras; el círculo identifica el punto final, $\tau=150$.}
 \end{figure}
-\vspace{-6pt}
-El diagnóstico de restricciones confirma que la factibilidad estratégica del mecanismo se preserva en todos los escenarios. Como muestra la Figura~\ref{fig:cal-eln-par-iric}, la restricción de incentivos del captor ($\mathrm{IC}^K$), la restricción de participación del captor ($\mathrm{IR}^K$), y la restricción de participación de la familia ($\mathrm{IR}^F$) se satisfacen en los 150 ciclos simulados en los cuatro escenarios. La verificación es \emph{a posteriori} respecto al tipo verdadero $\theta_K^\ast$: los instrumentos óptimos $(a_S^\ast,\alpha_t^\ast,\gamma_t^\ast)$ se evalúan directamente sobre las utilidades del tipo verdadero, sin ponderar por la creencia $\mu_t$. El mecanismo es por lo tanto factible en un sentido ex-post: dado $\theta_K^\ast$, la política óptima satisface la compatibilidad de incentivos y la participación sin abandonar el componente informacional.
-\vspace{-4pt}
-\begin{figure}[H]
+
+La interdicción financiera frente a la precisión posterior permite evaluar si el aprendizaje reduce o refuerza la necesidad de restringir la capacidad de pago. Como se reporta en la Figura~\ref{fig:cal-eln-par-iota-alpha}, $\alpha_t^\ast$ permanece alto mientras $\iota_t$ aumenta en todos los escenarios, lo que indica que identificar el tipo verdadero no elimina el valor de mantener la interdicción preventiva. Este patrón es consistente con entornos donde la interdicción financiera conserva relevancia como instrumento de control, contención de pagos, e inducción de separación entre tipos.
+
+\begin{figure}[!ht]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1159,8 +1191,10 @@ El diagnóstico de restricciones confirma que la factibilidad estratégica del m
 \label{fig:cal-eln-par-iota-alpha}
 \figurenote{\textit{Note:} El panel (a) corresponde al Escenario~I (DC), el panel (b) al Escenario~II (PAR), el panel (c) al Escenario~III (ELN), y el panel (d) al Escenario~IV (FARC). Cada trayectoria muestra 20 flechas indicadoras; el círculo identifica el punto final, $\tau=150$.}
 \end{figure}
-\clearpage
-\begin{figure}[H]
+
+El diagnóstico de restricciones confirma que la factibilidad estratégica del mecanismo se preserva en todos los escenarios. Como muestra la Figura~\ref{fig:cal-eln-par-iric}, la restricción de incentivos del captor ($\mathrm{IC}^K$), la restricción de participación del captor ($\mathrm{IR}^K$), y la restricción de participación de la familia ($\mathrm{IR}^F$) se satisfacen en los 150 ciclos simulados en los cuatro escenarios. La verificación es \emph{a posteriori} respecto al tipo verdadero $\theta_K^\ast$: los instrumentos óptimos $(a_S^\ast,\alpha_t^\ast,\gamma_t^\ast)$ se evalúan directamente sobre las utilidades del tipo verdadero, sin ponderar por la creencia $\mu_t$. El mecanismo es por lo tanto factible en un sentido ex-post: dado $\theta_K^\ast$, la política óptima satisface la compatibilidad de incentivos y la participación sin abandonar el componente informacional.
+
+\begin{figure}[!ht]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1188,10 +1222,10 @@ El diagnóstico de restricciones confirma que la factibilidad estratégica del m
 \label{fig:cal-eln-par-iric}
 \figurenote{\textit{Nota:} El panel (a) resume el cumplimiento en el Escenario~I (DC), el panel (b) en el Escenario~II (PAR), el panel (c) en el Escenario~III (ELN), y el panel (d) en el Escenario~IV (FARC). Los porcentajes se calculan sobre los ciclos simulados de cada escenario.}
 \end{figure}
-\vspace{-6pt}
-La ganancia informacional esperada $\Delta H_t$ cuantifica la reducción anticipada de entropía inducida por los instrumentos del Estado, en el sentido de la adquisición dinámica óptima de información de \citet{Zhong2022}. Ese subsidio informacional se concentra al inicio de la simulación, como se ilustra en la Figura~\ref{fig:cal-eln-par-dh}: en DC alcanza su máximo en $\tau=10$ con $\Delta H_{10}\approx 0{,}043$, y en PAR en $\tau=6$ con $\Delta H_6\approx 0{,}035$. A medida que $\Delta H_t$ converge a cero, las observaciones adicionales dejan de reducir la incertidumbre posterior y la decisión óptima pasa a estar gobernada por las pérdidas materiales y una creencia ya concentrada en el tipo verdadero.
-\vspace{-4pt}
-\begin{figure}[H]
+
+La ganancia informacional esperada $\Delta H_t$ cuantifica la reducción anticipada de entropía inducida por los instrumentos del Estado, en el sentido de la adquisición dinámica óptima de información de \citet{Zhong2022}. Ese subsidio informacional se concentra al inicio de la simulación, como se ilustra en la Figura~\ref{fig:cal-eln-par-dh}: en DC alcanza su máximo en $\tau=3$ con $\Delta H_3\approx 0{,}028$, y en PAR en $\tau=2$ con $\Delta H_2\approx 0{,}027$. A medida que $\Delta H_t$ converge a cero, las observaciones adicionales dejan de reducir la incertidumbre posterior y la decisión óptima pasa a estar gobernada por las pérdidas materiales y una creencia ya concentrada en el tipo verdadero.
+
+\begin{figure}[!ht]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1219,10 +1253,10 @@ La ganancia informacional esperada $\Delta H_t$ cuantifica la reducción anticip
 \label{fig:cal-eln-par-dh}
 \figurenote{\textit{Nota:} El panel (a) corresponde al Escenario~I (DC), el panel (b) al Escenario~II (PAR), el panel (c) al Escenario~III (ELN), y el panel (d) al Escenario~IV (FARC). La serie reporta la reducción esperada de entropía en cada ciclo simulado.}
 \end{figure}
-\vspace{-6pt}
-En todos los escenarios y para todos los tipos, $\kappa_h(\theta_K^\ast,t)>0$ en el 100\,\% de los ciclos simulados, como se muestra en la Figura~\ref{fig:cal-eln-par-kh}. Por la relación $\operatorname{sgn}(\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast)=-\operatorname{sgn}(\kappa_h)$, esto implica $\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast<0$: una mayor presión operativa \emph{reduce} la duración esperada del cautiverio sin excepción. El mecanismo no enfrenta un trade-off entre explotar el instrumento y aprender: la presión operativa acorta el cautiverio y, al modificar los hazards de cierre, genera simultáneamente señales que separan las verosimilitudes de los tipos rivales y aceleran la convergencia posterior.
-\vspace{-4pt}
-\begin{figure}[H]
+
+A diferencia de una relación uniforme, el signo de la sensibilidad neta $\kappa_h(\theta_K^\ast,t)$ varía entre escenarios, como se ilustra en la Figura~\ref{fig:cal-eln-par-kh}. En el Escenario~II (PAR) y el Escenario~IV (FARC), $\kappa_h > 0$ en la totalidad o la gran mayoría de los ciclos (100\,\% y 91{,}3\,\%, respectivamente), lo que implica $\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast<0$: una mayor presión operativa acorta el cautiverio. En contraste, en el Escenario~I (DC) la sensibilidad es predominantemente negativa ($\kappa_h < 0$ en el 82{,}0\,\% de los períodos), lo que implica que una mayor presión prolonga el cautiverio al inhibir el canal de pago directo sin compensar suficientemente mediante rescates. En el Escenario~III (ELN), la trayectoria fluctúa entre ambos regímenes. El modelo ilustra así un trade-off estratégico: la presión acorta el cautiverio solo cuando el riesgo de prolongación por disuasión de negociación es dominado por la efectividad del rescate o la capitulación.
+
+\begin{figure}[!ht]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1250,7 +1284,7 @@ En todos los escenarios y para todos los tipos, $\kappa_h(\theta_K^\ast,t)>0$ en
 \label{fig:cal-eln-par-kh}
 \figurenote{\textit{Nota:} Cada panel traza $\kappa_h(\theta_K^\ast,t)$ para el tipo verdadero del escenario. Un valor constante de $+1$ implica $-\operatorname{sgn}(\kappa_h)=-1$ en el 100\,\% de los ciclos, es decir, $\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast<0$; la línea punteada horizontal marca el cero de referencia.}
 \end{figure}
-\vspace{-6pt}
+
 Los desenlaces terminales hipotéticos difieren entre escenarios: \emph{Pago} en DC ($\tau^{\mathrm{hyp}}=35$), \emph{Rescate} en PAR ($\tau^{\mathrm{hyp}}=105$), \emph{Liberación} en ELN ($\tau^{\mathrm{hyp}}=75$), y \emph{Rescate} en FARC ($\tau^{\mathrm{hyp}}=20$). En todos los casos el posterior parte de su prior inicial y converge a $\mu_{150}(\theta^\ast)\approx 1{,}000$, con $\bar\alpha^\ast$ y $\bar\gamma^\ast$ por encima de 0{,}56 en todos los escenarios. Estos resultados se resumen en la Tabla~\ref{tab:calibracion-resumen}.
 
 \begin{table}[htbp]
@@ -1268,13 +1302,17 @@ ELN & 0.250 & 1.000 & 0.737 & 0.663 & 75 & Liberación \\
 FARC & 0.150 & 1.000 & 0.755 & 0.715 & 20 & Rescate \\
 \bottomrule
 \end{tabular}
-\end{table}En conjunto, el contraste ELN--PAR muestra que el mismo mecanismo bayesiano genera trayectorias de aprendizaje, intensidades de instrumentos, y tasas de viabilidad de restricciones distintas cuando, conjuntamente, cambian el tipo verdadero del captor y los márgenes institucional, familiar, de víctima, y geográfico descritos en el protocolo. Las simulaciones no sustituyen al Teorema~\ref{thm:posterior-consistency}, que requiere separación recurrente en el evento $\mathcal{T}$; ilustran que, con priors y hazards calibrados a la evidencia colombiana, el subsidio entrópico desplaza la política lejos de regímenes puramente miopes y acelera o disciplina la concentración posterior en horizontes finitos, en la dirección predicha por el resultado de identificación.
+\end{table}En conjunto, el contraste de los cuatro escenarios muestra que el mismo mecanismo bayesiano genera trayectorias de aprendizaje, intensidades de instrumentos, y tasas de viabilidad de restricciones distintas cuando, conjuntamente, cambian el tipo verdadero del captor y los márgenes institucional, familiar, de víctima, y geográfico descritos en el protocolo. Las simulaciones no sustituyen al Teorema~\ref{thm:posterior-consistency}, que requiere separación recurrente en el evento $\mathcal{T}$; ilustran que, con priors y hazards calibrados a la evidencia colombiana, el subsidio entrópico desplaza la política lejos de regímenes puramente miopes y acelera o disciplina la concentración posterior en horizontes finitos, en la dirección predicha por el resultado de identificación.
+
+\clearpage
 
 \section{Simulaciones bajo Exclusión de la Comunicación de Voz}\label{sec:no-voice}
 
-Para evaluar la robustez del mecanismo de identificación, esta sección analiza las simulaciones dinámicas bajo la exclusión contrafactual del canal de comunicación de voz. En la calibración de referencia de la Sección~\ref{sec:calibracion}, la actualización bayesiana del Estado incorpora tanto las señales físicas de riesgos competitivos (desenlaces de maduración y riesgos) como las características acústicas de las llamadas de voz. Aquí, aislamos los canales físico-institucionales estableciendo el indicador de llamada de voz $V_t = 0$ para todos los períodos (o equivalentemente, desactivando la retroalimentación de verosimilitud de la comunicación). Bajo esta configuración, la única fuente de aprendizaje para el Estado consiste en las señales físico-institucionales endógenas generadas por los riesgos competitivos del MDG ($\lambda_j$). El objetivo es verificar si la creencia posterior $\mu_t$ converge al tipo de captor verdadero $\theta_K^\ast$ basándose únicamente en estos desenlaces físico-institucionales, validando que el mecanismo subyacente es autosuficiente para la identificación.
+Para evaluar la robustez y suficiencia del mecanismo de identificación, esta sección analiza las simulaciones dinámicas bajo la exclusión contrafactual del canal de comunicación de voz, diferenciándose de la Sección~\ref{sec:calibracion} en que se elimina por completo la información acústica ($V_t = 0$ para todo $t$). En la calibración de referencia de la Sección~\ref{sec:calibracion}, la actualización bayesiana del Estado incorpora tanto las señales físico-institucionales de riesgos competitivos (desenlaces de maduración y riesgos) como las llamadas de voz. Aquí, aislamos los canales físico-institucionales endógenos estableciendo el indicador de llamada de voz $V_t = 0$ para todos los períodos (o equivalentemente, desactivando la retroalimentación de verosimilitud de la comunicación). Bajo esta configuración, la única fuente de aprendizaje para el Estado consiste en las señales físico-institucionales generadas por los riesgos competitivos del MDG ($\lambda_j$), con el objetivo de verificar si la creencia posterior $\mu_t$ converge al tipo de captor verdadero $\theta_K^\ast$ basándose únicamente en estos desenlaces, validando que el mecanismo es autosuficiente para la identificación.
 
-\begin{figure}[H]
+Como se muestra en la Figura~\ref{fig:cal-eln-par-mu-novoice}, la creencia posterior del tipo verdadero $\mu_t(\theta_K^\ast)$ converge a la certeza casi absoluta en los cuatro escenarios bajo exclusión de comunicación de voz. En el \emph{Escenario~I} (DC), la creencia posterior $\mu_t(\mathrm{DC})$ converge desde una actualización posterior al primer período de $0{,}130$ a $0{,}999$ en el período $\tau = 200$. En el \emph{Escenario~II} (PAR), $\mu_t(\mathrm{PAR})$ asciende de $0{,}344$ a $0{,}997$ en el período $\tau = 200$. En el \emph{Escenario~III} (ELN), $\mu_t(\mathrm{ELN})$ alcanza aproximadamente $1{,}000$ en el período $\tau = 300$, mientras que en el \emph{Escenario~IV} (FARC), $\mu_t(\mathrm{FARC})$ alcanza aproximadamente $1{,}000$ en el período $\tau = 400$. Estos resultados confirman la predicción teórica del Teorema~\ref{thm:posterior-consistency}: los riesgos competitivos físico-institucionales ($\lambda_j$), que dependen de los coeficientes contingentes al tipo y de los controles del Estado $(\alpha_t, \gamma_t)$, exhiben suficiente variación para separar asintóticamente los tipos. Desactivar el canal de voz no bloquea la identificación, pero ralentiza significativamente la velocidad de convergencia en comparación con la Sección~\ref{sec:calibracion}. En el caso de referencia, las características acústicas permitían que el posterior se concentrara dentro de $20$ a $105$ períodos; sin ellas, el Estado requiere una historia de señales físico-institucionales sustancialmente más larga, llegando a requerir hasta $400$ períodos en el escenario FARC, para lograr una precisión equivalente. Esto destaca el papel de la voz como un acelerador informacional y no como una condición necesaria para la identificación.
+
+\begin{figure}[!htbp]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1303,16 +1341,9 @@ Para evaluar la robustez del mecanismo de identificación, esta sección analiza
 \figurenote{\textit{Nota:} Los paneles (a)-(d) replican los escenarios de referencia pero con el canal de comunicación de voz desactivado. La banda gris marca el límite contrafactual de parada $\tau^{\mathrm{hyp}}$.}
 \end{figure}
 
-Como se muestra en la Figura~\ref{fig:cal-eln-par-mu-novoice}, la creencia posterior del tipo verdadero $\mu_t(\theta_K^\ast)$ converge a la certeza casi absoluta en los cuatro escenarios:
-\begin{itemize}
-    \item En el \emph{Escenario~I} (DC), la creencia posterior $\mu_t(\mathrm{DC})$ converge desde una actualización posterior al primer período de $0{,}130$ a $0{,}999$ en el período $\tau = 200$.
-    \item En el \emph{Escenario~II} (PAR), $\mu_t(\mathrm{PAR})$ asciende de $0{,}344$ a $0{,}997$ en el período $\tau = 200$.
-    \item En el \emph{Escenario~III} (ELN), $\mu_t(\mathrm{ELN})$ alcanza $1{,}000$ en el período $\tau = 300$.
-    \item En el \emph{Escenario~IV} (FARC), $\mu_t(\mathrm{FARC})$ alcanza $1{,}000$ en el período $\tau = 400$.
-\end{itemize}
-Estos resultados confirman la predicción teórica del Teorema~\ref{thm:posterior-consistency}: los riesgos competitivos físico-institucionales ($\lambda_j$), que dependen de los coeficientes contingentes al tipo ($\beta_{K,j,\theta}, \zeta_{i,\theta}$) y de los controles del Estado $(\alpha_t, \gamma_t)$, exhiben suficiente variación para separar asintóticamente los tipos. Desactivar el canal de voz no bloquea la identificación, pero ralentiza significativamente la velocidad de convergencia. En el caso de referencia, las características acústicas permitían que el posterior se concentrara dentro de $20$ a $105$ períodos; sin ellas, el Estado requiere una historia más larga de señales físico-institucionales (hasta $400$ períodos en el escenario FARC) para lograr una precisión equivalente. Esto destaca el papel dual de las características de la voz como un acelerador informacional y no como una condición necesaria para la identificación.
+La Figura~\ref{fig:cal-eln-par-gamma-novoice} presenta la trayectoria de la presión operativa óptima $\gamma_t^\ast$ y su comparación con el benchmark de información completa $\gamma^R$. Debido a que el aprendizaje es más lento sin la retroalimentación de la voz, el Estado se ve obligado a mantener niveles elevados de presión operativa durante un mayor número de períodos para inducir separación y forzar la revelación a través del hazard de rescate. Por ejemplo, en el caso DC, la presión promedio es $\bar\gamma^\ast \approx 0{,}573$ a lo largo de la simulación de 200 períodos, en comparación con $\bar\gamma^\ast \approx 0{,}564$ en la Sección~\ref{sec:calibracion}, permaneciendo en una fase prolongada de aprendizaje activo antes de flexibilizarse hacia el punto de referencia de información completa correspondiente al tipo verdadero.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1340,7 +1371,9 @@ Estos resultados confirman la predicción teórica del Teorema~\ref{thm:posterio
 \label{fig:cal-eln-par-gamma-novoice}
 \end{figure}
 
-\begin{figure}[H]
+De manera similar, la Figura~\ref{fig:cal-eln-par-alpha-novoice} ilustra la trayectoria de la interdicción financiera óptima $\alpha_t^\ast$ y su comparación con el punto de referencia de información completa $\alpha^R$. Al igual que con la presión operativa, la interdicción óptima se mantiene elevada durante más períodos en todos los escenarios bajo exclusión de voz. Por ejemplo, en el Escenario I (DC), el promedio de interdicción a lo largo de la simulación de 200 períodos es $\bar\alpha^\ast \approx 0{,}825$ (comparado con $0{,}896$ en los 35 períodos del caso con voz). Aunque el promedio sobre todo el horizonte es menor debido al retiro gradual del instrumento tras la convergencia tardía, en la fase inicial de la interacción el Estado sostiene la interdicción en niveles elevados por más tiempo para compensar la falta de señales acústicas y evitar la negociación prematura.
+
+\begin{figure}[!htbp]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1368,9 +1401,9 @@ Estos resultados confirman la predicción teórica del Teorema~\ref{thm:posterio
 \label{fig:cal-eln-par-alpha-novoice}
 \end{figure}
 
-Las Figuras~\ref{fig:cal-eln-par-gamma-novoice} y~\ref{fig:cal-eln-par-alpha-novoice} presentan las trayectorias de los instrumentos óptimos del Estado bajo exclusión de comunicación de voz. Debido a que el aprendizaje es más lento, el Estado mantiene niveles elevados de presión operativa $\gamma_t^\ast$ e interdicción $\alpha_t^\ast$ durante un mayor número de períodos. Por ejemplo, en el caso DC, la presión promedio es $\bar\gamma^\ast \approx 0{,}573$ y la interdicción promedio es $\bar\alpha^\ast \approx 0{,}825$ a lo largo de la simulación de 200 períodos, en comparación con $\bar\gamma^\ast \approx 0{,}564$ y $\bar\alpha^\ast \approx 0{,}896$ en el caso de referencia. La actualización más lenta significa que el Estado no puede flexibilizar rápidamente los instrumentos hacia sus puntos de referencia de información completa, permaneciendo en una fase prolongada de aprendizaje activo.
+La Figura~\ref{fig:cal-eln-par-iota-gamma-novoice} analiza las trayectorias de precisión posterior y presión operativa en el espacio conjunto $(\iota_t,\gamma_t^\ast)$. A diferencia de la Sección~\ref{sec:calibracion}, donde la retroalimentación de voz generaba saltos informacionales marcados en los primeros períodos, la precisión posterior asciende aquí de manera continua y gradual en todos los escenarios. Esta suavidad en el incremento de la precisión refleja que el aprendizaje descansa exclusivamente en el goteo constante de las tasas de hazard del MDG. En consecuencia, la presión operativa se reduce gradualmente solo a medida que la precisión converge a su límite superior, ilustrando un acoplamiento estrecho y sin saltos discretos entre la acumulación de información física y el retiro del instrumento.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1398,7 +1431,9 @@ Las Figuras~\ref{fig:cal-eln-par-gamma-novoice} y~\ref{fig:cal-eln-par-alpha-nov
 \label{fig:cal-eln-par-iota-gamma-novoice}
 \end{figure}
 
-\begin{figure}[H]
+La Figura~\ref{fig:cal-eln-par-iota-alpha-novoice} muestra las trayectorias conjuntas de precisión posterior e interdicción financiera $(\iota_t,\alpha_t^\ast)$. En correspondencia con la trayectoria de la presión, el retiro de la interdicción financiera hacia la rama de información completa óptima es mucho más lento y suave. La ausencia del subsidio informacional acústico elimina las transiciones rápidas de política, forzando al Estado a sostener la interdicción financiera en niveles altos para mantener la compatibilidad de incentivos (evitando la capitulación) mientras la creencia se actualiza lentamente período a período a partir de los desenlaces físicos.
+
+\begin{figure}[!htbp]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1426,9 +1461,9 @@ Las Figuras~\ref{fig:cal-eln-par-gamma-novoice} y~\ref{fig:cal-eln-par-alpha-nov
 \label{fig:cal-eln-par-iota-alpha-novoice}
 \end{figure}
 
-Las trayectorias conjuntas en el espacio de precisión y política, $(\iota_t,\gamma_t^\ast)$ y $(\iota_t,\alpha_t^\ast)$ (Figuras~\ref{fig:cal-eln-par-iota-gamma-novoice} y~\ref{fig:cal-eln-par-iota-alpha-novoice}), revelan un ascenso mucho más gradual y suave en comparación con el caso de referencia, lo cual es consistente con la ausencia de saltos informacionales repentinos provenientes de las llamadas de voz.
+El diagnóstico de restricciones en la Figura~\ref{fig:cal-eln-par-constraints-novoice} confirma que la viabilidad estratégica del mecanismo se preserva al 100\,\% en todos los ciclos simulados, incluso bajo las condiciones de actualización lenta por exclusión de voz. Las restricciones de racionalidad individual de la familia y el captor ($IR^F, IR^K$), así como la restricción de compatibilidad de incentivos del captor ($IC^K$), se satisfacen sin excepción. Esto demuestra que la formulación de control dual del Estado es robusta a cambios en la velocidad del aprendizaje, ajustando las trayectorias de política para asegurar que las restricciones de participación y de incentivos de equilibrio sigan siendo viables en cada período.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1456,7 +1491,9 @@ Las trayectorias conjuntas en el espacio de precisión y política, $(\iota_t,\g
 \label{fig:cal-eln-par-constraints-novoice}
 \end{figure}
 
-\begin{figure}[H]
+La Figura~\ref{fig:cal-eln-par-kh-novoice} traza la sensibilidad neta de la duración esperada del cautiverio $\kappa_h(\theta_K^\ast,t)$ respecto a la presión operativa. A diferencia de las fluctuaciones observadas bajo información con voz, al desactivar la comunicación acústica la sensibilidad neta se mantiene positiva ($\kappa_h > 0$) en todos los escenarios simulados, lo que implica $\partial\,\mathbb{E}[\tau\mid\theta_K]/\partial\gamma_t^\ast < 0$. Este resultado sugiere que, ante la ausencia del canal de voz que aceleraba la convergencia, el Estado debe depender críticamente del hazard de rescate físico para influir en las decisiones del captor, haciendo que la presión operativa reduzca la duración esperada del cautiverio en el 100\,\% de los ciclos simulados sin que el efecto desincentivo de la disuasión llegue a prolongar el secuestro.
+
+\begin{figure}[!htbp]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1484,7 +1521,9 @@ Las trayectorias conjuntas en el espacio de precisión y política, $(\iota_t,\g
 \label{fig:cal-eln-par-kh-novoice}
 \end{figure}
 
-\begin{figure}[H]
+La Figura~\ref{fig:cal-eln-par-outcomes-novoice} ilustra la evolución de las tasas de hazard de maduración y riesgos del secuestrador a lo largo de las trayectorias simuladas. El escalamiento de las tasas de maduración $\lambda_M$ y de los riesgos de cierre no regulado refleja cómo las decisiones estratégicas de los captores responden dinámicamente a la presión prolongada del Estado. A medida que la creencia bayesiana converge al tipo verdadero, la estabilización de los hazards alrededor de sus benchmarks óptimos demuestra que el comportamiento del secuestrador se disciplina hacia los desenlaces esperados de información completa, a pesar del retraso temporal inducido por la falta de señales de voz.
+
+\begin{figure}[!htbp]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
   \centering
@@ -1512,7 +1551,7 @@ Las trayectorias conjuntas en el espacio de precisión y política, $(\iota_t,\g
 \label{fig:cal-eln-par-outcomes-novoice}
 \end{figure}
 
-Además, los diagnósticos de cumplimiento en la Figura~\ref{fig:cal-eln-par-constraints-novoice} muestran que la viabilidad estratégica del mecanismo se preserva bajo este aprendizaje más lento, con las restricciones $IC^K, IR^K$ e $IR^F$ satisfechas en el 100\% de los períodos simulados. La sensibilidad $\kappa_h(\theta_K^\ast,t)$ se mantiene positiva en todos los escenarios (Figura~\ref{fig:cal-eln-par-kh-novoice}), garantizando que la presión del Estado continúa reduciendo la duración esperada del cautiverio. Los detalles de las simulaciones se resumen en la Tabla~\ref{tab:calibracion-resumen-novoice}.
+Los resultados cuantitativos de estas simulaciones contrafactuales se resumen en la Tabla~\ref{tab:calibracion-resumen-novoice}. En todos los escenarios, la creencia posterior converge a la certeza casi absoluta ($\mu_{\tau_{\max}}(\theta^\ast) \ge 0{,}997$), requiriendo horizontes máximos $\tau_{\max}$ que van desde 200 períodos en DC y PAR hasta 400 períodos en FARC. En conjunto, la comparación con la Sección~\ref{sec:calibracion} resalta que el mecanismo bayesiano es robusto y autosuficiente para la identificación, operando eficazmente incluso cuando la pérdida del canal de comunicación acústica disminuye la velocidad de aprendizaje del Estado.
 
 \begin{table}[htbp]
 \centering
@@ -1521,12 +1560,12 @@ Además, los diagnósticos de cumplimiento en la Figura~\ref{fig:cal-eln-par-con
 \small
 \begin{tabular}{lrrrrrl}
 \toprule
-$\theta_K^\ast$ & $\mu_1(\theta^\ast)$ & $\mu_{\tau_{\max}}(\theta^\ast)$ & $\bar{\alpha}^\ast$ & $\bar{\gamma}^\ast$ & $\tau_{\max}$ & Desenlace \\
+$\theta_K^\ast$ & $\mu_0(\theta^\ast)$ & $\mu_{\tau_{\max}}(\theta^\ast)$ & $\bar{\alpha}^\ast$ & $\bar{\gamma}^\ast$ & $\tau^{\mathrm{hyp}}$ & $m_{\tau^{\mathrm{hyp}}}$ \\
 \midrule
-DC & 0{,}130 & 0{,}999 & 0{,}825 & 0{,}573 & 200 & Continuar \\
-PAR & 0{,}344 & 0{,}997 & 0{,}789 & 0{,}592 & 200 & Continuar \\
-ELN & 0{,}070 & 1{,}000 & 0{,}784 & 0{,}673 & 300 & Continuar \\
-FARC & 0{,}160 & 1{,}000 & 0{,}757 & 0{,}716 & 400 & Continuar \\
+DC & 0.350 & 0.999 & 0.825 & 0.573 & 200 & Continuar \\
+PAR & 0.150 & 0.997 & 0.789 & 0.592 & 200 & Continuar \\
+ELN & 0.250 & 1.000 & 0.784 & 0.673 & 300 & Continuar \\
+FARC & 0.150 & 1.000 & 0.757 & 0.716 & 400 & Continuar \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1537,7 +1576,7 @@ Este artículo desarrolla un mecanismo indirecto dinámico para entornos en los 
 
 A nivel teórico, el núcleo MDG provee la materialización con soporte completo de las intenciones latentes sin un temblor exógeno, manteniendo la regla de Bayes bien definida fuera de la senda. El Teorema de Identificación de Tipos muestra que la separación recurrente en variación total de las leyes de observación condicionales al tipo implica la singularidad mutua de las medidas de trayectoria y la concentración posterior casi segura en el tipo verdadero en el evento de interacción prolongada $\mathcal{T}$. El Teorema de Implementabilidad Condicional complementa la identificación al garantizar un EBP que satisface la compatibilidad de incentivos y la racionalidad individual siempre que el conjunto factible permanezca no vacío. El resultado asintótico es deliberadamente preciso: clarifica el límite informacional de la arquitectura; el comportamiento en horizonte finito es un objeto distinto y aplicado.
 
-A nivel aplicado, el secuestro extorsivo en Colombia mapea el espacio de tipos abstracto a tecnologías criminales estimadas. La evidencia de riesgos competitivos y multinomial disciplina los hazards y los priors; las simulaciones ELN--PAR muestran que la regla calibrada de control dual acelera la concentración posterior, sostiene instrumentos altos pero disciplinados y preserva la factibilidad IR/IC, en la dirección predicha por los teoremas sin sustituirlos.
+A nivel aplicado, el secuestro extorsivo en Colombia mapea el espacio de tipos abstracto a tecnologías criminales estimadas, donde la evidencia de riesgos competitivos y de elección multinomial disciplina los hazards y los priors. Las simulaciones dinámicas de los escenarios de referencia muestran que la regla calibrada de control dual acelera la concentración posterior en el tipo verdadero, sostiene intensidades de instrumentos elevadas pero disciplinadas y preserva la factibilidad de las restricciones IR e IC, en la dirección predicha por la teoría. Asimismo, el análisis contrafactual bajo exclusión del canal de comunicación de voz valida la robustez del mecanismo: la identificación bayesiana es autosuficiente basándose únicamente en las señales de los hazards físico-institucionales del MDG, aunque la velocidad de convergencia posterior se ralentiza significativamente y demanda una historia de interacción más prolongada para alcanzar un nivel equivalente de precisión.
 
 Dos extensiones son naturales. La primera es una cota de identificación en horizonte finito que traduzca la separación en variación total en tasas explícitas de concentración posterior bajo parada endógena. La segunda es la identificación concurrente con múltiples agentes cuando varias partes con información privada interactúan bajo una historia pública compartida. Ambas trasladarían el marco más allá del cribado adversarial a otros mercados con implementación ruidosa y agrupamiento observacional.
 
