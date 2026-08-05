@@ -410,7 +410,7 @@ with tab1:
     T_t_S = float(T0_S * max(H_ratio * np.exp(-eta_cal * MDG_MULT_STATE["eta_cal"] * t_days), c_bar * MDG_MULT_STATE["c_bar"]))
     T_t_F = float(T0_F * max(H_ratio * np.exp(-eta_cal * MDG_MULT_FAMILY["eta_cal"] * t_days), c_bar * MDG_MULT_FAMILY["c_bar"]))
     T_t_K = float(T0_K * max(H_ratio * np.exp(-eta_cal * MDG_MULT_CAPTOR["eta_cal"] * t_days), c_bar * MDG_MULT_CAPTOR["c_bar"]))
-    st.caption(f"$T_t^S={T_t_S:.4f}$ &ensp; $T_t^F={T_t_F:.4f}$ &ensp; $T_t^K={T_t_K:.4f}$ (temperaturas propias por jugador — estas SÍ alimentan $\\tilde a^{{S,F,K}}$)")
+    st.caption(f"$T_t^S={T_t_S:.4f}$ &ensp; $T_t^F={T_t_F:.4f}$ &ensp; $T_t^K={T_t_K:.4f}$ (individual temperatures per player — these DO feed into $\\tilde a^{{S,F,K}}$)")
 
     st.markdown("##### 🎭 Latent Plans and Executed Action Distributions for each player:")
     
@@ -1311,7 +1311,7 @@ with tab2:
     _r_fmt_tab2 = "{:,.0f}".format(ransom_R)
     _captor_table_md += "\n| $R$ (ransom value, COP; Tab 1 slider) | {r} | {r} | {r} | {r} |".format(r=_r_fmt_tab2)
     st.markdown(_captor_table_md)
-    st.caption("φ, κ_c, ν: canonical Table 12/15 calibration (app.py `_TAB15_FIXED_COST_COEFFS`). κ_rel, η, F_cap: baseline defaults from `derive_kidnapper_structural_params`, executed and verified directly. β̃ is now type-specific and editable live in Tab 1 (Block B, default 0.92 for all types, matching the previous global constant). R is common to all types (app.py: \"R común a todos los tipos\") and is Tab 1's live slider value (default 20,000,000 COP, matching app.py's `_R_default`) — it updates if you change the slider in Tab 1.")
+    st.caption("φ, κ_c, ν: canonical Table 12/15 calibration (app.py `_TAB15_FIXED_COST_COEFFS`). κ_rel, η, F_cap: baseline defaults from `derive_kidnapper_structural_params`, executed and verified directly. β̃ is now type-specific and editable live in Tab 1 (Block B, default 0.92 for all types, matching the previous global constant). R is common to all types (app.py: \"R common to all types\") and is Tab 1's live slider value (default 20,000,000 COP, matching app.py's `_R_default`) — it updates if you change the slider in Tab 1.")
 
     st.markdown("---")
 
@@ -3141,9 +3141,9 @@ with tab4:
     _tau_hist_norm_tab4 = st.session_state.get("tau_history_normalized", {})
     if not _tau_hist_norm_tab4:
         st.info(
-            "No hay datos todavía — presiona “▶️ Run State Optimization” en la pestaña "
-            "**3. Results** (con T_max ≥ 1) para generar la trayectoria τ=0…T_max que "
-            "alimenta estas gráficas."
+            "No data available yet — click “▶️ Run State Optimization” in the "
+            "**3. Results** tab (with T_max ≥ 1) to generate the trajectory τ=0…T_max that "
+            "feeds these graphs."
         )
     else:
         _taus_sorted_tab4 = sorted(_tau_hist_norm_tab4.keys())
@@ -3157,7 +3157,7 @@ with tab4:
                 fig.add_vrect(
                     x0=_tau_closed_tab4 - 0.5, x1=_tau_closed_tab4 + 0.5,
                     fillcolor="lightgray", opacity=0.45, layer="below", line_width=0,
-                    annotation_text=f"τ={_tau_closed_tab4}: primer m≠Cont",
+                    annotation_text=f"τ={_tau_closed_tab4}: first m≠Cont",
                     annotation_position="top",
                 )
             return fig
@@ -3206,7 +3206,7 @@ with tab4:
             _y_star = [_tau_hist_norm_tab4[t].get(field_key) for t in _taus_sorted_tab4]
             fig.add_trace(go.Scatter(
                 x=_taus_sorted_tab4, y=_y_star, mode="lines+markers",
-                name=f"{ytitle}*_τ (instrumento usado por el Estado)",
+                name=f"{ytitle}*_τ (instrument used by the State)",
                 line=dict(color="black", width=3.5),
             ))
             
@@ -3214,7 +3214,7 @@ with tab4:
             _y_avg_R = [_tau_hist_norm_tab4[t].get(avg_r_key) for t in _taus_sorted_tab4]
             fig.add_trace(go.Scatter(
                 x=_taus_sorted_tab4, y=_y_avg_R, mode="lines+markers",
-                name=f"{ytitle}_R^μ (promedio de rama Rescate)",
+                name=f"{ytitle}_R^μ (Rescue branch average)",
                 line=dict(color="#1f77b4", width=2.5, dash="dash"),
             ))
             
@@ -3222,7 +3222,7 @@ with tab4:
             _y_avg_N = [_tau_hist_norm_tab4[t].get(avg_n_key) for t in _taus_sorted_tab4]
             fig.add_trace(go.Scatter(
                 x=_taus_sorted_tab4, y=_y_avg_N, mode="lines+markers",
-                name=f"{ytitle}_N^μ (promedio de rama Negociación)",
+                name=f"{ytitle}_N^μ (Negotiation branch average)",
                 line=dict(color="#ff7f0e", width=2.5, dash="dash"),
             ))
             
@@ -3234,10 +3234,10 @@ with tab4:
             )
             return fig
 
-        st.markdown(f"### γ — Instrumento del Estado vs. promedios de rama R y N ({cov_perp}*)")
+        st.markdown(f"### γ — State instrument vs. R and N branch averages ({cov_perp}*)")
         st.plotly_chart(_plot_instrument_tab4("gamma", "gamma_R_mu", "gamma_N_mu", "γ"), use_container_width=True)
 
-        st.markdown(f"### α — Instrumento del Estado vs. promedios de rama R y N ({cov_perp}*)")
+        st.markdown(f"### α — State instrument vs. R and N branch averages ({cov_perp}*)")
         st.plotly_chart(_plot_instrument_tab4("alpha", "alpha_R_mu", "alpha_N_mu", "α"), use_container_width=True)
 
         # ---- Graficas trayectoria (instrumento*, iota) -- 20 flechas INDEPENDIENTES
@@ -3424,11 +3424,11 @@ with tab4:
         st.plotly_chart(fig_dh_tab4, use_container_width=True)
 
         st.caption(
-            "Datos tomados de `st.session_state['tau_history_normalized']` (τ=0 exógeno + "
-            "τ=1…T_max simulado, generado al presionar “Run State Optimization” en la "
-            "pestaña 3). La franja gris marca el primer τ donde m≠Cont (`eq:stopping-time`) "
-            "— todo lo posterior es extensión contrafactual bajo estado absorbente si "
-            "marcaste esa opción al correr la simulación."
+            "Data retrieved from `st.session_state['tau_history_normalized']` (exogenous τ=0 + "
+            "simulated τ=1…T_max, generated by clicking “Run State Optimization” in "
+            "tab 3). The gray band marks the first τ where m≠Cont (`eq:stopping-time`) "
+            "— everything after is a counterfactual extension under an absorbing state if "
+            "you selected that option when running the simulation."
         )
 
 with tab5:
